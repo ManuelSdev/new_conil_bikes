@@ -1,6 +1,12 @@
-import { Stack, TextField } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from "@mui/material";
+import { Stack, TextField } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+} from '@mui/material'
 
 import {
   setAddress,
@@ -9,7 +15,7 @@ import {
   setMail,
   setName,
   setPhone,
-} from "@/src/store/bookingFormSlice";
+} from '@/src/store/bookingFormSlice'
 import {
   getAddress,
   getHomeDelivery,
@@ -17,19 +23,17 @@ import {
   getMail,
   getName,
   getPhone,
-} from "@/src/store/selectors";
-
-
+} from '@/src/store/selectors'
 
 const ContactStep = () => {
-  const name = useSelector(getName);
-  const address = useSelector(getAddress);
-  const phone = useSelector(getPhone);
-  const mail = useSelector(getMail);
-  const homeDelivery = useSelector(getHomeDelivery);
-  const homePickup = useSelector(getHomePickup);
+  const name = useSelector(getName)
+  const address = useSelector(getAddress)
+  const phone = useSelector(getPhone)
+  const mail = useSelector(getMail)
+  const homeDelivery = useSelector(getHomeDelivery)
+  const homePickup = useSelector(getHomePickup)
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const idMap = {
     name: setName,
     address: setAddress,
@@ -37,20 +41,16 @@ const ContactStep = () => {
     mail: setMail,
     homeDelivery: setHomeDelivery,
     homePickup: setHomePickup,
-  };
+  }
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    if (value === "true") dispatch(idMap[name](true));
-    else if (value === "false") dispatch(idMap[name](false));
-    else dispatch(idMap[name](value));
-  };
+    const { name, value } = event.target
+    if (value === 'true') dispatch(idMap[name](true))
+    else if (value === 'false') dispatch(idMap[name](false))
+    else dispatch(idMap[name](value))
+  }
 
   return (
-    <Stack
-      component="form"
-      mb={2}
-      spacing={2}
-    >
+    <Stack component="form" mb={2} spacing={2}>
       <TextField
         fullWidth
         name="name"
@@ -63,7 +63,7 @@ const ContactStep = () => {
         name="phone"
         label="Teléfono"
         value={phone}
-        inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
         //  inputProps={{ type: 'hidden' }}
         onChange={handleChange}
       />
@@ -128,7 +128,7 @@ const ContactStep = () => {
         </RadioGroup>
       </FormControl>
     </Stack>
-  );
-};
+  )
+}
 
-export default ContactStep;
+export default ContactStep

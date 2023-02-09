@@ -1,11 +1,19 @@
-
 import {
-    DialogTitle, Dialog, DialogActions, DialogContent, DialogContentText
-} from '@mui/material';
+    DialogTitle,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+} from '@mui/material'
 
-
-export default function Modal({ open, title, content, handleClose, full, children }) {
-
+export default function Modal({
+    open,
+    title,
+    content,
+    handleClose,
+    full,
+    children,
+}) {
     return (
         <div>
             <Dialog
@@ -15,22 +23,14 @@ export default function Modal({ open, title, content, handleClose, full, childre
                 aria-describedby="alert-dialog-description"
                 fullScreen={full ? true : false}
             >
-                <DialogTitle id="alert-dialog-title">
-                    {title}
-                </DialogTitle>
+                <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         {content}
                     </DialogContentText>
                 </DialogContent>
-                <DialogActions>
-                    {children}
-
-                </DialogActions>
-
+                <DialogActions>{children}</DialogActions>
             </Dialog>
         </div>
-
-
-    );
+    )
 }

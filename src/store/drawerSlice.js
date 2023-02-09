@@ -1,7 +1,7 @@
 import { createSlice, current } from '@reduxjs/toolkit'
 
 const initialState = {
-    isOpen: false
+    isOpen: false,
 }
 
 export const drawerSlice = createSlice({
@@ -14,7 +14,6 @@ export const drawerSlice = createSlice({
         closeDrawer: (state) => {
             state.isOpen = false
         },
-
     },
 })
 
