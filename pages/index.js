@@ -1,25 +1,22 @@
+import Layout from '@/src/components/layout/Layout'
 import Link from '@/src/lib/Link'
 import { Button } from '@mui/material'
-import Head from 'next/head'
-
-
-
+import Image from 'next/image'
+import photo from '@/public/booking.jpg'
 export default function Home() {
-  return (
-
-    <>
-      <Head>
-        <title>Conil Bikes Web</title>
-        <meta name="description" content="Web de Conil Bikes: venta, alquiler y reparación de bicicletas" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main >
-        <Link href="/bookings">
-          <Button variant="contained">reservar</Button>
-        </Link>
-      </main>
-    </>
-  )
+   return (
+      <Layout>
+         <Image
+            src={photo}
+            alt="Imagen de producto"
+            style={{
+               backgroundColor: '#F1F1F1',
+               objectFit: 'contain',
+            }}
+         />
+         <Link href="/bookings">
+            <Button variant="contained">reservar</Button>
+         </Link>
+      </Layout>
+   )
 }

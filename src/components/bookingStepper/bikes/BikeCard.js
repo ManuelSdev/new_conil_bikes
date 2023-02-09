@@ -23,7 +23,8 @@ export default function BikeCard({ bike }) {
     const a = () => {
         if (true) return false
     }
-
+    console.log(images)
+    //TODO: mete en alt la descripción de la bici
     return (
         <Card
         //  sx={{ maxWidth: 345 }}
@@ -54,7 +55,7 @@ export default function BikeCard({ bike }) {
 
 BikeCard.propTypes = {
     bike: T.shape({
-        avaiable: T.string,
+        avaiable: T.bool,
         bookings: T.array,
         brand: T.string,
         description: T.string,
