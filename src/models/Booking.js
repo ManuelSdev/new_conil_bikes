@@ -1,17 +1,17 @@
 import mongoose from "mongoose";
-import {BOOKING_STATES_MAP} from "../lib/utils/detailsMaps";
+import { BOOKING_STATES_MAP } from "../utils/appValues";
 
 const bookingSchema = new mongoose.Schema(
   {
     name: String,
     surname: String,
     mail: String,
-    phone: {type: Number, index: true},
+    phone: { type: Number, index: true },
     address: String,
 
-    from: {type: Date, index: true},
-    to: {type: Date, index: true},
-    bikes: {type: [mongoose.ObjectId], index: true},
+    from: { type: Date, index: true },
+    to: { type: Date, index: true },
+    bikes: { type: [mongoose.ObjectId], index: true },
     price: Number,
     completed: Boolean,
     state: {
@@ -26,7 +26,7 @@ const bookingSchema = new mongoose.Schema(
     homeDelivery: Boolean,
     homePickup: Boolean,
   },
-  {timestamps: true},
+  { timestamps: true },
 );
 
 //productSchema.index({ name: 'text' });

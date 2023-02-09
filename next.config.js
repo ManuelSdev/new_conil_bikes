@@ -9,6 +9,11 @@ const nextConfig = {
       transform: "@mui/icons-material/{{member}}",
     },
   },
+  //TODO: filtro más estricto
+  //https://nextjs.org/docs/api-reference/next/image#remote-patterns
+  images: {
+    domains: ['www.sbbikestogo.com', 'assets.specialized.com'],
+  },
 
 }
 

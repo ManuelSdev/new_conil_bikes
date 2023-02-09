@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Paper, Stack, Typography, Stepper, Step, StepLabel, Box } from '@mui/material';
-import ContactStep from './ContactStep';
-import ResumeStep from './ResumeStep';
-import DateStep from './DateStep';
+
 import ConfirmBookingButton from './ConfirmBookingButton';
 import { getAddress, getDate, getMail, getName, getNumberOfBikes, getPhone } from '@/src/store/selectors';
+import ContactStep from './contact/ContactStep';
+import ResumeStep from './resume/ResumeStep';
+import DateStep from './date/DateStep';
+import BikesStep from './bikes/BikesStep';
+
 //TODO: chapuza?
 const steps = [
     'Fecha',
@@ -13,7 +16,6 @@ const steps = [
     'Contacto',
     'Resumen',
 ];
-
 const StepWrapper = ({ children, textHeader }) =>
     <Box>
         <Typography sx={{ mt: 1, mb: 1 }} variant="h5" component="div">

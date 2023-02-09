@@ -5,10 +5,12 @@
 import { Box, Button, } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "@/src/components/elements/Modal";
+//import Modal from "@/src/components/elements/Modal";
 import DateSelect from './DateSelect';
 import { resetBikes, setAddButton, setFormIsActive } from "@/src/store/bookingFormSlice";
 import { getAddButton, getBikes, getDate, getFormIsActive, getNumberOfBikes } from "@/src/store/selectors";
+import Modal from "../../elements/Modal";
+//import Modal from "../../elements/Modal";
 
 //TODO: limpia
 const DateStep = () => {

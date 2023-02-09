@@ -7,17 +7,15 @@ import { CacheProvider } from '@emotion/react';
 import theme from '../src/theme';
 import createEmotionCache from '../src/lib/createEmotionCache';
 import { wrapper } from '@/src/store';
-import { Provider } from 'react-redux';
 
 
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
-function MyApp({ Component, ...rest }) {
+function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }) {
   // const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-  const { store, props } = wrapper.useWrappedStore(rest);
-  const { pageProps, emotionCache = clientSideEmotionCache } = props;
+
   return (
     <CacheProvider value={emotionCache}>
 
@@ -29,17 +27,13 @@ function MyApp({ Component, ...rest }) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Provider store={store}>
-          <Component {...pageProps} />
-        </Provider>
-
+        <Component {...pageProps} />
       </ThemeProvider>
     </CacheProvider>
   );
 }
 
-export default MyApp;
-
+export default wrapper.withRedux(MyApp)
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   emotionCache: PropTypes.object,

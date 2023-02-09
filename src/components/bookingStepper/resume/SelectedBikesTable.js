@@ -22,16 +22,27 @@ const SelectedBikesTable = () => {
           >
             <Grid
               item
+              //sx={{ position: 'relative' }}
               xs={4}
+            ><Box
+              sx={{
+                // width: '100%',
+                height: '100%',
+                position: 'relative'
+              }}
             >
-              <Image
-                width="100%"
-                height="100%"
-                objectFit="contain"
-                src={image}
-                alt="Imagen de producto"
-                style={{ backgroundColor: "#F1F1F1" }}
-              />
+                <Image
+                  //    width="100%"
+                  //   height="100%"
+                  //objectFit="contain"
+
+                  fill
+                  src={image}
+                  alt="Imagen de producto"
+                  style={{ backgroundColor: "#F1F1F1", objectFit: 'contain' }}
+                />
+              </Box>
+
             </Grid>
             <Grid
               item

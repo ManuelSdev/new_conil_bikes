@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
-import {
-  BIKE_STATES_MAP,
-  BIKE_RANGES_MAP,
-  BIKE_TYPES_MAP,
-  BIKE_SIZES_MAP,
-} from "../lib/utils/detailsMaps";
+import { BIKE_RANGES_MAP, BIKE_SIZES_MAP, BIKE_STATES_MAP, BIKE_TYPES_MAP } from "../utils/appValues";
+
 
 const bikeSchema = new mongoose.Schema({
   brand: String,
@@ -48,7 +44,7 @@ const bikeSchema = new mongoose.Schema({
   images: [String],
   avaiable: Boolean,
   //rented: { type: [Date], index: true },
-  bookings: {type: [mongoose.ObjectId]},
+  bookings: { type: [mongoose.ObjectId] },
 });
 
 //productSchema.index({ name: 'text' });

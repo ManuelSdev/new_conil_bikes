@@ -40,9 +40,9 @@ const ContactStep = () => {
   };
   const handleChange = (event) => {
     const { name, value } = event.target;
-    if (value === "true") value = true;
-    if (value === "false") value = false;
-    dispatch(idMap[name](value));
+    if (value === "true") dispatch(idMap[name](true));
+    else if (value === "false") dispatch(idMap[name](false));
+    else dispatch(idMap[name](value));
   };
 
   return (

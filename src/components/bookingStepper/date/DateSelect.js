@@ -13,8 +13,8 @@ import {
   getDate,
   getDateError,
   getNumberOfBikes,
-} from "@src/store/selectors";
-import { setDate, setDateError } from "@src//store/bookingFormSlice";
+} from "@/src/store/selectors";
+import { setDate, setDateError } from "@/src/store/bookingFormSlice";
 
 
 

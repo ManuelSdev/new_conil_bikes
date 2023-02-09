@@ -1,5 +1,7 @@
 
-import { DialogTitle, Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material/DialogTitle';
+import {
+    DialogTitle, Dialog, DialogActions, DialogContent, DialogContentText
+} from '@mui/material';
 
 
 export default function Modal({ open, title, content, handleClose, full, children }) {
@@ -28,5 +30,7 @@ export default function Modal({ open, title, content, handleClose, full, childre
 
             </Dialog>
         </div>
+
+
     );
 }
