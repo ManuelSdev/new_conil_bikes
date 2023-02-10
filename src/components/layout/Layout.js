@@ -29,35 +29,60 @@ const Layout = ({ header, children }) => {
                name="viewport"
                content="width=device-width, initial-scale=1"
             />
-            <link rel="icon" href="/favicon.ico" />
+            <link rel="icon" type="image/svg" href="/favicon.svg" />
          </Head>
          <header className="w-[100%]">
             <Box
-               className="flex grow justify-center py-4	"
+               className="flex grow flex-col justify-center py-4	"
                sx={{
                   minWidth,
                   // width: '100%',
                   // height: '700px',
                   // https://cssgradient.io/,
-                  background:
-                     'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(228,243,158,1) 26%, rgba(147,203,81,1) 74%)',
+                  backgroundColor: 'primary.green',
+                  // 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(228,243,158,1) 26%, rgba(147,203,81,1) 74%)',
 
                   //  width: '227px',
                   //  height: '181px',
                }}
             >
-               <Logo
-                  className="fill-black "
-                  fill="black"
-                  //   viewBox={handleViewBox()}
-                  width={handleSvgWidth(factor)}
-                  height={handleSvgHeight(factor)}
-               />
+               <Box className="flex justify-center">
+                  <Logo
+                     className="fill-black "
+                     fill="black"
+                     //   viewBox={handleViewBox()}
+                     width={handleSvgWidth(factor)}
+                     height={handleSvgHeight(factor)}
+                  />
+               </Box>
+
+               <Box
+                  sx={{
+                     width: '100%',
+                     height: '40px',
+                     background: 'black',
+                     color: 'white',
+                  }}
+               >
+                  ICONOS
+               </Box>
             </Box>
          </header>
          <main>
-            <Box sx={{ minWidth }}>
-               <Container sx={{ mb: 5, backgroundColor: '#F4F6FD' }}>
+            <Box
+               sx={{
+                  //minWidth
+                  background: 'red',
+               }}
+            >
+               <Container
+                  sx={{
+                     mb: 5,
+                     //   px: 9,
+                     backgroundColor: 'primary.green',
+                     // height: '700px',
+                  }}
+               >
                   {children}
                </Container>
             </Box>

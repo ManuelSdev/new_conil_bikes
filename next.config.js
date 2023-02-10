@@ -16,6 +16,7 @@ const nextConfig = {
          'www.sbbikestogo.com',
          //  'www.assets.specialized.com',
          'assets.specialized.com',
+         'trek.scene7.com',
       ],
    },
    /*
