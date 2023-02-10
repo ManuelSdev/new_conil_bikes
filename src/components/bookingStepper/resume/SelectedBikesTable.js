@@ -6,7 +6,14 @@ import { BIKE_RANGES_MAP, BIKE_TYPES_MAP } from '@/src/utils/appValues'
 
 const SelectedBikesTable = () => {
    const selectedBikes = useSelector(getBikes)
-   return <Box spacing={1}></Box>
+   return (
+      <Box spacing={1}>
+         {selectedBikes.map((bike) => {
+            const [image] = bike.images
+            return <div>ddd</div>
+         })}
+      </Box>
+   )
 }
 
 export default SelectedBikesTable

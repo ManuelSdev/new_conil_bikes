@@ -35,7 +35,7 @@ const Layout = ({ header, children }) => {
             <Box
                className="flex grow flex-col justify-center py-4	"
                sx={{
-                  minWidth,
+                  // minWidth,
                   // width: '100%',
                   // height: '700px',
                   // https://cssgradient.io/,
@@ -55,8 +55,9 @@ const Layout = ({ header, children }) => {
                      height={handleSvgHeight(factor)}
                   />
                </Box>
-
-               <Box
+               {/**
+ 
+ <Box
                   sx={{
                      width: '100%',
                      height: '40px',
@@ -66,6 +67,8 @@ const Layout = ({ header, children }) => {
                >
                   ICONOS
                </Box>
+
+ */}
             </Box>
          </header>
          <main>

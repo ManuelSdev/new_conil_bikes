@@ -26,7 +26,7 @@ export default function Home() {
             condimentum vitae ipsum eget tempus. Phasellus interdum id
             massa non bibendum. Curabitur auctor cursus dignissim."
                alt="hola"
-               buttonText={'reservar'}
+               buttonText={'reservar online'}
             >
                ALQUILER DE <br /> BICICLETAS
             </HomeSectionCard>
