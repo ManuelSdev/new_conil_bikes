@@ -1,3 +1,4 @@
+import Link from '@/src/lib/Link'
 import { Box, Button, Divider, Paper, Typography } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
@@ -9,19 +10,21 @@ export const HomeSectionCard = ({
    text,
    children,
    buttonText,
+   href,
 }) => {
    return (
       <Paper
-         sx={{ backgroundColor: 'primary.main' }}
+         sx={{ backgroundColor: 'dark.c' }}
          elevation={1}
          //      variant="outlined"
          className="relative flex
-  w-full flex-col items-center justify-start overflow-hidden rounded-[50px] bg-transparent pb-4 "
+  w-full flex-col items-center justify-start overflow-hidden rounded-[50px]  pb-4 "
       >
          <Box
             //className="relative flex h-screen  justify-items-start overflow-hidden rounded-t-[50px]"
             //  sx={{ height: '100px' }}
-            className="relative h-[200px] w-auto overflow-hidden"
+            //CLAVE: Controla width aquí
+            className="relative h-[200px] w-full overflow-hidden"
          >
             <Image
                alt={alt}
@@ -36,17 +39,20 @@ export const HomeSectionCard = ({
             </Typography>
          </Box>
 
-         <Typography className="p-4 text-justify text-black">{text}</Typography>
+         <Typography className="p-4 text-justify text-[#BCBCBC]">
+            {text}
+         </Typography>
          <Divider sx={{ pb: 2 }} />
-
-         <Button
-            sx={{ borderRadius: '50px' }}
-            variant="contained"
-            color="secondary"
-            //className="justify-self-center	"
-         >
-            {buttonText}
-         </Button>
+         <Link href={href} passHref>
+            <Button
+               sx={{ borderRadius: '50px' }}
+               variant="contained"
+               color="secondary"
+               //className="justify-self-center	"
+            >
+               {buttonText}
+            </Button>
+         </Link>
       </Paper>
    )
 }

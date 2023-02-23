@@ -14,16 +14,14 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import { Container } from '@mui/material'
 
 const drawerWidth = 240
 const navItems = ['Home', 'About', 'Contact']
 
 function DrawerAppBar(props) {
    const { window } = props
-   const { children } = props
-   console.log(window)
    const [mobileOpen, setMobileOpen] = React.useState(false)
+
    const handleDrawerToggle = () => {
       setMobileOpen((prevState) => !prevState)
    }
@@ -52,7 +50,6 @@ function DrawerAppBar(props) {
    return (
       <Box sx={{ display: 'flex' }}>
          <CssBaseline />
-         <header />
          <AppBar component="nav">
             <Toolbar>
                <IconButton
@@ -100,17 +97,9 @@ function DrawerAppBar(props) {
                {drawer}
             </Drawer>
          </Box>
-         <Container
-            component="main"
-            ///bgcolor={'red'}
-            sx={{
-               backgroundColor: 'dark.a',
-               //p: 3
-            }}
-         >
+         <Box component="main" sx={{ p: 3 }}>
             <Toolbar />
-            {children}
-         </Container>
+         </Box>
       </Box>
    )
 }
@@ -124,3 +113,10 @@ DrawerAppBar.propTypes = {
 }
 
 export default DrawerAppBar
+
+/**
+ <header className="sticky h-16 w-full bg-black  ">
+
+    <div></div>
+   </header>
+ */

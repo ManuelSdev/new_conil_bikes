@@ -3,19 +3,114 @@ import Link from '@/src/lib/Link'
 import { Stack } from '@mui/material'
 import Photo from '@/public/mbike.webp'
 import Shop from '@/public/shop.jpg'
-import Repair from '@/public/repair.jpg'
-
+import Repair from '@/public/booking.jpg'
+import Logo from '@/public/logo.svg'
 import { HomeSectionCard } from '@/src/components/elements/HomeSectionCard'
+import { Box } from '@mui/system'
+
+const a = <Logo fill={'red'} />
 export default function Home() {
    //  const p = './booking.jpg'
+   // console.log(logo)
+
+   console.log(a)
    return (
       <Layout>
          <Stack
+            //     component="div"
+
             direction="column"
             spacing={2}
-            //  sx={{ backgroundColor: 'primary.main' }}
+            sx={{
+               // pt: 17,
+               height: 5000,
+               width: '100%',
+               // backgroundColor: 'red',
+               //   position: 'relative',
+            }}
          >
-            <HomeSectionCard
+            <Box
+               sx={{
+                  position: 'fixed',
+                  width: '100%',
+                  display: 'flex',
+                  left: 0,
+                  justifyContent: 'center',
+               }}
+            >
+               <Logo
+                  fill={'white'}
+                  style={{
+                     //  position: 'fixed',
+                     width: '80%',
+                  }}
+               ></Logo>
+            </Box>
+
+            <Logo style={{ visibility: 'hidden', width: '80%' }}></Logo>
+            <Stack
+               //     component="div"
+
+               direction="column"
+               spacing={2}
+               sx={{
+                  // pt: 17,
+                  // pt: 10,
+                  //height: 5000,
+                  width: '100%',
+                  backgroundColor: 'dark.a',
+                  position: 'relative',
+               }}
+            >
+               <HomeSectionCard
+                  src={Photo.src}
+                  title={
+                     <span>
+                        ALQUILER DE <br /> BICICLETAS
+                     </span>
+                  }
+                  text="  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+            condimentum vitae ipsum eget tempus. Phasellus interdum id
+            massa non bibendum. Curabitur auctor cursus dignissim."
+                  alt="hola"
+                  buttonText={'reservar online'}
+                  href={'/bookings'}
+               >
+                  ALQUILER DE <br /> BICICLETAS
+               </HomeSectionCard>
+               <HomeSectionCard
+                  src={Shop.src}
+                  text="  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+            condimentum vitae ipsum eget tempus. Phasellus interdum id
+            massa non bibendum. Curabitur auctor cursus dignissim."
+                  alt="hola"
+                  buttonText={'contactar'}
+                  href={'/'}
+               >
+                  VENTA DE
+                  <br />
+                  BICICLETAS Y<br /> ACCESORIOS
+               </HomeSectionCard>
+               <HomeSectionCard
+                  src={Repair.src}
+                  text="  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+            condimentum vitae ipsum eget tempus. Phasellus interdum id
+            massa non bibendum. Curabitur auctor cursus dignissim."
+                  alt="hola"
+                  buttonText={'contactar'}
+                  href={'/'}
+               >
+                  REPARACION Y
+                  <br />
+                  MANTENIMIENTO
+               </HomeSectionCard>
+            </Stack>
+         </Stack>
+      </Layout>
+   )
+}
+/*
+  <HomeSectionCard
                src={Photo.src}
                title={
                   <span>
@@ -54,11 +149,7 @@ export default function Home() {
                <br />
                MANTENIMIENTO
             </HomeSectionCard>
-         </Stack>
-      </Layout>
-   )
-}
-
+*/
 /*
   <Image
             src={photo}
@@ -122,4 +213,40 @@ export default function Home() {
                </Button>
             </Paper>
             
+
+
+
+
+
+
+
+
+
+
+            <Stack
+            //     component="div"
+            direction="column"
+            spacing={2}
+            sx={{
+               pt: 17,
+               height: 5000,
+               width: '100%',
+
+               //     backgroundImage: `url(${Repair.src})`,
+
+               //  maskImage: 'url(/logo.svg)',
+               // maskRepeat: 'no-repeat',
+               // maskMode: 'unset',
+               //     maskco
+               backgroundColor: 'red',
+               backgroundImage: 'url(/logo.svg)',
+               backgroundSize: 'contain',
+               backgroundRepeat: 'no-repeat',
+               backgroundAttachment: 'scroll',
+               backgroundPosition: 'top',
+               //  backdropFilter: 'red',
+               // backgroundColor: 'blue',
+               //    background: 'red',
+            }}
+         >
             */

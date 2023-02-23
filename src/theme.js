@@ -14,6 +14,7 @@ const theme = createTheme({
    palette: {
       primary: {
          // main: '#556cd6',
+         //verde
          main: '#D5FF40',
          green: '#E4F39E',
          green: '#D5FF40',
@@ -22,7 +23,13 @@ const theme = createTheme({
       secondary: {
          // main: '#19857b',
          main: '#000000',
+
          contrastText: '#D5FF40',
+      },
+      dark: {
+         a: '#121212',
+         b: '#1E1E1E',
+         c: '#363636',
       },
       gradient: {
          main: 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(228,243,158,1) 26%, rgba(147,203,81,1) 74%)',
