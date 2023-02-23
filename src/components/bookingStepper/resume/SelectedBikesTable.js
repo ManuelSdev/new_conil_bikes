@@ -8,9 +8,9 @@ const SelectedBikesTable = () => {
    const selectedBikes = useSelector(getBikes)
    return (
       <Box spacing={1}>
-         {selectedBikes.map((bike) => {
+         {selectedBikes.map((bike, index) => {
             const [image] = bike.images
-            return <div>ddd</div>
+            return <div key={index}>ddd</div>
          })}
       </Box>
    )
