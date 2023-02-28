@@ -7,6 +7,7 @@ import Repair from '@/public/repair.jpg'
 import Logo from '@/public/logo.svg'
 import { HomeSectionCard } from '@/src/components/elements/HomeSectionCard'
 import { Box } from '@mui/system'
+import { dale } from '@/src/lib/initDatabase'
 
 const a = <Logo fill={'red'} />
 export default function Home() {
@@ -109,6 +110,7 @@ export default function Home() {
       </Layout>
    )
 }
+
 /*
   <HomeSectionCard
                src={Photo.src}
