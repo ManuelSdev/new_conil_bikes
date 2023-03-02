@@ -2,10 +2,10 @@
 
 import { Pool } from 'pg'
 
-let conn
+let pool
 
-if (!conn) {
-   conn = new Pool({
+if (!pool) {
+   pool = new Pool({
       user: process.env.PGSQL_USER,
       password: process.env.PGSQL_PASSWORD,
       host: process.env.PGSQL_HOST,
@@ -14,4 +14,4 @@ if (!conn) {
    })
 }
 
-export default conn
+export default pool

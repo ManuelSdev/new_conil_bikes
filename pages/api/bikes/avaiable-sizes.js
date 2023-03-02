@@ -1,57 +1,56 @@
-
-import dbConnect from "@/src/lib/dbConnect";
-import Bike from "@/src/models/Bike";
-import Booking from "@/src/models/Booking";
-
+import dbConnect from '@/src/lib/dbConnect'
+import Bike from '@/src/models/Bike'
+import Booking from '@/src/models/Booking'
 
 export async function getSizes(filters) {
-  await dbConnect();
-  console.log("FILTERS en sizes", filters);
-  const { from: fromDate, to: toDate } = filters;
-  // console.log('toDate en ISO', ISODate(toDate))
-  //Consideramos que el día de entrega o recogida no se puede reservar
-  // por eso usa  gt/lt en lugar de gte/lte
+   await dbConnect()
+   console.log('FILTERS en sizes', filters)
+   const { from: fromDate, to: toDate } = filters
+   // console.log('toDate en ISO', ISODate(toDate))
+   //Consideramos que el día de entrega o recogida no se puede reservar
+   // por eso usa  gt/lt en lugar de gte/lte
 
-  const activeBookings = await Booking.find(
-    {
-      $or: [
-        { from: { $lte: toDate, $gt: fromDate } },
-        { to: { $gte: fromDate, $lt: toDate } },
-      ],
-    },
-    //Selecciona solo el campo que pongas aquí
-    {
-      bikes: 1,
-      _id: 0,
-    },
-  );
+   const activeBookings = await Booking.find(
+      {
+         $or: [
+            { from: { $lte: toDate, $gt: fromDate } },
+            { to: { $gte: fromDate, $lt: toDate } },
+         ],
+      },
+      //Selecciona solo el campo que pongas aquí
+      {
+         bikes: 1,
+         _id: 0,
+      }
+   )
 
-  const rentedBikesIds = activeBookings.map((booking) => booking.bikes);
-  const b = () => {
-    let a = [];
-    rentedBikesIds.forEach((arr) => {
-      a = [...a, ...arr];
-    });
-    return a;
-  };
-  const d = b();
-  const avaiableBikesSizes = await Bike.distinct("size", { _id: { $nin: d } });
-  // console.log('activeBookings', activeBookings)
-  console.log("BIKES SIZE RES", avaiableBikesSizes);
-  // console.log('BIKES', bikes)
-  return avaiableBikesSizes;
+   const rentedBikesIds = activeBookings.map((booking) => booking.bikes)
+   const b = () => {
+      let a = []
+      rentedBikesIds.forEach((arr) => {
+         a = [...a, ...arr]
+      })
+      return a
+   }
+   const d = b()
+   const avaiableBikesSizes = await Bike.distinct('size', { _id: { $nin: d } })
+   // console.log('activeBookings', activeBookings)
+   console.log('BIKES SIZE RES', avaiableBikesSizes)
+   // console.log('BIKES', bikes)
+   return avaiableBikesSizes
 }
 
 export default async function handler(req, res) {
-  const date = req.query;
-  try {
-    const result = await getSizes(date);
+   const date = req.query
+   console.log('DATE->', date)
+   try {
+      const result = await getSizes(date)
 
-    res.status(201).json(result);
-  } catch (err) {
-    console.log("ERROR BIKES GET", err.message);
-    res.status(500);
-  }
+      res.status(201).json(result)
+   } catch (err) {
+      console.log('ERROR BIKES GET', err.message)
+      res.status(500)
+   }
 }
 
 /*

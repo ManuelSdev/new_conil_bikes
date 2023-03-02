@@ -186,11 +186,20 @@ CREATE TABLE
 CREATE TABLE
   BookingOrder (
     bikeSn text NOT NULL,
-    bookingId int REFERENCES Booking,
-    pedalModel text REFERENCES Pedal,
+    bookingId int,
+    pedalModel text,
     addBaskey boolean NOT NULL,
     FOREIGN KEY (bikeSn) REFERENCES Bike (sn),
     FOREIGN KEY (pedalModel) REFERENCES Pedal,
     FOREIGN KEY (bookingId) REFERENCES Booking,
     PRIMARY KEY (bikeSn, bookingId)
   );
+
+/**API**/
+/** avaiable-size**/
+SELECT
+  id
+FROM
+  Booking
+WHERE
+   '[2011-01-01 14:30:00,2011-01-09 15:30:00]'::tsrange && date
