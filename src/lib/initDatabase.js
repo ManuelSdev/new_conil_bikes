@@ -1,5 +1,6 @@
 import conn from './db'
 
+//import conn from './db'
 //const rows = await pool.query('SELECT * FROM users WHERE id = $1', [1])
 //console.log('user:', rows)
 

@@ -7,14 +7,14 @@ import Repair from '@/public/repair.jpg'
 import Logo from '@/public/logo.svg'
 import { HomeSectionCard } from '@/src/components/elements/HomeSectionCard'
 import { Box } from '@mui/system'
-import { dale } from '@/src/lib/initDatabase'
+//import { dale } from '@/src/lib/initDatabase'
 
 const a = <Logo fill={'red'} />
 export default function Home() {
    //  const p = './booking.jpg'
    // console.log(logo)
 
-   console.log(a)
+   // console.log(a)
    return (
       <Layout>
          <Stack
