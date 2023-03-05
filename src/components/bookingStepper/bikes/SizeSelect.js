@@ -17,6 +17,23 @@ import { getDate, getDateError, getSize } from '@/src/store/selectors'
 import { setSize } from '@/src/store/bookingFormSlice'
 import { useGetAvaiableSizesQuery } from '@/src/store/services/bikeApi'
 
+const loadingLabel = () => (
+   <Box>
+      Cargando tallas disponibles
+      <LinearProgress
+         sx={
+            {
+               //      backgroundColor: 'grey',
+               //      color: 'red',
+               //display: 'flex',
+               //       justifySelf: 'center',
+               //      position: 'relative',
+               //   '&..MuiCircularProgress-root.MuiCircularProgress-svg': { position: 'relative' },
+            }
+         }
+      />
+   </Box>
+)
 export default function SizeSelect() {
    const dispatch = useDispatch()
    const isoDate = useSelector(getDate)
@@ -57,24 +74,6 @@ export default function SizeSelect() {
             : //     console.log('dispatch+++++++++++++++++++++') ||
               dispatch(setSize(''))
    }, [isoDate])
-
-   const loadingLabel = () => (
-      <Box>
-         Cargando tallas disponibles
-         <LinearProgress
-            sx={
-               {
-                  //      backgroundColor: 'grey',
-                  //      color: 'red',
-                  //display: 'flex',
-                  //       justifySelf: 'center',
-                  //      position: 'relative',
-                  //   '&..MuiCircularProgress-root.MuiCircularProgress-svg': { position: 'relative' },
-               }
-            }
-         />
-      </Box>
-   )
 
    return (
       <Box sx={{ minWidth: 120 }}>

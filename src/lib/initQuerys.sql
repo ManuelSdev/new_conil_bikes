@@ -20,10 +20,10 @@ CREATE TYPE modelType AS ENUM (
 );
 
 CREATE TYPE modelRange AS ENUM (
-  'ride-trekking',
-  'midRange',
-  'highEnd',
-  'premium'
+  'ride',
+  'mid',
+  'hight',
+  'top'
 );
 
 CREATE TYPE bikeState AS ENUM (
@@ -53,7 +53,7 @@ CREATE TABLE BikeModelRange (
 );
 
 INSERT INTO BikeModelRange
-  VALUES ('premium'), ('highEnd'), ('midRange'), ('ride-trekking');
+  VALUES ('mid'), ('hight'), ('top'), ('ride');
 
 CREATE TABLE Segment (
   bikeModelType modelType NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE Segment (
 );
 
 INSERT INTO Segment
-  VALUES ('city', 'midRange', 12), ('city', 'highEnd', 15), ('mountain', 'midRange', 12), ('mountain', 'highEnd', 15), ('mountain', 'premium', 25), ('road', 'midRange', 15), ('road', 'highEnd', 18), ('road', 'premium', 25), ('electric', 'ride-trekking', 25);
+  VALUES ('city', 'mid', 12), ('city', 'hight', 15), ('mountain', 'mid', 12), ('mountain', 'hight', 15), ('mountain', 'top', 25), ('road', 'mid', 15), ('road', 'hight', 18), ('road', 'top', 25), ('electric', 'ride', 25);
 
 CREATE TABLE PedalModel (
   pedalModelName text NOT NULL,
@@ -88,7 +88,7 @@ CREATE TABLE CompatiblePedal (
 );
 
 INSERT INTO CompatiblePedal
-  VALUES ('mountain', 'highEnd', 'pedalModel-E'), ('mountain', 'highEnd', 'pedalModel-F'), ('mountain', 'premium', 'pedalModel-E'), ('mountain', 'premium', 'pedalModel-F'), ('road', 'highEnd', 'pedalModel-A'), ('road', 'highEnd', 'pedalModel-B'), ('road', 'highEnd', 'pedalModel-C'), ('road', 'highEnd', 'pedalModel-D'), ('road', 'premium', 'pedalModel-A'), ('road', 'premium', 'pedalModel-B'), ('road', 'premium', 'pedalModel-C'), ('road', 'premium', 'pedalModel-D');
+  VALUES ('mountain', 'hight', 'pedalModel-E'), ('mountain', 'hight', 'pedalModel-F'), ('mountain', 'top', 'pedalModel-E'), ('mountain', 'top', 'pedalModel-F'), ('road', 'hight', 'pedalModel-A'), ('road', 'hight', 'pedalModel-B'), ('road', 'hight', 'pedalModel-C'), ('road', 'hight', 'pedalModel-D'), ('road', 'top', 'pedalModel-A'), ('road', 'top', 'pedalModel-B'), ('road', 'top', 'pedalModel-C'), ('road', 'top', 'pedalModel-D');
 
 CREATE TABLE BikeSize (
   bikeSize bikeSizeType NOT NULL,
