@@ -3,7 +3,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'SPARK RC SL EVO AXS',
-      size: 'l',
+      size: 'xl',
       type: 'city',
       range: 'midRange',
       price: 10,
@@ -53,7 +53,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'S-Works Enduro',
-      size: 's',
+      size: 'm',
       type: 'mountain',
       range: 'premium',
       price: 10,
@@ -68,7 +68,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'S-Works Enduro',
-      size: 'l',
+      size: 'xl',
       type: 'mountain',
       range: 'premium',
       price: 10,
@@ -83,7 +83,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'Turbo Levo Comp',
-      size: 'm',
+      size: 'l',
       type: 'mountain',
       range: 'premium',
       price: 10,
@@ -97,8 +97,8 @@ const bikes = [
    },
    {
       brand: 'Specialized',
-      model: 'Kenevo Comp',
-      size: 'l',
+      model: 'Chisel',
+      size: 's',
       type: 'mountain',
       range: 'highEnd',
       price: 10,
@@ -128,7 +128,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'Chisel',
-      size: 'l',
+      size: 's',
       type: 'mountain',
       range: 'midRange',
       price: 10,
@@ -143,7 +143,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'SPARK RC SL EVO AXS',
-      size: 'l',
+      size: 'xl',
       type: 'mountain',
       range: 'highEnd',
       price: 10,
@@ -159,7 +159,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'S-Works Enduro',
-      size: 's',
+      size: 'm',
       type: 'mountain',
       range: 'premium',
       price: 10,
@@ -174,7 +174,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'S-Works Enduro',
-      size: 'l',
+      size: 'xl',
       type: 'mountain',
       range: 'premium',
       price: 10,
@@ -189,7 +189,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'Turbo Levo Comp',
-      size: 'm',
+      size: 'l',
       type: 'mountain',
       range: 'premium',
       price: 10,
@@ -203,8 +203,8 @@ const bikes = [
    },
    {
       brand: 'Scott',
-      model: 'Kenevo Comp',
-      size: 'l',
+      model: 'Chisel',
+      size: 'm',
       type: 'mountain',
       range: 'highEnd',
       price: 10,
@@ -219,7 +219,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'Rockhopper Sport 29',
-      size: 'm',
+      size: 's',
       type: 'mountain',
       range: 'midRange',
       price: 10,
@@ -234,7 +234,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'Chisel',
-      size: 'l',
+      size: 's',
       type: 'mountain',
       range: 'highEnd',
       price: 10,
@@ -250,7 +250,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'SPARK RC SL EVO AXS',
-      size: 'l',
+      size: 'xl',
       type: 'mountain',
       range: 'midRange',
       price: 10,
@@ -266,7 +266,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'SPARK RC SL EVO AXS',
-      size: 'l',
+      size: 'xxl',
       type: 'mountain',
       range: 'midRange',
       price: 10,
@@ -282,7 +282,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'S-Works Enduro',
-      size: 's',
+      size: 'm',
       type: 'mountain',
       range: 'premium',
       price: 10,
@@ -297,7 +297,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'S-Works Enduro',
-      size: 'l',
+      size: 'xxl',
       type: 'mountain',
       range: 'premium',
       price: 10,
@@ -312,7 +312,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'Turbo Levo Comp',
-      size: 'm',
+      size: 'xl',
       type: 'mountain',
       range: 'premium',
       price: 10,
@@ -326,8 +326,8 @@ const bikes = [
    },
    {
       brand: 'Kross',
-      model: 'Kenevo Comp',
-      size: 'l',
+      model: 'Chisel',
+      size: 'm',
       type: 'mountain',
       range: 'highEnd',
       price: 10,
@@ -342,7 +342,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'Rockhopper Sport 29',
-      size: 'm',
+      size: 's',
       type: 'mountain',
       range: 'midRange',
       price: 10,
@@ -357,7 +357,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'Chisel',
-      size: 'l',
+      size: 's',
       type: 'mountain',
       range: 'highEnd',
       price: 10,
@@ -372,7 +372,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'SPARK RC SL EVO AXS',
-      size: 'l',
+      size: 'xxl',
       type: 'mountain',
       range: 'midRange',
       price: 10,
@@ -388,7 +388,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'S-Works Enduro',
-      size: 's',
+      size: 'xxl',
       type: 'city',
       range: 'premium',
       price: 10,
@@ -418,7 +418,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'Turbo Levo Comp',
-      size: 'm',
+      size: 'xl',
       type: 'city',
       range: 'premium',
       price: 10,
@@ -432,8 +432,8 @@ const bikes = [
    },
    {
       brand: 'Specialized',
-      model: 'Kenevo Comp',
-      size: 'l',
+      model: 'Chisel',
+      size: 'xl',
       type: 'city',
       range: 'highEnd',
       price: 10,
@@ -448,7 +448,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'Rockhopper Sport 29',
-      size: 'm',
+      size: 's',
       type: 'city',
       range: 'midRange',
       price: 10,
@@ -463,7 +463,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'Chisel',
-      size: 'l',
+      size: 'm',
       type: 'city',
       range: 'highEnd',
       price: 10,
@@ -494,7 +494,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'S-Works Enduro',
-      size: 's',
+      size: 'l',
       type: 'city',
       range: 'premium',
       price: 10,
@@ -524,7 +524,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'Turbo Levo Comp',
-      size: 'm',
+      size: 'xl',
       type: 'city',
       range: 'premium',
       price: 10,
@@ -538,8 +538,8 @@ const bikes = [
    },
    {
       brand: 'Scott',
-      model: 'Kenevo Comp',
-      size: 'l',
+      model: 'Chisel',
+      size: 'xxl',
       type: 'city',
       range: 'highEnd',
       price: 10,
@@ -554,7 +554,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'Rockhopper Sport 29',
-      size: 'm',
+      size: 'l',
       type: 'city',
       range: 'midRange',
       price: 10,
@@ -569,7 +569,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'Chisel',
-      size: 'l',
+      size: 'm',
       type: 'city',
       range: 'highEnd',
       price: 10,
@@ -584,7 +584,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'SPARK RC SL EVO AXS',
-      size: 'l',
+      size: 's',
       type: 'city',
       range: 'midRange',
       price: 10,
@@ -600,7 +600,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'S-Works Enduro',
-      size: 's',
+      size: 'xl',
       type: 'city',
       range: 'premium',
       price: 10,
@@ -630,7 +630,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'Turbo Levo Comp',
-      size: 'm',
+      size: 'xxl',
       type: 'city',
       range: 'premium',
       price: 10,
@@ -644,8 +644,8 @@ const bikes = [
    },
    {
       brand: 'Kross',
-      model: 'Kenevo Comp',
-      size: 'l',
+      model: 'Chisel',
+      size: 'xxl',
       type: 'city',
       range: 'highEnd',
       price: 10,
@@ -660,7 +660,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'Rockhopper Sport 29',
-      size: 'm',
+      size: 'l',
       type: 'city',
       range: 'midRange',
       price: 10,
@@ -675,7 +675,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'Chisel',
-      size: 'l',
+      size: 'm',
       type: 'city',
       range: 'highEnd',
       price: 10,
@@ -690,7 +690,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'SPARK RC SL EVO AXS',
-      size: 'l',
+      size: 's',
       type: 'city',
       range: 'midRange',
       price: 10,
@@ -706,7 +706,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'S-Works Enduro',
-      size: 's',
+      size: 'xl',
       type: 'electric',
       range: 'premium',
       price: 10,
@@ -721,7 +721,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'S-Works Enduro',
-      size: 'l',
+      size: 's',
       type: 'electric',
       range: 'premium',
       price: 10,
@@ -766,7 +766,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'Rockhopper Sport 29',
-      size: 'm',
+      size: 'xxl',
       type: 'electric',
       range: 'midRange',
       price: 10,
@@ -781,7 +781,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'Chisel',
-      size: 'l',
+      size: 'xl',
       type: 'electric',
       range: 'highEnd',
       price: 10,
@@ -796,7 +796,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'SPARK RC SL EVO AXS',
-      size: 'l',
+      size: 's',
       type: 'electric',
       range: 'midRange',
       price: 10,
@@ -812,7 +812,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'S-Works Enduro',
-      size: 's',
+      size: 'xxl',
       type: 'electric',
       range: 'premium',
       price: 10,
@@ -827,7 +827,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'S-Works Enduro',
-      size: 'l',
+      size: 's',
       type: 'electric',
       range: 'premium',
       price: 10,
@@ -872,7 +872,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'Rockhopper Sport 29',
-      size: 'm',
+      size: 'xxl',
       type: 'electric',
       range: 'midRange',
       price: 10,
@@ -887,7 +887,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'Chisel',
-      size: 'l',
+      size: 'xl',
       type: 'electric',
       range: 'highEnd',
       price: 10,
@@ -902,7 +902,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'SPARK RC SL EVO AXS',
-      size: 'l',
+      size: 'm',
       type: 'electric',
       range: 'midRange',
       price: 10,
@@ -933,7 +933,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'S-Works Enduro',
-      size: 'l',
+      size: 'm',
       type: 'electric',
       range: 'premium',
       price: 10,
@@ -978,7 +978,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'Rockhopper Sport 29',
-      size: 'm',
+      size: 'xxl',
       type: 'electric',
       range: 'midRange',
       price: 10,
@@ -993,7 +993,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'Chisel',
-      size: 'l',
+      size: 'xl',
       type: 'electric',
       range: 'highEnd',
       price: 10,
@@ -1008,7 +1008,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'SPARK RC SL EVO AXS',
-      size: 'l',
+      size: 'm',
       type: 'electric',
       range: 'midRange',
       price: 10,
@@ -1039,7 +1039,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'S-Works Enduro',
-      size: 'l',
+      size: 'm',
       type: 'road',
       range: 'premium',
       price: 10,
@@ -1054,7 +1054,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'Turbo Levo Comp',
-      size: 'm',
+      size: 's',
       type: 'road',
       range: 'premium',
       price: 10,
@@ -1114,7 +1114,7 @@ const bikes = [
    {
       brand: 'Specialized',
       model: 'SPARK RC SL EVO AXS',
-      size: 'l',
+      size: 'm',
       type: 'road',
       range: 'midRange',
       price: 10,
@@ -1145,7 +1145,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'S-Works Enduro',
-      size: 'l',
+      size: 'm',
       type: 'road',
       range: 'premium',
       price: 10,
@@ -1160,7 +1160,7 @@ const bikes = [
    {
       brand: 'Scott',
       model: 'Turbo Levo Comp',
-      size: 'm',
+      size: 's',
       type: 'road',
       range: 'premium',
       price: 10,
@@ -1174,8 +1174,8 @@ const bikes = [
    },
    {
       brand: 'Scott',
-      model: 'Kenevo Comp',
-      size: 'l',
+      model: 'Chisel',
+      size: 's',
       type: 'road',
       range: 'midRange',
       price: 10,
@@ -1251,7 +1251,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'S-Works Enduro',
-      size: 'l',
+      size: 'xl',
       type: 'road',
       range: 'premium',
       price: 10,
@@ -1266,7 +1266,7 @@ const bikes = [
    {
       brand: 'Kross',
       model: 'Turbo Levo Comp',
-      size: 'm',
+      size: 's',
       type: 'road',
       range: 'premium',
       price: 10,
@@ -1280,8 +1280,8 @@ const bikes = [
    },
    {
       brand: 'Kross',
-      model: 'Kenevo Comp',
-      size: 'l',
+      model: 'Chisel',
+      size: 's',
       type: 'road',
       range: 'midRange',
       price: 10,

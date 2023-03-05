@@ -33,7 +33,7 @@ const insertModelText = () => {
    })
    let all = `
    INSERT INTO
-     Model (model, type, range, brand, description, images)
+     BikeModel (bikeModelName, bikeModelType, bikeModelRange, bikeModelBrand, bikeModelDescription, bikeModelImages)
    VALUES  ${texto};  
    `
    // console.log(all)
@@ -54,7 +54,7 @@ const insertBikeText = () => {
    })
    let all = `
    INSERT INTO
-     Bike (sn, model, size,state)
+     Bike (bikeSn, bikeModelName, bikeSize,bikeState)
    VALUES  ${texto};  
    `
    return all
@@ -76,196 +76,159 @@ const execute = async (query) => {
    }
 }
 const text = `
-DROP TABLE IF EXISTS Range,
-Type,
-Segment,
-Pedal,
-CompatiblePedal,
-Size,
-Model,
-Bike,
-Customer,
-Booking,
-BookingOrder;
+DROP TABLE IF EXISTS bikeModelRange, bikeModelType, Segment, PedalModel, CompatiblePedal, BikeSize, BikeModel, Bike, Customer, Booking, BookingOrder;
 
-DROP TYPE IF EXISTS  bikeSize, bikeType,bikeRange, bikeState, bookingState;
+DROP TYPE IF EXISTS bikeSizeType, modelType, modelRange, bikeState, bookingState;
 
-CREATE TYPE  bikeSize AS ENUM ('s', 'm', 'l', 'xl', 'xxl');
+CREATE TYPE bikeSizeType AS ENUM (
+  's',
+  'm',
+  'l',
+  'xl',
+  'xxl'
+);
 
-CREATE TYPE bikeType AS ENUM ('mountain', 'city', 'electric', 'road');
+CREATE TYPE modelType AS ENUM (
+  'mountain',
+  'city',
+  'electric',
+  'road'
+);
 
-CREATE TYPE bikeRange AS ENUM ('ride-trekking', 'midRange', 'highEnd', 'premium');
+CREATE TYPE modelRange AS ENUM (
+  'ride-trekking',
+  'midRange',
+  'highEnd',
+  'premium'
+);
 
-CREATE TYPE bikeState AS ENUM ('s1', 's2', 's3');
+CREATE TYPE bikeState AS ENUM (
+  's1',
+  's2',
+  's3'
+);
 
-CREATE TYPE bookingState AS ENUM ('pending', 'active', 'finished', 'cancelled');
+CREATE TYPE bookingState AS ENUM (
+  'pending',
+  'active',
+  'finished',
+  'cancelled'
+);
 
-CREATE TABLE
-  Type (type bikeType NOT NULL, PRIMARY KEY (type));
+CREATE TABLE BikeModelType (
+  bikeModelType modelType NOT NULL,
+  PRIMARY KEY (bikeModelType)
+);
 
-INSERT INTO
-  Type
-VALUES
-  ('mountain'),
-  ('city'),
-  ('electric'),
-  ('road');
+INSERT INTO BikeModelType
+  VALUES ('mountain'), ('city'), ('electric'), ('road');
 
-CREATE TABLE
-  Range (range bikeRange NOT NULL, PRIMARY KEY (range));
+CREATE TABLE BikeModelRange (
+  bikeModelRange modelRange NOT NULL,
+  PRIMARY KEY (bikeModelRange)
+);
 
-INSERT INTO
-  Range
-VALUES
-  ('premium'),
-  ('highEnd'),
-  ('midRange'),
-  ('ride-trekking');
+INSERT INTO BikeModelRange
+  VALUES ('premium'), ('highEnd'), ('midRange'), ('ride-trekking');
 
-CREATE TABLE
-  Segment (
-    type bikeType NOT NULL,
-    range bikeRange NOT NULL,
-    price smallint NOT NULL CHECK (price > 0),
-    basket boolean NOT NULL,
-    FOREIGN KEY (type) REFERENCES Type,
-    FOREIGN KEY (range) REFERENCES Range,
-    PRIMARY KEY (type, range)
-  );
+CREATE TABLE Segment (
+  bikeModelType modelType NOT NULL,
+  bikeModelRange modelRange NOT NULL,
+  segmentPrice smallint NOT NULL CHECK (segmentPrice > 0),
+  FOREIGN KEY (bikeModelType) REFERENCES BikeModelType,
+  FOREIGN KEY (bikeModelRange) REFERENCES BikeModelRange,
+  PRIMARY KEY (bikeModelType, bikeModelRange)
+);
 
-INSERT INTO
-  Segment
-VALUES
-  ('city', 'midRange', 12, true),
-  ('city', 'highEnd', 15, true),
-  ('mountain', 'midRange', 12, true),
-  ('mountain', 'highEnd', 15, true),
-  ('mountain', 'premium', 25, true),
-  ('road', 'midRange', 15, false),
-  ('road', 'highEnd', 18, false),
-  ('road', 'premium', 25, false),
-  ('electric', 'ride-trekking', 25, true);
+INSERT INTO Segment
+  VALUES ('city', 'midRange', 12), ('city', 'highEnd', 15), ('mountain', 'midRange', 12), ('mountain', 'highEnd', 15), ('mountain', 'premium', 25), ('road', 'midRange', 15), ('road', 'highEnd', 18), ('road', 'premium', 25), ('electric', 'ride-trekking', 25);
 
-CREATE TABLE
-  Pedal (
-    pedalModel text NOT NULL,
-    pedalType text NOT NULL,
-    price smallint NOT NULL CHECK (price >= 0),
-    quantity smallint NOT NULL CHECK (quantity >= 0),
-    PRIMARY KEY (pedalModel)
-  );
+CREATE TABLE PedalModel (
+  pedalModelName text NOT NULL,
+  pedalModelType text NOT NULL,
+  pedalModelPrice smallint NOT NULL CHECK (pedalModelPrice >= 0),
+  quantity smallint NOT NULL CHECK (quantity >= 0),
+  PRIMARY KEY (pedalModelName)
+);
 
-INSERT INTO
-  Pedal
-VALUES
-  ('pedalModel-A', 'pedalType-1', 0, 10),
-  ('pedalModel-B', 'pedalType-1', 0, 8),
-  ('pedalModel-C', 'pedalType-1', 0, 12),
-  ('pedalModel-D', 'pedalType-1', 0, 12),
-  ('pedalModel-E', 'pedalType-2', 0, 12),
-  ('pedalModel-F', 'pedalType-2', 0, 12);
+INSERT INTO PedalModel
+  VALUES ('pedalModel-A', 'pedalType-1', 0, 10), ('pedalModel-B', 'pedalType-1', 0, 8), ('pedalModel-C', 'pedalType-1', 0, 12), ('pedalModel-D', 'pedalType-1', 0, 12), ('pedalModel-E', 'pedalType-2', 0, 12), ('pedalModel-F', 'pedalType-2', 0, 12);
 
-CREATE TABLE
-  CompatiblePedal (
-    type bikeType NOT NULL,
-    range bikeRange NOT NULL ,
-    pedalModel text NOT NULL ,
-    FOREIGN KEY (type, range) REFERENCES Segment (type, range),
-    FOREIGN KEY (pedalModel) REFERENCES Pedal,
-    PRIMARY KEY (type, range, pedalModel)
-  );
+CREATE TABLE CompatiblePedal (
+  bikeModelType modelType NOT NULL,
+  bikeModelRange modelRange NOT NULL,
+  pedalModelName text NOT NULL,
+  FOREIGN KEY (bikeModelType, bikeModelRange) REFERENCES Segment (bikeModelType, bikeModelRange),
+  FOREIGN KEY (pedalModelName) REFERENCES PedalModel,
+  PRIMARY KEY (bikeModelType, bikeModelRange, pedalModelName)
+);
 
-INSERT INTO
-  CompatiblePedal
-VALUES
-  ('mountain', 'highEnd', 'pedalModel-E'),
-  ('mountain', 'highEnd', 'pedalModel-F'),
-  ('mountain', 'premium', 'pedalModel-E'),
-  ('mountain', 'premium', 'pedalModel-F'),
-  ('road', 'highEnd', 'pedalModel-A'),
-  ('road', 'highEnd', 'pedalModel-B'),
-  ('road', 'highEnd', 'pedalModel-C'),
-  ('road', 'highEnd', 'pedalModel-D'),
-  ('road', 'premium', 'pedalModel-A'),
-  ('road', 'premium', 'pedalModel-B'),
-  ('road', 'premium', 'pedalModel-C'),
-  ('road', 'premium', 'pedalModel-D');
+INSERT INTO CompatiblePedal
+  VALUES ('mountain', 'highEnd', 'pedalModel-E'), ('mountain', 'highEnd', 'pedalModel-F'), ('mountain', 'premium', 'pedalModel-E'), ('mountain', 'premium', 'pedalModel-F'), ('road', 'highEnd', 'pedalModel-A'), ('road', 'highEnd', 'pedalModel-B'), ('road', 'highEnd', 'pedalModel-C'), ('road', 'highEnd', 'pedalModel-D'), ('road', 'premium', 'pedalModel-A'), ('road', 'premium', 'pedalModel-B'), ('road', 'premium', 'pedalModel-C'), ('road', 'premium', 'pedalModel-D');
 
-CREATE TABLE
-  Size (
-    size bikeSize NOT NULL,
-    heightRange smallint ARRAY,
-    PRIMARY KEY (size)
-  );
+CREATE TABLE BikeSize (
+  bikeSize bikeSizeType NOT NULL,
+  sizeDescription smallint ARRAY,
+  PRIMARY KEY (bikeSize)
+);
 
-INSERT INTO
-  Size
-VALUES
-  ('s', '{150, 160}'),
-  ('m', '{161, 170}'),
-  ('l', '{171, 180}'),
-  ('xl', '{181, 190}'),
-  ('xxl', '{191, 200}');
+INSERT INTO BikeSize
+  VALUES ('s', '{150, 160}'), ('m', '{161, 170}'), ('l', '{171, 180}'), ('xl', '{181, 190}'), ('xxl', '{191, 200}');
 
-CREATE TABLE
-  Model (
-    model text NOT NULL,
-    type bikeType NOT NULL,
-    range bikeRange NOT NULL,
-    brand text NOT NULL,
-    description text NOT NULL,
-    images text ARRAY NOT NULL,
-    FOREIGN KEY (type, range) REFERENCES Segment,
-    PRIMARY KEY (model)
-  );
+CREATE TABLE BikeModel (
+  bikeModelName text NOT NULL,
+  bikeModelType modelType NOT NULL,
+  bikeModelRange modelRange NOT NULL,
+  bikeModelBrand text NOT NULL,
+  bikeModelDescription text NOT NULL,
+  bikeModelImages text ARRAY NOT NULL,
+  FOREIGN KEY (bikeModelType, bikeModelRange) REFERENCES Segment,
+  PRIMARY KEY (bikeModelName)
+);
 
-CREATE TABLE
-  Bike (
-    sn text NOT NULL,
-    model text NOT NULL,
-    size bikeSize NOT NULL,
-    state text NOT NULL,
-    FOREIGN KEY (model) REFERENCES Model,
-    FOREIGN KEY (size) REFERENCES Size,
-    PRIMARY KEY (sn)
-  );
+CREATE TABLE Bike (
+  bikesn text NOT NULL,
+  bikeModelName text NOT NULL,
+  bikeSize bikeSizeType NOT NULL,
+  bikeState text NOT NULL,
+  FOREIGN KEY (bikeModelName) REFERENCES BikeModel,
+  FOREIGN KEY (bikeSize) REFERENCES BikeSize,
+  PRIMARY KEY (bikeSn)
+);
 
-CREATE TABLE
-  Customer (
-    email text NOT NULL,
-    name text NOT NULL,
-    surname text NOT NULL,
-    phone text NOT NULL,
-    userId serial,
-    PRIMARY KEY (email)
-  );
+CREATE TABLE Customer (
+  customerEmail text NOT NULL,
+  customerName text NOT NULL,
+  customerSurname text NOT NULL,
+  customerPhone text NOT NULL,
+  customerId serial,
+  PRIMARY KEY (customerEmail)
+);
 
-CREATE TABLE
-  Booking (
-    bookingId serial,
-    email text NOT NULL,
-    price smallint NOT NULL CHECK (price > 0),
-    startDate date NOT NULL,
-    endDate date NOT NULL,
-    bookingDate timestamp,
-    duration text,
-    deliveryAddress text,
-    pickupAddress text,
-    FOREIGN KEY (email) REFERENCES Customer,
-    PRIMARY KEY (bookingId)
-  );
+CREATE TABLE Booking (
+  bookingId serial,
+  customerEmail text NOT NULL,
+  bookingPrice smallint NOT NULL CHECK (bookingPrice > 0),
+  bookingDateTest date NOT NULL,
+  bookingDate timestamp NOT NULL,
+  bookingDateRange tstzrange NOT NULL,
+  bookingDuration text,
+  deliveryAddress text,
+  pickupAddress text,
+  FOREIGN KEY (customerEmail) REFERENCES Customer,
+  PRIMARY KEY (bookingId)
+);
 
-CREATE TABLE
-  BookingOrder (
-    bikeSn text NOT NULL,
-    bookingId int REFERENCES Booking,
-    pedalModel text REFERENCES Pedal,
-    addBaskey boolean NOT NULL,
-    FOREIGN KEY (bikeSn) REFERENCES Bike (sn),
-    FOREIGN KEY (pedalModel) REFERENCES Pedal,
-    FOREIGN KEY (bookingId) REFERENCES Booking,
-    PRIMARY KEY (bikeSn, bookingId)
-  );
+CREATE TABLE BookingOrder (
+  bikeSn text NOT NULL,
+  bookingId int,
+  pedalModelName text,
+  hasBasket boolean NOT NULL,
+  FOREIGN KEY (bikeSn) REFERENCES Bike (bikeSn),
+  FOREIGN KEY (pedalModelName) REFERENCES PedalModel,
+  FOREIGN KEY (bookingId) REFERENCES Booking,
+  PRIMARY KEY (bikeSn, bookingId)
+);
 `
 execute(text).then((result) => {
    if (result) {

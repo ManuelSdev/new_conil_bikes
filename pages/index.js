@@ -48,7 +48,12 @@ export default function Home() {
                ></Logo>
             </Box>
 
-            <Logo style={{ visibility: 'hidden', width: '80%' }}></Logo>
+            <Logo
+               style={{
+                  visibility: 'hidden',
+                  width: '80%',
+               }}
+            ></Logo>
             <Stack
                //     component="div"
 
