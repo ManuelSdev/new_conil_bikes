@@ -27,9 +27,9 @@ const models = [
       image: '{https://assets.specialized.com/i/specialized/92420-84_SIRRUS-X-20-ST-DSTTUR-RKTRED-BLK_HERO?bg=rgb(241,241,241)&w=1600&h=900&fmt=auto}',
    },
    {
-      model: 'Roll Hight',
+      model: 'Roll high',
       type: 'city',
-      range: 'hight',
+      range: 'high',
       brand: 'Specialized',
       description:
          'Tiene todo lo que necesitas para ayudarte a llegar a cualquier lado y además mantenerte en forma. Para ello cuenta con una geometría muy cómoda que te hará mantener la sonrisa aunque las cosas se pongan difíciles. Neumáticos de 650b con mucha tracción. Un cuadro con un diseño que te permitirá subirte y bajarte de la bicicleta en un suspiro. Y todo esto en una bicicleta con una bonita estética y que te producirá una sensación de alegría cada vez que la montes.',
@@ -38,7 +38,7 @@ const models = [
    {
       model: 'Roll Sport XT',
       type: 'city',
-      range: 'hight',
+      range: 'high',
       brand: 'Scott',
       description:
          'Tiene todo lo que necesitas para ayudarte a llegar a cualquier lado y además mantenerte en forma. Para ello cuenta con una geometría muy cómoda que te hará mantener la sonrisa aunque las cosas se pongan difíciles. Neumáticos de 650b con mucha tracción. Un cuadro con un diseño que te permitirá subirte y bajarte de la bicicleta en un suspiro. No tienes que sacrificarte, solo necesitas la Roll Spor',
@@ -47,7 +47,7 @@ const models = [
    {
       model: 'Sirrus X 2.0 V2',
       type: 'city',
-      range: 'hight',
+      range: 'high',
       brand: 'Kross',
       description:
          'La Sirrus X es tu pasaje para montar más y hacerlo por esos lugares por donde nunca imaginaste. Es una bicicleta cómoda, eficaz, de "vamos a por todo" que te inspirará a montar más de lo que nunca lo has hecho. Con neumáticos más anchos que te darán mayor confianza, una posición de conducción un poco más vertical, cambios súper intuitivos y además con la capacidad de montar portabultos y guardabarros, será tu compañera de aventuras perfecta en todo tipo de carreteras.',
@@ -83,7 +83,7 @@ const models = [
    {
       model: 'Rockhopper Expert 29',
       type: 'mountain',
-      range: 'hight',
+      range: 'high',
       brand: 'Scott',
       description:
          'Realmente nos hemos superado a nosotros mismos con esta bicicleta. Demostrando que la verdadera capacidad de domesticar senderos no tiene que tener un precio intimidante, la Rockhopper Expert es la culminación de 30 años de redefinir la relación entre calidad-precio y rendimiento. Comenzamos con un cuadro de aluminio Premium A1 minuciosamente diseñado, añadimos una geometría moderna que tenga en cuenta la eficiencia y la capacidad de confianza, y ya tendrás una base sólida de nuestra mejor Rockhopper hasta el momento. Combina eso con una lista de componentes que simplemente harán volar a esta Rockhopper: horquilla RockShox Judy SoloAir, frenos hidráulicos Shimano MT-200, ruedas preparadas para Tubeless, transmisión SRAM Eagle 1x12.',
@@ -92,7 +92,7 @@ const models = [
    {
       model: 'Rockhopper Sport 29',
       type: 'mountain',
-      range: 'hight',
+      range: 'high',
       brand: 'Kross',
       description:
          'Realmente nos hemos superado a nosotros mismos con esta bicicleta. Demostrando que la verdadera capacidad de domesticar senderos no tiene que tener un precio intimidante, la Rockhopper Expert es la culminación de 30 años de redefinir la relación entre calidad-precio y rendimiento. Comenzamos con un cuadro de aluminio Premium A1 minuciosamente diseñado, añadimos una geometría moderna que tenga en cuenta la eficiencia y la capacidad de confianza, y ya tendrás una base sólida de nuestra mejor Rockhopper hasta el momento. Combina eso con una lista de componentes que simplemente harán volar a esta Rockhopper: horquilla RockShox Judy SoloAir, frenos hidráulicos Shimano MT-200, ruedas preparadas para Tubeless, transmisión SRAM Eagle 1x12.',
@@ -101,7 +101,7 @@ const models = [
    {
       model: 'Chisel SD',
       type: 'mountain',
-      range: 'hight',
+      range: 'high',
       brand: 'Specialized',
       description:
          'La nueva Chisel ha sido especialmente diseñada para afrontar los trazados modernos de cross country y circuitos de competición con la mayor velocidad. De hecho, comparte muchas de las mismas características modernas que su hermana la Epic Hardtail, pero en un conjunto más económico , Lo que la convierte en la bicicleta rígida de aluminio más eficiente y capaz que existe.',
@@ -164,7 +164,7 @@ const models = [
    {
       model: 'SPARK RC SL EVO',
       type: 'road',
-      range: 'hight',
+      range: 'high',
       brand: 'Kross',
       description:
          'Lista para el juego con los frenos de disco hidráulicos Shimano MT200, transmisión MicroSHIFT y una horquilla SR Suntour XCM hecha para el ajetreo; la Rockhopper Sport puede lograr la victoria cualquier domingo, ¡y el resto de la semana también!.',
@@ -173,7 +173,7 @@ const models = [
    {
       model: 'Diverge E5-DR',
       type: 'road',
-      range: 'hight',
+      range: 'high',
       brand: 'Scott',
       description:
          'La Diverge E5 utiliza nuestro cuadro de aluminio E5 premium y horquilla FACT íntegramente de carbono para una conducción rápida, segura y cómoda en carretera, tierra y grava gruesa. El grupo Shimano Claris 2x8 asegura un amplio rango de marchas para cualquier terreno y las llantas de aluminio Axis Elite con neumáticos Pathfinder Sport de 38mm ofrecen una conducción eficiente sobre asfalto con la versatilidad para conducir en tierra dura.',
@@ -182,7 +182,7 @@ const models = [
    {
       model: 'Elite E5',
       type: 'road',
-      range: 'hight',
+      range: 'high',
       brand: 'Specialized',
       description:
          'La Diverge Elite E5 utiliza nuestro cuadro de aluminio E5 premium y horquilla FACT íntegramente de carbono para una conducción rápida, segura y cómoda en carretera, tierra y grava gruesa. El grupo Shimano GRX 400 inspirado en gravel de 2x10 asegura marcha suave en cualquier terreno y las llantas de aluminio Axis Elite con neumáticos Road Sport de 35 mm ofrecen una conducción eficiente sobre asfalto con la versatilidad para conducir en tierra dura.',

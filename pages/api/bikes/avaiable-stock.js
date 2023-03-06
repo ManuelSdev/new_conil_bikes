@@ -23,7 +23,7 @@ import Booking from '@/src/models/Booking'
  * - su bookingId tiene las fechas del rango
  */
 
-const query = (dateRange) => `
+const text = (dateRange) => `
 WITH AvaiableBikes AS (
   SELECT
     bikeSn,
@@ -60,16 +60,20 @@ WITH AvaiableBikes AS (
         ORDER BY
           bikeSize ASC
 )
-    SELECT DISTINCT
-      bikeSize,
-      bikeModelRange,
-      bikeModelType
+    SELECT distinct
+      bikeSize
     FROM
       AvaiableBikes
       INNER JOIN BikeModel ON AvaiableBikes.bikeModelName = BikeModel.bikeModelName
       ORDER BY
       bikeSize ASC
 `
+
+const query = (dateRange) => ({
+   text: text(dateRange),
+   rowMode: 'array',
+})
+
 export async function getSizes(filters) {
    return 'avaiableBikesSizes'
 }
@@ -83,7 +87,10 @@ export default async function handler(req, res) {
       await pool.connect()
       const { rows } = await pool.query(query(strDateRange))
       //await getSizes(date)
-      console.log('SQL---------', rows)
+      console.log(
+         'SQL---------',
+         rows.flatMap((r) => r)
+      )
       res.status(201).json(rows)
    } catch (err) {
       console.log('ERROR BIKES GET', err.message)

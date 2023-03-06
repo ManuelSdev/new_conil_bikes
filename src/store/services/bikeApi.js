@@ -18,7 +18,11 @@ const bikeApi = baseApi.injectEndpoints({
 
       getAvaiableSizes: builder.query({
          query: ({ from, to }) =>
-            `/bikes/avaiable-sizesSQL?${urlParams({ from, to })}`,
+            `/bikes/avaiable-sizes?${urlParams({ from, to })}`,
+      }),
+      getAvaiableStock: builder.query({
+         query: ({ from, to }) =>
+            `/bikes/avaiable-stock?${urlParams({ from, to })}`,
       }),
       getAvaiableTypes: builder.query({
          query: ({ from, to, size }) =>
@@ -53,6 +57,7 @@ export const useGetAvaiableBikesQueryState =
 export const {
    useGetBikesQuery,
    useGetBikesByIdQuery,
+   useGetAvaiableStockQuery,
    useGetAvaiableSizesQuery,
    useGetAvaiableTypesQuery,
    useLazyGetAvaiableTypesQuery,

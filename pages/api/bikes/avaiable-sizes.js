@@ -1,87 +1,52 @@
-import dbConnect from '@/src/lib/dbConnect'
-import Bike from '@/src/models/Bike'
-import Booking from '@/src/models/Booking'
+import pool from '@/src/lib/db'
 
-export async function getSizes(filters) {
-   await dbConnect()
-   console.log('FILTERS en sizes', filters)
-   const { from: fromDate, to: toDate } = filters
-   // console.log('toDate en ISO', ISODate(toDate))
-   //Consideramos que el día de entrega o recogida no se puede reservar
-   // por eso usa  gt/lt en lugar de gte/lte
+const text = ({ dateRange }) => `
+    SELECT distinct
+      bikeSize
+    FROM
+      Bike
+    WHERE
+      bikeSn IN (
+        SELECT
+          bikeSn avaiableBikeSn
+        FROM
+          bike
+        WHERE
+          bikeSn NOT IN (
+            SELECT
+              bikeSn reservedBikeSn
+            FROM
+              BookingOrder
+            WHERE
+              bookingId IN (
+                SELECT
+                  bookingId reservedId
+                FROM
+                  Booking
+                WHERE
+                  /*DONDE el rango dado se superpone en algún día
+                   con algunos de los rangos que contiene la columna
+                   tzdate de la tabla Booking*/
+                  '[${dateRange}]'::tstzrange && bookingDateRange)))                 
+          ORDER BY
+            bikesize ASC
+  `
 
-   const activeBookings = await Booking.find(
-      {
-         $or: [
-            { from: { $lte: toDate, $gt: fromDate } },
-            { to: { $gte: fromDate, $lt: toDate } },
-         ],
-      },
-      //Selecciona solo el campo que pongas aquí
-      {
-         bikes: 1,
-         _id: 0,
-      }
-   )
-
-   const rentedBikesIds = activeBookings.map((booking) => booking.bikes)
-   const b = () => {
-      let a = []
-      rentedBikesIds.forEach((arr) => {
-         a = [...a, ...arr]
-      })
-      return a
-   }
-   const d = b()
-   const avaiableBikesSizes = await Bike.distinct('size', { _id: { $nin: d } })
-   // console.log('activeBookings', activeBookings)
-   console.log('BIKES SIZE RES', avaiableBikesSizes)
-   // console.log('BIKES', bikes)
-   return avaiableBikesSizes
-}
+const query = (filter) => ({
+   text: text(filter),
+   rowMode: 'array',
+})
 
 export default async function handler(req, res) {
-   const date = req.query
-   console.log('DATE->', date)
+   const { from, to } = req.query
+   const dateRange = `${from},${to}`
    try {
-      const result = await getSizes(date)
-
-      res.status(201).json(result)
+      await pool.connect()
+      const { rows } = await pool.query(query({ dateRange }))
+      const avaiableSizes = rows.flatMap((r) => r)
+      res.status(201).json(avaiableSizes)
    } catch (err) {
-      console.log('ERROR BIKES GET', err.message)
+      console.log('ERROR API AVAIABLE SIZES', err.message)
       res.status(500)
    }
 }
-
-/*
-db.hotels.find({
-    $and: [
-        {
-            bookings: {
-                $elemMatch: {
-
-                    $or: [
-                        { from: { $gte: to_date } },
-                        { to: { $lte: from_date } }
-                    ]
-
-                }
-            }
-        },
-        {
-            bookings: {
-                $not: {
-                    $elemMatch: {
-
-                        $or: [
-                            { from: { $gte: from_date, $lte: to_date } },
-                            { to: { $lte: to_date, $gte: from_date } }
-                        ]
-
-                    }
-                }
-            }
-        }]
-})
-
-*/

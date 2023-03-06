@@ -22,7 +22,7 @@ CREATE TYPE modelType AS ENUM (
 CREATE TYPE modelRange AS ENUM (
   'ride',
   'mid',
-  'hight',
+  'high',
   'top'
 );
 
@@ -53,7 +53,7 @@ CREATE TABLE BikeModelRange (
 );
 
 INSERT INTO BikeModelRange
-  VALUES ('mid'), ('hight'), ('top'), ('ride');
+  VALUES ('mid'), ('high'), ('top'), ('ride');
 
 CREATE TABLE Segment (
   bikeModelType modelType NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE Segment (
 );
 
 INSERT INTO Segment
-  VALUES ('city', 'mid', 12), ('city', 'hight', 15), ('mountain', 'mid', 12), ('mountain', 'hight', 15), ('mountain', 'top', 25), ('road', 'mid', 15), ('road', 'hight', 18), ('road', 'top', 25), ('electric', 'ride', 25);
+  VALUES ('city', 'mid', 12), ('city', 'high', 15), ('mountain', 'mid', 12), ('mountain', 'high', 15), ('mountain', 'top', 25), ('road', 'mid', 15), ('road', 'high', 18), ('road', 'top', 25), ('electric', 'ride', 25);
 
 CREATE TABLE PedalModel (
   pedalModelName text NOT NULL,
@@ -88,16 +88,17 @@ CREATE TABLE CompatiblePedal (
 );
 
 INSERT INTO CompatiblePedal
-  VALUES ('mountain', 'hight', 'pedalModel-E'), ('mountain', 'hight', 'pedalModel-F'), ('mountain', 'top', 'pedalModel-E'), ('mountain', 'top', 'pedalModel-F'), ('road', 'hight', 'pedalModel-A'), ('road', 'hight', 'pedalModel-B'), ('road', 'hight', 'pedalModel-C'), ('road', 'hight', 'pedalModel-D'), ('road', 'top', 'pedalModel-A'), ('road', 'top', 'pedalModel-B'), ('road', 'top', 'pedalModel-C'), ('road', 'top', 'pedalModel-D');
+  VALUES ('mountain', 'high', 'pedalModel-E'), ('mountain', 'high', 'pedalModel-F'), ('mountain', 'top', 'pedalModel-E'), ('mountain', 'top', 'pedalModel-F'), ('road', 'high', 'pedalModel-A'), ('road', 'high', 'pedalModel-B'), ('road', 'high', 'pedalModel-C'), ('road', 'high', 'pedalModel-D'), ('road', 'top', 'pedalModel-A'), ('road', 'top', 'pedalModel-B'), ('road', 'top', 'pedalModel-C'), ('road', 'top', 'pedalModel-D');
 
 CREATE TABLE BikeSize (
   bikeSize bikeSizeType NOT NULL,
-  sizeDescription smallint ARRAY,
+  minHeight smallint NOT NULL CHECK (minHeight > 0),
+  maxHeight smallint NOT NULL CHECK (maxHeight > 0),
   PRIMARY KEY (bikeSize)
 );
 
 INSERT INTO BikeSize
-  VALUES ('s', '{150, 160}'), ('m', '{161, 170}'), ('l', '{171, 180}'), ('xl', '{181, 190}'), ('xxl', '{191, 200}');
+  VALUES ('s', 150, 160), ('m', 161, 170), ('l', 171, 180), ('xl', 181, 190), ('xxl', 191, 200);
 
 CREATE TABLE BikeModel (
   bikeModelName text NOT NULL,
@@ -199,14 +200,112 @@ WITH AvaiableBikes AS (
                  tzdate de la tabla Booking*/
                 '[${dateRange}]'::tstzrange && bookingDateRange)))
         ORDER BY
-          size ASC
+          bikesize ASC);
+
+SELECT DISTINCT
+  bikeSize,
+  bikeModelRange,
+  bikeModelType
+FROM
+  AvaiableBikes
+  INNER JOIN BikeModel ON AvaiableBikes.bikeModelName = BikeModel.bikeModelName
+ORDER BY
+  bikeSize ASC;
+
+
+/***********/
+WITH AvaiableBikes AS (
+  SELECT DISTINCT
+    bikeSize,
+    bikeModelName
+  FROM
+    Bike
+  WHERE
+    bikeSn IN (
+      SELECT
+        bikeSn avaiableBikeSn
+      FROM
+        bike
+      WHERE
+        bikeSn NOT IN (
+          SELECT
+            bikeSn reservedBikeSn
+          FROM
+            BookingOrder
+          WHERE
+            bookingId IN (
+              SELECT
+                /*Devuelve tabla con una columna bookingId con
+                 alias reservedId que contiene con los ids que
+                 cumplen el WHERE*/
+                bookingId reservedId
+              FROM
+                Booking
+              WHERE
+                /*DONDE el rango dado se superpone en algún día
+                 con algunos de los rangos que contiene la columna
+                 tzdate de la tabla Booking*/
+                '[${dateRange}]'::tstzrange && bookingDateRange)))
+          AND bikeModelType = '${size}'
+        ORDER BY
+          bikesize ASC;
+
+)
+SELECT DISTINCT
+  bikeSize,
+  bikeModelRange,
+  bikeModelType
+FROM
+  AvaiableBikes
+  INNER JOIN BikeModel ON AvaiableBikes.bikeModelName = BikeModel.bikeModelName
+ORDER BY
+  bikeSize ASC;
+
+
+/**/
+SELECT
+  bikesize,
+  heightrange
+FROM
+  bikesize;
+
+
+/**/
+WITH AvaiableBikes AS (
+  SELECT DISTINCT
+    bikeSize
+  FROM
+    Bike
+  WHERE
+    bikeSn IN (
+      SELECT
+        bikeSn avaiableBikeSn
+      FROM
+        bike
+      WHERE
+        bikeSn NOT IN (
+          SELECT
+            bikeSn reservedBikeSn
+          FROM
+            BookingOrder
+          WHERE
+            bookingId IN (
+              SELECT
+                bookingId reservedId
+              FROM
+                Booking
+              WHERE
+                /*DONDE el rango dado se superpone en algún día
+                 con algunos de los rangos que contiene la columna
+                 tzdate de la tabla Booking*/
+                '[${dateRange}]'::tstzrange && bookingDateRange)))
+        ORDER BY
+          bikesize ASC
 )
     SELECT DISTINCT
-      bikeSize,
-      bikeModelRange,
-      bikeModelType
+      AvaiableBikes.bikeSize,
+      minHeight,
+      maxHeight
     FROM
       AvaiableBikes
-      INNER JOIN BikeModel ON AvaiableBikes.bikeModelName = BikeModel.bikeModelName
-    ORDER BY
-      bikeSize ASC
+      INNER JOIN BikeSize ON AvaiableBikes.bikeSize = BikeSize.bikeSize
