@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="jPepSmBY_UWn0gD1jqHt" name="Página-1">
-        <mxGraphModel dx="677" dy="836" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="none" math="0" shadow="0">
+        <mxGraphModel dx="642" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="none" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -235,7 +235,7 @@
                 <mxCell id="604" value="duración" style="ellipse;whiteSpace=wrap;html=1;align=center;dashed=1;" parent="1" vertex="1">
                     <mxGeometry x="1050" y="46.08" width="100" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="606" value="modelo" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" parent="1" vertex="1">
+                <mxCell id="606" value="serial" style="ellipse;whiteSpace=wrap;html=1;align=center;fontStyle=4;" parent="1" vertex="1">
                     <mxGeometry x="60" y="426.08" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="607" value="código" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
@@ -325,6 +325,9 @@
                 </mxCell>
                 <mxCell id="652" value="N" style="resizable=0;html=1;align=right;verticalAlign=bottom;" parent="651" connectable="0" vertex="1">
                     <mxGeometry x="1" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="653" value="nombre" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="60" y="346.08" width="100" height="40" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

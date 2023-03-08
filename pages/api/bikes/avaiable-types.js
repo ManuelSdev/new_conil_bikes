@@ -4,7 +4,7 @@ const text = ({ dateRange, size }) => `
 WITH AvaiableBikes AS (
   SELECT distinct
     bikeSize,
-    bikeModelName
+    modelId
   FROM
     Bike
   WHERE
@@ -38,7 +38,7 @@ WITH AvaiableBikes AS (
       bikeModelType
     FROM
       AvaiableBikes
-      INNER JOIN BikeModel ON AvaiableBikes.bikeModelName = BikeModel.bikeModelName
+      INNER JOIN BikeModel USING (modelId)
 `
 const query = (filter) => ({
    text: text(filter),

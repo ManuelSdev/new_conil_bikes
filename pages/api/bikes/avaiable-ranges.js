@@ -5,7 +5,7 @@ WITH AvaiableBikes AS (
   SELECT distinct
   bikesn,
     bikeSize,
-    bikeModelName
+    modelId
   FROM
     Bike
   WHERE
@@ -39,7 +39,7 @@ WITH AvaiableBikes AS (
       bikeModelRange
     FROM
       AvaiableBikes
-      INNER JOIN BikeModel USING (bikeModelName) 
+      INNER JOIN BikeModel USING (modelId) 
       WHERE bikemodeltype='${type}'
 `
 const query = (filter) => ({

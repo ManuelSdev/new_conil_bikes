@@ -10,7 +10,7 @@ import { Box } from '@mui/system'
 //import { dale } from '@/src/lib/initDatabase'
 
 const a = <Logo fill={'red'} />
-export default function Home() {
+const Home = () => {
    //  const p = './booking.jpg'
    // console.log(logo)
 
@@ -116,6 +116,7 @@ export default function Home() {
    )
 }
 
+export default Home
 /*
   <HomeSectionCard
                src={Photo.src}

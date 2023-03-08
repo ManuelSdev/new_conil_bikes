@@ -9,57 +9,57 @@ import BikesGrid from './BikesGrid'
 import { getDate, getRange, getSize, getType } from '@/src/store/selectors'
 
 const BikesSelect = () => {
-    const isoDate = useSelector(getDate)
-    const selectedSize = useSelector(getSize)
-    const selectedType = useSelector(getType)
-    const selectedRange = useSelector(getRange)
+   const isoDate = useSelector(getDate)
+   const selectedSize = useSelector(getSize)
+   const selectedType = useSelector(getType)
+   const selectedRange = useSelector(getRange)
 
-    const args = {
-        ...isoDate,
-        size: selectedSize,
-        type: selectedType,
-        range: selectedRange,
-    }
+   const args = {
+      // ...isoDate,
+      //size: selectedSize,
+      type: selectedType,
+      range: selectedRange,
+   }
 
-    const [bikes, setBikes] = useState([])
+   const [bikes, setBikes] = useState([])
 
-    const [
-        trigger,
-        { data: avaiableBikes, isFetching, isSuccess },
-        lastPromiseInfo,
-    ] = useLazyGetAvaiableBikesQuery((a) => console.log('0000000000000000', a))
+   const [
+      trigger,
+      { data: avaiableBikes, isFetching, isSuccess },
+      lastPromiseInfo,
+   ] = useLazyGetAvaiableBikesQuery((a) => console.log('0000000000000000', a))
 
-    const handleTrigger = () => trigger(args)
+   const handleTrigger = () => trigger(args)
 
-    useEffect(() => {
-        !!!selectedRange && setBikes([])
-    }, [selectedRange])
+   useEffect(() => {
+      !!!selectedRange && setBikes([])
+   }, [selectedRange])
 
-    useEffect(() => {
-        isSuccess && setBikes([...avaiableBikes])
-    }, [avaiableBikes])
+   useEffect(() => {
+      isSuccess && setBikes([...avaiableBikes])
+   }, [avaiableBikes])
 
-    return (
-        <Container>
-            <Stack alignItems="center" spacing={2}>
-                {selectedRange && (
-                    <Button
-                        //disabled={!!!selectedRange}
-                        onClick={handleTrigger}
-                    >
-                        Mostrar bicicletas
-                    </Button>
-                )}
-                {isFetching ? (
-                    <Box sx={{ display: 'flex' }}>
-                        <CircularProgress />
-                    </Box>
-                ) : (
-                    bikes && <BikesGrid bikes={bikes} />
-                )}
-            </Stack>
-        </Container>
-    )
+   return (
+      <Container>
+         <Stack alignItems="center" spacing={2}>
+            {selectedRange && (
+               <Button
+                  //disabled={!!!selectedRange}
+                  onClick={handleTrigger}
+               >
+                  Mostrar bicicletas
+               </Button>
+            )}
+            {isFetching ? (
+               <Box sx={{ display: 'flex' }}>
+                  <CircularProgress />
+               </Box>
+            ) : (
+               bikes && <BikesGrid bikes={bikes} />
+            )}
+         </Stack>
+      </Container>
+   )
 }
 
 export default BikesSelect

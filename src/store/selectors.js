@@ -1,5 +1,8 @@
 import { format, addYears, differenceInDays } from 'date-fns'
 
+//Database constants
+export const getDatabaseInfo = (state) => state.databaseInfo
+
 // drawerSlice
 export const getDrawerState = (state) => state.drawer.isOpen
 
@@ -22,37 +25,37 @@ export const getHomeDelivery = (state) => state.bookingForm.homeDelivery
 export const getHomePickup = (state) => state.bookingForm.homePickup
 
 export const getContactInfo = (state) => [
-    state.bookingForm.name,
-    state.bookingForm.mail,
-    state.bookingForm.phone,
-    state.bookingForm.address,
-    //state.bookingForm.homeDelivery,
-    // state.bookingForm.homePickup,
+   state.bookingForm.name,
+   state.bookingForm.mail,
+   state.bookingForm.phone,
+   state.bookingForm.address,
+   //state.bookingForm.homeDelivery,
+   // state.bookingForm.homePickup,
 ]
 
 export const getBookingData = (state) => ({
-    from: state.bookingForm.date.from,
-    to: state.bookingForm.date.to,
-    bikes: state.bookingForm.bikes.map((bike) => bike._id),
-    name: state.bookingForm.name,
-    address: state.bookingForm.address,
-    phone: state.bookingForm.phone,
-    price: state.bookingForm.price,
-    mail: state.bookingForm.mail,
-    homeDelivery: state.bookingForm.homeDelivery,
-    homePickup: state.bookingForm.homePickup,
+   from: state.bookingForm.date.from,
+   to: state.bookingForm.date.to,
+   bikes: state.bookingForm.bikes.map((bike) => bike._id),
+   name: state.bookingForm.name,
+   address: state.bookingForm.address,
+   phone: state.bookingForm.phone,
+   price: state.bookingForm.price,
+   mail: state.bookingForm.mail,
+   homeDelivery: state.bookingForm.homeDelivery,
+   homePickup: state.bookingForm.homePickup,
 })
 export const getBikes = (state) => state.bookingForm.bikes
 export const getNumberOfBikes = (state) => state.bookingForm.bikes.length
 
 export const getCalendarSelectedDay = (state) =>
-    state.bookingCalendar.selectedDay
+   state.bookingCalendar.selectedDay
 
 export const getCalendarBookingsOnDate = (state) => {
-    return {
-        bookingsStarting: state.bookingCalendar.bookingsStarting,
-        bookingsEnding: state.bookingCalendar.bookingsEnding,
-    }
+   return {
+      bookingsStarting: state.bookingCalendar.bookingsStarting,
+      bookingsEnding: state.bookingCalendar.bookingsEnding,
+   }
 }
 
 export const getCurrentBooking = (state) => state.currentBooking
