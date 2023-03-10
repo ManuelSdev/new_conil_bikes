@@ -57,7 +57,7 @@ export default function SizeSelect() {
       // refetchOnMountOrArgChange: true
    })
 
-   console.log('+++++++++++++', avaiableSizes)
+   //console.log('+++++++++++++', avaiableSizes)
    const dateIsCorrect = () =>
       !!isoDate.from &&
       !!isoDate.to &&

@@ -36,7 +36,10 @@ export const getContactInfo = (state) => [
 export const getBookingData = (state) => ({
    from: state.bookingForm.date.from,
    to: state.bookingForm.date.to,
-   bikes: state.bookingForm.bikes.map((bike) => bike._id),
+   bikes: state.bookingForm.bikes.map((bike) => ({
+      id: bike.id,
+      size: bike.size,
+   })),
    name: state.bookingForm.name,
    address: state.bookingForm.address,
    phone: state.bookingForm.phone,
@@ -59,3 +62,28 @@ export const getCalendarBookingsOnDate = (state) => {
 }
 
 export const getCurrentBooking = (state) => state.currentBooking
+
+export const getBookingDayPrice = (state) => {
+   const { segmentList } = getDatabaseInfo(state)
+   const dayPrice = state.bookingForm.bikes.reduce((acc, bike) => {
+      const { type, range } = bike
+      const [{ price }] = segmentList.filter(
+         (segment) => segment.type === type && segment.range === range
+      )
+      return acc + price
+   }, 0)
+   return dayPrice
+}
+
+export const getBookingDuration = (state) => {
+   const isoDate = getDate(state)
+   const date = {
+      from: isoDate.from ? new Date(isoDate.from) : null,
+      to: isoDate.to ? new Date(isoDate.to) : null,
+   }
+   const duration = differenceInDays(date.to, date.from)
+   return duration
+}
+
+export const getBookingPrice = (state) =>
+   getBookingDayPrice(state) * getBookingDuration(state)

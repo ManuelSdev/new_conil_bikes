@@ -28,7 +28,7 @@ const BikesSelect = () => {
       { data: avaiableBikes, isFetching, isSuccess },
       lastPromiseInfo,
    ] = useLazyGetAvaiableBikesQuery((a) => console.log('0000000000000000', a))
-
+   console.log('bikes', avaiableBikes)
    const handleTrigger = () => trigger(args)
 
    useEffect(() => {

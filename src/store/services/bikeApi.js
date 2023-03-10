@@ -38,11 +38,9 @@ const bikeApi = baseApi.injectEndpoints({
             })}`,
       }),
       getAvaiableBikes: builder.query({
-         query: ({ from, to, size, type, range }) =>
+         query: ({ type, range }) =>
+            console.log('========> RTK query getAvaiableBikes') ||
             `/bikes/avaiable?${urlParams({
-               from,
-               to,
-               size,
                type,
                range,
             })}`,

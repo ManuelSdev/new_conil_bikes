@@ -6,7 +6,7 @@ const models = [
       brand: 'Specialized',
       description:
          'Tiene todo lo que necesitas para ayudarte a llegar a cualquier lado y además mantenerte en forma. Para ello cuenta con una geometría muy cómoda que te hará mantener la sonrisa aunque las cosas se pongan difíciles. Neumáticos de 650b con mucha tracción. Un cuadro con un diseño que te permitirá subirte y bajarte de la bicicleta en un suspiro. Y todo esto en una bicicleta con una bonita estética y que te producirá una sensación de alegría cada vez que la montes.',
-      image: 'https://assets.specialized.com/i/specialized/96120-72_ROLL-mid-ENTRY-BLK-CHAR-BLK_HERO?bg=rgb(241,241,241)&w=1600&h=900&fmt=auto',
+      image: 'https://assets.specialized.com/i/specialized/93921-52_VADO-SL-40-ST-EQ-WHTSGE-BLKREFL_HERO?bg=rgb(241,241,241)&w=1600&h=900&fmt=auto',
    },
    {
       model: 'Roll Sport',
@@ -15,7 +15,7 @@ const models = [
       brand: 'Scott',
       description:
          'Tiene todo lo que necesitas para ayudarte a llegar a cualquier lado y además mantenerte en forma. Para ello cuenta con una geometría muy cómoda que te hará mantener la sonrisa aunque las cosas se pongan difíciles. Neumáticos de 650b con mucha tracción. Un cuadro con un diseño que te permitirá subirte y bajarte de la bicicleta en un suspiro. No tienes que sacrificarte, solo necesitas la Roll Spor',
-      image: 'https://assets.specialized.com/i/specialized/96121-66_ROLL-SPORT-mid-ENTRY-BLSH-SMK-BLK_HERO?bg=rgb(241,241,241)&w=1600&h=900&fmt=auto',
+      image: 'https://assets.specialized.com/i/specialized/95322-70_VADO-30-IGH-REDTNT-SILREFL_HERO?bg=rgb(241,241,241)&w=1600&h=900&fmt=auto',
    },
    {
       model: 'Sirrus X 2.0 Step',
@@ -33,7 +33,7 @@ const models = [
       brand: 'Specialized',
       description:
          'Tiene todo lo que necesitas para ayudarte a llegar a cualquier lado y además mantenerte en forma. Para ello cuenta con una geometría muy cómoda que te hará mantener la sonrisa aunque las cosas se pongan difíciles. Neumáticos de 650b con mucha tracción. Un cuadro con un diseño que te permitirá subirte y bajarte de la bicicleta en un suspiro. Y todo esto en una bicicleta con una bonita estética y que te producirá una sensación de alegría cada vez que la montes.',
-      image: 'https://assets.specialized.com/i/specialized/96120-72_ROLL-mid-ENTRY-BLK-CHAR-BLK_HERO?bg=rgb(241,241,241)&w=1600&h=900&fmt=auto',
+      image: 'https://assets.specialized.com/i/specialized/95022-70_VADO-30-CSTBLK-SILREFL_HERO?bg=rgb(241,241,241)&w=1600&h=900&fmt=auto',
    },
    {
       model: 'Roll Sport XT',
@@ -42,7 +42,7 @@ const models = [
       brand: 'Scott',
       description:
          'Tiene todo lo que necesitas para ayudarte a llegar a cualquier lado y además mantenerte en forma. Para ello cuenta con una geometría muy cómoda que te hará mantener la sonrisa aunque las cosas se pongan difíciles. Neumáticos de 650b con mucha tracción. Un cuadro con un diseño que te permitirá subirte y bajarte de la bicicleta en un suspiro. No tienes que sacrificarte, solo necesitas la Roll Spor',
-      image: 'https://assets.specialized.com/i/specialized/96121-66_ROLL-SPORT-mid-ENTRY-BLSH-SMK-BLK_HERO?bg=rgb(241,241,241)&w=1600&h=900&fmt=auto',
+      image: 'https://assets.specialized.com/i/specialized/90422-52_COMO-40-REDTNT-SILREFL_HERO?bg=rgb(241,241,241)&w=1600&h=900&fmt=auto',
    },
    {
       model: 'Sirrus X 2.0 V2',

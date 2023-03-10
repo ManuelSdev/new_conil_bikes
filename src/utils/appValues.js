@@ -50,9 +50,10 @@ export const BIKE_TYPES_MAP = {
 }
 
 export const BIKE_RANGES_MAP = {
-   premium: 'premium',
-   highEnd: 'alta',
-   midRange: 'media',
+   top: 'premium',
+   high: 'alta',
+   mid: 'media',
+   ride: 'paseo-trekking',
 }
 
 export const BOOKING_STATES_MAP = {

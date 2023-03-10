@@ -29,7 +29,7 @@ const RangeSelect = () => {
    const selectedRange = useSelector(getRange)
    const { segmentList } = useSelector(getDatabaseInfo)
    //   console.log(segmentList)
-   const segmentPrice = (range) =>
+   const segmentPrice_ = (range) =>
       segmentList.reduce((acc, segment) => {
          console.log('--------- ', acc)
          if (
@@ -44,18 +44,20 @@ const RangeSelect = () => {
             return acc + segment.segmentprice
          } else return acc
       }, 0)
+   const segmentPrice = (segmentList, range, type) =>
+      segmentList.filter(
+         (segment) => segment.type === type && segment.range === range
+      )
 
-   const calcPrice = (range) => {
-      let result
-      segmentList.map((segment, index) => {
-         if (
-            selectedType == segment.bikemodeltype &&
-            range == segment.bikemodelrange
-         )
-            result = segment.segmentprice
+   const rangeInfo = (range) => {
+      let price
+      segmentList.forEach((segment) => {
+         if (selectedType == segment.type && range == segment.range)
+            price = segment.price
       })
-      return result ? result : 'Gama no disponible'
+      return price ? `${price} €/día` : 'Gama no disponible'
    }
+
    const params = (b) => new URLSearchParams(b)
    const args = {
       ...isoDate,
@@ -123,9 +125,7 @@ const RangeSelect = () => {
                      key={engRange}
                      value={engRange}
                   >
-                     {`${capitalizeFirst(spaRange)} - ${calcPrice(
-                        engRange
-                     )} €/día`}
+                     {`${capitalizeFirst(spaRange)} - ${rangeInfo(engRange)}`}
                   </MenuItem>
                )
             })}

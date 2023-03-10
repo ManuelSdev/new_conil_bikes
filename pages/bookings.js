@@ -33,9 +33,9 @@ export const getStaticProps = storeWrapper.getStaticProps(
         `
       const segment = `
       SELECT
-         bikeModelType,
-         bikeModelRange,
-         segmentPrice
+         bikeModelType as type,
+         bikeModelRange as range,
+         segmentPrice as price
       FROM
         Segment  
         `

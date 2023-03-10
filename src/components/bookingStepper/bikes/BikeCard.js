@@ -6,21 +6,20 @@ import CardMedia from '@mui/material/CardMedia'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addBike, setFormIsActive } from '@/src/store/bookingFormSlice'
+import { getRange, getSize, getType } from '@/src/store/selectors'
 
 export default function BikeCard({ bike }) {
-   const {
-      bikemodelbrand: brand,
-      bikemodelname: model,
-      bikemodeldescription: description,
-      bikemodelimages: images,
-   } = bike
+   //Los modelos están disponibles en la tallla seleccionada
+   //Añado talla para que esta conste en el formulario final que se envía al api
+   const size = useSelector(getSize)
+   const { brand, model, desc, images } = bike
 
    const dispatch = useDispatch()
 
    const handleClick = () => {
-      dispatch(addBike({ brand, model, images }))
+      dispatch(addBike({ size, ...bike }))
       dispatch(setFormIsActive(false))
       // dispatch(setSize(''))
    }
@@ -28,7 +27,7 @@ export default function BikeCard({ bike }) {
    const a = () => {
       if (true) return false
    }
-   console.log(images)
+   // console.log(images)
    //TODO: mete en alt la descripción de la bici
    return (
       <Card
@@ -46,7 +45,7 @@ export default function BikeCard({ bike }) {
             </Typography>
 
             <Typography variant="body2" color="text.secondary">
-               {description}
+               {desc}
             </Typography>
          </CardContent>
          <CardActions sx={{ justifyContent: 'center' }}>
@@ -63,7 +62,7 @@ BikeCard.propTypes = {
       avaiable: T.bool,
       bookings: T.array,
       brand: T.string,
-      description: T.string,
+      desc: T.string,
       images: T.array,
       model: T.string,
    }),

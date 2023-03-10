@@ -53,7 +53,7 @@ export default async function handler(req, res) {
       await pool.connect()
       const { rows } = await pool.query(query({ dateRange, size, type }))
       const avaiableRanges = rows.flatMap((r) => r)
-      console.log('++++++++', avaiableRanges)
+      //  console.log('++++++++', avaiableRanges)
       res.status(201).json(avaiableRanges)
    } catch (err) {
       console.log('ERROR API AVAIABLE RANGES', err.message)
