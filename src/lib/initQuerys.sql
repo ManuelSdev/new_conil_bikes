@@ -417,3 +417,74 @@ INSERT INTO bokking
   INSERT INTO ORDERTEST
     VALUES ();
 
+
+/**API bikes/avaiable**/
+WITH AvaiableBikes AS (
+  SELECT DISTINCT
+    bikesn,
+    bikeSize,
+    modelId
+  FROM
+    Bike
+  WHERE
+    bikeSn IN (
+      SELECT
+        bikeSn avaiableBikeSn
+      FROM
+        bike
+      WHERE
+        bikeSn NOT IN (
+          SELECT
+            bikeSn reservedBikeSn
+          FROM
+            BookingOrder
+          WHERE
+            bookingId IN (
+              SELECT
+                bookingId reservedId
+              FROM
+                Booking
+              WHERE
+                '[${dateRange}]'::tstzrange && bookingDateRange)))
+          AND bikesize = '${size}'
+        ORDER BY
+          bikesize ASC
+),
+SelectedBikeModels AS (
+  SELECT
+    modelId,
+    bikemodelname AS model,
+    bikemodeltype AS type,
+    bikemodelrange AS RANGE,
+    bikemodelbrand AS brand,
+    bikemodeldescription AS des,
+    bikemodelimages AS images
+  FROM
+    BikeModel
+  WHERE
+    bikemodelrange = '${range}'
+    AND bikemodeltype = '${type}'
+)
+SELECT
+  count(bikesn)
+count,
+modelid AS id,
+bikesize,
+model,
+type,
+RANGE,
+brand,
+des,
+images
+FROM
+  AvaiableBikes
+  INNER JOIN SelectedBikeModels USING (modelid)
+GROUP BY
+  id,
+  bikesize,
+  model,
+  type,
+  RANGE,
+  brand,
+  des,
+  images

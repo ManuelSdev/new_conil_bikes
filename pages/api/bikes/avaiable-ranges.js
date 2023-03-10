@@ -27,9 +27,6 @@ WITH AvaiableBikes AS (
               FROM
                 Booking
               WHERE
-                /*DONDE el rango dado se superpone en algún día
-                 con algunos de los rangos que contiene la columna
-                 tzdate de la tabla Booking*/
                 '[${dateRange}]'::tstzrange && bookingDateRange)))
                 AND bikesize='${size}'
         ORDER BY

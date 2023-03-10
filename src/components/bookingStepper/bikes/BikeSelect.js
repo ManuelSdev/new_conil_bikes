@@ -15,8 +15,8 @@ const BikesSelect = () => {
    const selectedRange = useSelector(getRange)
 
    const args = {
-      // ...isoDate,
-      //size: selectedSize,
+      ...isoDate,
+      size: selectedSize,
       type: selectedType,
       range: selectedRange,
    }

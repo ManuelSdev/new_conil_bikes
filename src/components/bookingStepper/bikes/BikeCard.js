@@ -9,12 +9,13 @@ import Typography from '@mui/material/Typography'
 import { useDispatch, useSelector } from 'react-redux'
 import { addBike, setFormIsActive } from '@/src/store/bookingFormSlice'
 import { getRange, getSize, getType } from '@/src/store/selectors'
+import Image from 'next/image'
 
 export default function BikeCard({ bike }) {
    //Los modelos están disponibles en la tallla seleccionada
    //Añado talla para que esta conste en el formulario final que se envía al api
    const size = useSelector(getSize)
-   const { brand, model, desc, images } = bike
+   const { brand, model, description, images } = bike
 
    const dispatch = useDispatch()
 
@@ -39,13 +40,26 @@ export default function BikeCard({ bike }) {
             //height="140"
             image={images[0]}
          />
+         {/**
+           <Image
+            src={images[0]}
+            alt="Vercel Logo"
+            //className={styles.vercelLogo}
+            width="800"
+            height="400"
+            //TODO: mira bien esto de priority
+            //priority
+            style={{ width: '100%', height: '50%' }}
+         />
+          */}
+
          <CardContent>
             <Typography gutterBottom variant="h5" component="div">
                {`${brand} ${model}`}
             </Typography>
 
             <Typography variant="body2" color="text.secondary">
-               {desc}
+               {description}
             </Typography>
          </CardContent>
          <CardActions sx={{ justifyContent: 'center' }}>
@@ -62,7 +76,7 @@ BikeCard.propTypes = {
       avaiable: T.bool,
       bookings: T.array,
       brand: T.string,
-      desc: T.string,
+      description: T.string,
       images: T.array,
       model: T.string,
    }),
