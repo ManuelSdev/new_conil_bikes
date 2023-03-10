@@ -1,6 +1,6 @@
-import pool from '@/src/lib/db'
+import { query } from '@/src/lib/db'
 
-const text = ({ dateRange }) => `
+const setText = (dateRange) => `
     SELECT distinct
       bikeSize
     FROM
@@ -24,25 +24,18 @@ const text = ({ dateRange }) => `
                 FROM
                   Booking
                 WHERE
-                  /*DONDE el rango dado se superpone en algún día
-                   con algunos de los rangos que contiene la columna
-                   tzdate de la tabla Booking*/
                   '[${dateRange}]'::tstzrange && bookingDateRange)))                 
           ORDER BY
             bikesize ASC
   `
 
-const query = (filter) => ({
-   text: text(filter),
-   rowMode: 'array',
-})
-
 export default async function handler(req, res) {
    const { from, to } = req.query
    const dateRange = `${from},${to}`
+   const text = setText(dateRange)
    try {
-      await pool.connect()
-      const { rows } = await pool.query(query({ dateRange }))
+      const { rows } = await query(text, 'array')
+      console.log('test----------------', rows)
       const avaiableSizes = rows.flatMap((r) => r)
       res.status(201).json(avaiableSizes)
    } catch (err) {

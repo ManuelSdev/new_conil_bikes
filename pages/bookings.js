@@ -1,7 +1,8 @@
 import BookingStepper from '@/src/components/bookingStepper/BookingStepper'
 import { storeWrapper } from '@/src/store'
 import { setDatabaseInfo } from '@/src/store/databaseInfoSlice'
-import pool from '@/src/lib/db'
+import { query } from '@/src/lib/db'
+
 const BookingsPage = () => {
    // console.log('***********', bikeSizeList)
    return <BookingStepper />
@@ -39,28 +40,18 @@ export const getStaticProps = storeWrapper.getStaticProps(
       FROM
         Segment  
         `
-      const query = (text) => ({
-         text: size,
-         rowMode: 'array',
-      })
 
-      const queryFn = async (text) =>
-         await pool.query({
-            text: text,
-            rowMode: 'array',
-         })
       try {
-         await pool.connect()
          const [
             { rows: bikeSizeList },
             { rows: typeList },
             { rows: rangeList },
             { rows: segmentList },
          ] = await Promise.all([
-            queryFn(size),
-            queryFn(type),
-            queryFn(range),
-            await pool.query(segment),
+            query(size, 'array'),
+            query(type, 'array'),
+            query(range, 'array'),
+            query(segment),
          ])
          //  console.log('1----', bikeSizeList)
          //   console.log('2----', typeList)

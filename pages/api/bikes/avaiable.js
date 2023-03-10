@@ -33,7 +33,7 @@ export default async function handler(req, res) {
       console.log('+++++++++   2')
       const { rows: avaiableBikes } = await pool.query(query({ range, type }))
       console.log('+++++++++   3')
-      console.log('++++++++++++', avaiableBikes)
+      console.log('++++++++++++', !!avaiableBikes)
       // const avaiableBikes = rows.flatMap((r) => r)
       // console.log('++++++++', avaiableBikes)
       res.status(201).json(avaiableBikes)

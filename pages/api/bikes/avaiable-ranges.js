@@ -1,6 +1,6 @@
-import pool from '@/src/lib/db'
+import { query } from '@/src/lib/db'
 
-const text = ({ dateRange, size, type }) => `
+const setText = (dateRange, size, type) => `
 WITH AvaiableBikes AS (
   SELECT distinct
   bikesn,
@@ -42,16 +42,13 @@ WITH AvaiableBikes AS (
       INNER JOIN BikeModel USING (modelId) 
       WHERE bikemodeltype='${type}'
 `
-const query = (filter) => ({
-   text: text(filter),
-   rowMode: 'array',
-})
+
 export default async function handler(req, res) {
    const { from, to, size, type } = req.query
    const dateRange = `${from},${to}`
+   const text = setText(dateRange, size, type)
    try {
-      await pool.connect()
-      const { rows } = await pool.query(query({ dateRange, size, type }))
+      const { rows } = await query(text, 'array')
       const avaiableRanges = rows.flatMap((r) => r)
       //  console.log('++++++++', avaiableRanges)
       res.status(201).json(avaiableRanges)
