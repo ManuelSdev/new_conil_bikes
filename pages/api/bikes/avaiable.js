@@ -48,7 +48,7 @@ SelectedBikeModels AS (
     AND bikemodeltype = '${type}'
 )
 SELECT
-  count(bikesn) count,
+  count(bikesn)::int count,
 modelid AS id,
 size,
 model,
@@ -78,7 +78,7 @@ export default async function handler(req, res) {
    const text = setText(dateRange, size, range, type)
    try {
       const { rows } = await query(text)
-
+      console.log('------------', rows)
       res.status(201).json(rows)
    } catch (err) {
       console.log('ERROR API AVAIABLE BIKES', err.message)

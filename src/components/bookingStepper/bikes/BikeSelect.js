@@ -15,35 +15,8 @@ import {
 } from '@/src/store/selectors'
 import { deleteBike } from '@/src/store/bookingFormSlice'
 
-const getCheckedNewBikes = (newBikes, currentBikes) => {
-   //Si aun no hay bicicletas seleccionadas en el store, no se aplican cambios
-
-   if (currentBikes.length === 0) return newBikes
-   const checkedNewBikes = newBikes.map((nBike) => {
-      const { id, size, count } = nBike
-      let checkedBike = {}
-      //Comprueba si el id+size ya se encuentra stored y procede
-      currentBikes.forEach((cBike) => {
-         if (id === cBike.id && size === cBike.size) {
-            if (count === cBike.quantity)
-               checkedBike = { ...nBike, avaiable: false }
-            if (count > cBike.quantity)
-               checkedBike = { ...nBike, avaiable: true }
-            if (count < cBike.quantity) {
-               dispatch(deleteBike({ id, size, count }))
-               checkedBike = { ...nBike, avaiable: false }
-            }
-         } else {
-            //Si el id+size no está stored, asigna la propiedad avaiable:true directamente
-            checkedBike = { ...nBike, avaiable: true }
-         }
-      })
-      return checkedBike
-   })
-   return checkedNewBikes
-}
-
 const BikesSelect = () => {
+   const dispatch = useDispatch()
    const isoDate = useSelector(getDate)
    const selectedSize = useSelector(getSize)
    const selectedType = useSelector(getType)
@@ -65,6 +38,7 @@ const BikesSelect = () => {
    ] = useLazyGetAvaiableBikesQuery()
 
    isSuccess && console.log('bikes', avaiableBikes)
+
    const handleTrigger = () => trigger(args)
 
    useEffect(() => {
@@ -75,6 +49,43 @@ const BikesSelect = () => {
       isSuccess && setBikes(getCheckedNewBikes(avaiableBikes, currentBikes))
    }, [avaiableBikes])
 
+   const getCheckedNewBikes = (newBikes, currentBikes) => {
+      //Si aun no hay bicicletas seleccionadas en el store, no se aplican cambios
+
+      if (currentBikes.length === 0) return newBikes
+      const checkedNewBikes = newBikes.map((nBike) => {
+         const { id, size, count } = nBike
+         let checkedBike = {}
+         //Comprueba si el id+size ya se encuentra stored y procede
+         currentBikes.forEach((cBike) => {
+            if (id === cBike.id && size === cBike.size) {
+               console.log('****', nBike)
+               console.log('++++', cBike)
+               if (count === cBike.quantity) {
+                  console.log('primero')
+                  checkedBike = { ...nBike, avaiable: false }
+               }
+               if (count > cBike.quantity) {
+                  console.log('segundo')
+                  checkedBike = { ...nBike, avaiable: true }
+               }
+               if (count < cBike.quantity) {
+                  console.log('tercero')
+                  dispatch(deleteBike({ id, size, count }))
+                  checkedBike = { ...nBike, avaiable: false }
+               }
+            } else {
+               {
+                  console.log('nada')
+                  //Si el id+size no está stored, asigna la propiedad avaiable:true directamente
+                  checkedBike = { ...nBike, avaiable: true }
+               }
+            }
+         })
+         return checkedBike
+      })
+      return checkedNewBikes
+   }
    return (
       <Container>
          <Stack alignItems="center" spacing={2}>
