@@ -51,6 +51,23 @@ export const getBookingData = (state) => ({
    homePickup: state.bookingForm.homePickup,
 })
 export const getBikes = (state) => state.bookingForm.bikes
+
+export const getBikesByUnits = (state) => {
+   const bikes = state.bookingForm.bikes
+   const items = bikes.map((bike) => {
+      //Retorna un  <SelectedBikesListItem> por cada unidad stored del mismo id+size
+      const multipleItem = []
+      let n = 1
+      const { quantity } = bike
+      while (n <= quantity) {
+         multipleItem.push(bike)
+         n++
+      }
+      return multipleItem
+   })
+
+   return items.flat()
+}
 export const getNumberOfBikes = (state) => state.bookingForm.bikes.length
 
 export const getCalendarSelectedDay = (state) =>

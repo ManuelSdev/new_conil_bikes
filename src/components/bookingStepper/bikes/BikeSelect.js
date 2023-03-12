@@ -20,20 +20,25 @@ const getCheckedNewBikes = (newBikes, currentBikes) => {
 
    if (currentBikes.length === 0) return newBikes
    const checkedNewBikes = newBikes.map((nBike) => {
-      console.log('***********', nBike)
-      nBike.new = 'jkjajja'
       const { id, size, count } = nBike
+      let checkedBike = {}
+      //Comprueba si el id+size ya se encuentra stored y procede
       currentBikes.forEach((cBike) => {
          if (id === cBike.id && size === cBike.size) {
-            if (count === cBike.quantity) nBike.avaiable = false
-            if (count > cBike.quantity) nBike.avaiable = true
+            if (count === cBike.quantity)
+               checkedBike = { ...nBike, avaiable: false }
+            if (count > cBike.quantity)
+               checkedBike = { ...nBike, avaiable: true }
             if (count < cBike.quantity) {
                dispatch(deleteBike({ id, size, count }))
-               nBike.avaiable = false
+               checkedBike = { ...nBike, avaiable: false }
             }
+         } else {
+            //Si el id+size no está stored, asigna la propiedad avaiable:true directamente
+            checkedBike = { ...nBike, avaiable: true }
          }
       })
-      return nBike
+      return checkedBike
    })
    return checkedNewBikes
 }
