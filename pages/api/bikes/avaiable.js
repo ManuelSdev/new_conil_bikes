@@ -4,7 +4,7 @@ const setText = (dateRange, size, range, type) => `
 WITH AvaiableBikes AS (
   SELECT DISTINCT
     bikesn,
-    bikeSize,
+    bikeSize as size,
     modelId
   FROM
     Bike
@@ -50,7 +50,7 @@ SelectedBikeModels AS (
 SELECT
   count(bikesn) count,
 modelid AS id,
-bikesize,
+size,
 model,
 type,
 RANGE,
@@ -62,7 +62,7 @@ FROM
   INNER JOIN SelectedBikeModels USING (modelid)
 GROUP BY
   id,
-  bikesize,
+  size,
   model,
   type,
   RANGE,
@@ -78,7 +78,6 @@ export default async function handler(req, res) {
    const text = setText(dateRange, size, range, type)
    try {
       const { rows } = await query(text)
-      console.log(rows)
 
       res.status(201).json(rows)
    } catch (err) {

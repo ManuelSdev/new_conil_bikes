@@ -23,7 +23,7 @@ const BikeForm = () => {
          <SizeSelect />
          <TypeSelect />
          <RangeSelect />
-         {r && <BikesSelect />}
+         <BikesSelect />
       </Stack>
    )
 }

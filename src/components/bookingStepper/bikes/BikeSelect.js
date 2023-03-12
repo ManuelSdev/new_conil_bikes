@@ -1,19 +1,49 @@
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Button, Stack } from '@mui/material'
 import { Container } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
 import { useLazyGetAvaiableBikesQuery } from '@/src/store/services/bikeApi'
 import BikesGrid from './BikesGrid'
-import { getDate, getRange, getSize, getType } from '@/src/store/selectors'
+import {
+   getBikes,
+   getDate,
+   getRange,
+   getSize,
+   getType,
+} from '@/src/store/selectors'
+import { deleteBike } from '@/src/store/bookingFormSlice'
+
+const getCheckedNewBikes = (newBikes, currentBikes) => {
+   //Si aun no hay bicicletas seleccionadas en el store, no se aplican cambios
+
+   if (currentBikes.length === 0) return newBikes
+   const checkedNewBikes = newBikes.map((nBike) => {
+      console.log('***********', nBike)
+      nBike.new = 'jkjajja'
+      const { id, size, count } = nBike
+      currentBikes.forEach((cBike) => {
+         if (id === cBike.id && size === cBike.size) {
+            if (count === cBike.quantity) nBike.avaiable = false
+            if (count > cBike.quantity) nBike.avaiable = true
+            if (count < cBike.quantity) {
+               dispatch(deleteBike({ id, size, count }))
+               nBike.avaiable = false
+            }
+         }
+      })
+      return nBike
+   })
+   return checkedNewBikes
+}
 
 const BikesSelect = () => {
    const isoDate = useSelector(getDate)
    const selectedSize = useSelector(getSize)
    const selectedType = useSelector(getType)
    const selectedRange = useSelector(getRange)
-
+   const currentBikes = useSelector(getBikes)
    const args = {
       ...isoDate,
       size: selectedSize,
@@ -27,8 +57,9 @@ const BikesSelect = () => {
       trigger,
       { data: avaiableBikes, isFetching, isSuccess },
       lastPromiseInfo,
-   ] = useLazyGetAvaiableBikesQuery((a) => console.log('0000000000000000', a))
-   console.log('bikes', avaiableBikes)
+   ] = useLazyGetAvaiableBikesQuery()
+
+   isSuccess && console.log('bikes', avaiableBikes)
    const handleTrigger = () => trigger(args)
 
    useEffect(() => {
@@ -36,7 +67,7 @@ const BikesSelect = () => {
    }, [selectedRange])
 
    useEffect(() => {
-      isSuccess && setBikes([...avaiableBikes])
+      isSuccess && setBikes(getCheckedNewBikes(avaiableBikes, currentBikes))
    }, [avaiableBikes])
 
    return (

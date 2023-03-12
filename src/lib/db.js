@@ -39,8 +39,8 @@ export const query = async (text, rowMode, values) => {
    const res = await pool.query(queryConf)
    const duration = Date.now() - start
 
-   console.log('executed query text -->', text)
-   console.log('stats -->', { duration, rows: res.rowCount })
+   //console.log('executed query text -->', text)
+   //console.log('stats -->', { duration, rows: res.rowCount })
    return res
 }
 /***

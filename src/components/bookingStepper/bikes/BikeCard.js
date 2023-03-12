@@ -14,13 +14,13 @@ import Image from 'next/image'
 export default function BikeCard({ bike }) {
    //Los modelos están disponibles en la tallla seleccionada
    //Añado talla para que esta conste en el formulario final que se envía al api
-   const size = useSelector(getSize)
+
    const { brand, model, description, images } = bike
 
    const dispatch = useDispatch()
 
    const handleClick = () => {
-      dispatch(addBike({ size, ...bike }))
+      dispatch(addBike(bike))
       dispatch(setFormIsActive(false))
       // dispatch(setSize(''))
    }

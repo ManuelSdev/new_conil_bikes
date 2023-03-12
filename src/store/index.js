@@ -6,7 +6,7 @@ import { baseApi } from './services/baseApi'
 import bookingFormReducer from './bookingFormSlice'
 import drawerReducer from './drawerSlice'
 import bookingCalendarReducer from './bookingCalendarSlice'
-import currentBookingReducer from './currentBookingSlice'
+import appEventReducer from './appEventSlice'
 import databaseInfoReducer from './databaseInfoSlice'
 
 const makeStore = () =>
@@ -15,7 +15,7 @@ const makeStore = () =>
          drawer: drawerReducer,
          bookingForm: bookingFormReducer,
          bookingCalendar: bookingCalendarReducer,
-         currentBooking: currentBookingReducer,
+         appEvent: appEventReducer,
          databaseInfo: databaseInfoReducer,
          [baseApi.reducerPath]: baseApi.reducer,
       },
