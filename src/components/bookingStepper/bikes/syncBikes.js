@@ -1,10 +1,11 @@
 /**MEJORAS */
 //Socket io?
 //Indican cuantas quedan en la tabla de bicis
-
+/*
 import { deleteBike } from '@/src/store/bookingFormSlice'
 import { useDispatch } from 'react-redux'
 const dispatch = useDispatch()
+*/
 /**********************************************************************************************
  * Durante el margen de tiempo que un cliente tarda en finalizar su reserva, es posible
  * que otros clientes hayan finalizado la suya. Las solicitudes del formulario de seleccíón
@@ -33,6 +34,7 @@ const dispatch = useDispatch()
  * , será avaiable=true
  *
  */
+/*
 export const getCheckedNewBikes = (newBikes, currentBikes) => {
    //Si aun no hay bicicletas seleccionadas en el store, no se aplican cambios
    if (currentBikes.length === 0) return newBikes
@@ -52,3 +54,4 @@ export const getCheckedNewBikes = (newBikes, currentBikes) => {
    })
    return checkedNewBikes
 }
+*/
