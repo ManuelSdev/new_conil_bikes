@@ -4,14 +4,13 @@ import TypeSelect from './TypeSelect'
 import RangeSelect from './RangeSelect'
 //import BikesSelect from "./BikeSelect"
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setAnotherForm } from '@/src/store/bookingFormSlice'
 import BikesSelect from './BikeSelect'
-import { getRange } from '@/src/store/selectors'
 
-const BikeForm = () => {
+const BikeFilterForm = () => {
    const dispatch = useDispatch()
-   const r = useSelector(getRange)
+
    useEffect(() => {
       //  console.log("++++++++++++++Component mounted.");
       return () =>
@@ -28,4 +27,4 @@ const BikeForm = () => {
    )
 }
 
-export default BikeForm
+export default BikeFilterForm

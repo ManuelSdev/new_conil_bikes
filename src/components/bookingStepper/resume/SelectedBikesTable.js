@@ -3,16 +3,19 @@ import { useSelector } from 'react-redux'
 import { getBikes } from '@/src/store/selectors'
 import Image from 'next/image'
 import { BIKE_RANGES_MAP, BIKE_TYPES_MAP } from '@/src/utils/appValues'
+import SelectedBikeCard from './SelectedBikeCard'
 
 const SelectedBikesTable = () => {
    const selectedBikes = useSelector(getBikes)
+   console.log(selectedBikes)
+
    return (
-      <Box spacing={1}>
+      <Stack spacing={2} sx={{ padding: 1 }}>
          {selectedBikes.map((bike, index) => {
             const [image] = bike.images
-            return <div key={index}>ddd</div>
+            return <SelectedBikeCard key={index} bike={bike} />
          })}
-      </Box>
+      </Stack>
    )
 }
 

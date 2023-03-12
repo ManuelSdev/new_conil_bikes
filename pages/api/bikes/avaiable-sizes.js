@@ -1,88 +1,45 @@
+import { query } from '@/src/lib/db'
 
-import dbConnect from "@/src/lib/dbConnect";
-import Bike from "@/src/models/Bike";
-import Booking from "@/src/models/Booking";
-
-
-export async function getSizes(filters) {
-  await dbConnect();
-  console.log("FILTERS en sizes", filters);
-  const { from: fromDate, to: toDate } = filters;
-  // console.log('toDate en ISO', ISODate(toDate))
-  //Consideramos que el día de entrega o recogida no se puede reservar
-  // por eso usa  gt/lt en lugar de gte/lte
-
-  const activeBookings = await Booking.find(
-    {
-      $or: [
-        { from: { $lte: toDate, $gt: fromDate } },
-        { to: { $gte: fromDate, $lt: toDate } },
-      ],
-    },
-    //Selecciona solo el campo que pongas aquí
-    {
-      bikes: 1,
-      _id: 0,
-    },
-  );
-
-  const rentedBikesIds = activeBookings.map((booking) => booking.bikes);
-  const b = () => {
-    let a = [];
-    rentedBikesIds.forEach((arr) => {
-      a = [...a, ...arr];
-    });
-    return a;
-  };
-  const d = b();
-  const avaiableBikesSizes = await Bike.distinct("size", { _id: { $nin: d } });
-  // console.log('activeBookings', activeBookings)
-  console.log("BIKES SIZE RES", avaiableBikesSizes);
-  // console.log('BIKES', bikes)
-  return avaiableBikesSizes;
-}
+const setText = (dateRange) => `
+    SELECT distinct
+      bikeSize
+    FROM
+      Bike
+    WHERE
+      bikeSn IN (
+        SELECT
+          bikeSn avaiableBikeSn
+        FROM
+          bike
+        WHERE
+          bikeSn NOT IN (
+            SELECT
+              bikeSn reservedBikeSn
+            FROM
+              BookingOrder
+            WHERE
+              bookingId IN (
+                SELECT
+                  bookingId reservedId
+                FROM
+                  Booking
+                WHERE
+                  '[${dateRange}]'::tstzrange && bookingDateRange)))                 
+          ORDER BY
+            bikesize ASC
+  `
 
 export default async function handler(req, res) {
-  const date = req.query;
-  try {
-    const result = await getSizes(date);
-
-    res.status(201).json(result);
-  } catch (err) {
-    console.log("ERROR BIKES GET", err.message);
-    res.status(500);
-  }
+   const { from, to } = req.query
+   const dateRange = `${from},${to}`
+   const text = setText(dateRange)
+   try {
+      const { rows } = await query(text, 'array')
+      console.log('test----------------', rows)
+      const avaiableSizes = rows.flatMap((r) => r)
+      res.status(201).json(avaiableSizes)
+   } catch (err) {
+      console.log('ERROR API AVAIABLE SIZES', err.message)
+      res.status(500)
+   }
 }
-
-/*
-db.hotels.find({
-    $and: [
-        {
-            bookings: {
-                $elemMatch: {
-
-                    $or: [
-                        { from: { $gte: to_date } },
-                        { to: { $lte: from_date } }
-                    ]
-
-                }
-            }
-        },
-        {
-            bookings: {
-                $not: {
-                    $elemMatch: {
-
-                        $or: [
-                            { from: { $gte: from_date, $lte: to_date } },
-                            { to: { $lte: to_date, $gte: from_date } }
-                        ]
-
-                    }
-                }
-            }
-        }]
-})
-
-*/

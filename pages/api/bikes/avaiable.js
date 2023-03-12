@@ -1,59 +1,87 @@
-import dbConnect from "@/src/lib/dbConnect";
-import Bike from "@/src/models/Bike";
-import Booking from "@/src/models/Booking";
+import { query } from '@/src/lib/db'
 
-
-export async function getBikes(filters) {
-  await dbConnect();
-  console.log("FILTERS bikes/avaiable api", filters);
-  const { from: fromDate, to: toDate, size, type, range } = filters;
-  // console.log('toDate en ISO', ISODate(toDate))
-  //Consideramos que el día de entrega o recogida no se puede reservar
-  // por eso usa  gt/lt en lugar de gte/lte
-
-  const activeBookings = await Booking.find(
-    {
-      $or: [
-        { from: { $lte: toDate, $gt: fromDate } },
-        { to: { $gte: fromDate, $lt: toDate } },
-      ],
-    },
-    //Selecciona solo el campo que pongas aquí
-    {
-      bikes: 1,
-      _id: 0,
-    },
-  );
-
-  const rentedBikesIds = activeBookings.map((booking) => booking.bikes);
-  const b = () => {
-    let a = [];
-    rentedBikesIds.forEach((arr) => {
-      a = [...a, ...arr];
-    });
-    return a;
-  };
-  const d = b();
-  const avaiableBikes = await Bike.find({
-    _id: { $nin: d },
-    size: size,
-    type: type,
-    range: range,
-  });
-  //console.log('activeBookings', activeBookings)
-  console.log("AVAIABLE BIKES RES", avaiableBikes.length);
-  // console.log('BIKES', bikes)
-  return avaiableBikes;
-}
+const setText = (dateRange, size, range, type) => `
+WITH AvaiableBikes AS (
+  SELECT DISTINCT
+    bikesn,
+    bikeSize as size,
+    modelId
+  FROM
+    Bike
+  WHERE
+    bikeSn IN (
+      SELECT
+        bikeSn avaiableBikeSn
+      FROM
+        bike
+      WHERE
+        bikeSn NOT IN (
+          SELECT
+            bikeSn reservedBikeSn
+          FROM
+            BookingOrder
+          WHERE
+            bookingId IN (
+              SELECT
+                bookingId reservedId
+              FROM
+                Booking
+              WHERE
+                '[${dateRange}]'::tstzrange && bookingDateRange)))
+          AND bikesize = '${size}'
+        ORDER BY
+          bikesize ASC
+),
+SelectedBikeModels AS (
+  SELECT
+    modelId,
+    bikemodelname AS model,
+    bikemodeltype AS type,
+    bikemodelrange AS RANGE,
+    bikemodelbrand AS brand,
+    bikemodeldescription as description,
+    bikemodelimages AS images
+  FROM
+    BikeModel
+  WHERE
+    bikemodelrange = '${range}'
+    AND bikemodeltype = '${type}'
+)
+SELECT
+  count(bikesn)::int count,
+modelid AS id,
+size,
+model,
+type,
+RANGE,
+brand,
+description,
+images
+FROM
+  AvaiableBikes
+  INNER JOIN SelectedBikeModels USING (modelid)
+GROUP BY
+  id,
+  size,
+  model,
+  type,
+  RANGE,
+  brand,
+  description,
+  images     
+`
 
 export default async function handler(req, res) {
-  const filters = req.query;
-  try {
-    const result = await getBikes(filters);
-
-    res.status(201).json(result);
-  } catch (err) {
-    console.log("ERROR BIKES GET", err.message);
-    res.status(500);
-  }
+   //  console.log('==========', req.query)
+   const { from, to, size, range, type } = req.query
+   const dateRange = `${from},${to}`
+   const text = setText(dateRange, size, range, type)
+   try {
+      const { rows } = await query(text)
+      console.log('------------', rows)
+      res.status(201).json(rows)
+   } catch (err) {
+      console.log('ERROR API AVAIABLE BIKES', err.message)
+      res.status(500)
+   }
 }
