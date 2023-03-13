@@ -6,8 +6,8 @@ import {
    getBookingData,
    getBookingDuration,
    getBookingPrice,
-} from '@/src/store/selectors'
-import { useAddBookingMutation } from '@/src/store/services/bookingApi'
+} from '@/src/app/selectors'
+import { useAddBookingMutation } from '@/src/app/apiServices/bookingApi'
 import Modal from '../elements/Modal'
 
 const ConfirmBookingButton = () => {

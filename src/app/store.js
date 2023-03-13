@@ -6,15 +6,15 @@ import {
 import { createWrapper } from 'next-redux-wrapper'
 
 import { setupListeners } from '@reduxjs/toolkit/query'
-import { baseApi } from './services/baseApi'
-import bookingFormReducer, {
+import { baseApi } from './apiServices/baseApi'
+import bookingProcessReducer, {
    dateSelected,
    setSize,
    testAction,
-} from './bookingFormSlice'
+} from './features/user/booking/bookingProcessSlice'
 import drawerReducer from './drawerSlice'
-import bookingCalendarReducer from './bookingCalendarSlice'
-import appEventReducer from './appEventSlice'
+import bookingCalendarReducer from './features/admin/bookingCalendarSlice'
+
 import databaseInfoReducer from './databaseInfoSlice'
 
 // Create the middleware instance and methods
@@ -35,9 +35,9 @@ const makeStore = () =>
    configureStore({
       reducer: {
          drawer: drawerReducer,
-         bookingForm: bookingFormReducer,
+         bookingProcess: bookingProcessReducer,
          bookingCalendar: bookingCalendarReducer,
-         appEvent: appEventReducer,
+
          databaseInfo: databaseInfoReducer,
          [baseApi.reducerPath]: baseApi.reducer,
       },

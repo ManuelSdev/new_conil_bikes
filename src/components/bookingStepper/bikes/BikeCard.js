@@ -7,8 +7,11 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { addBike, setFormIsActive } from '@/src/store/bookingFormSlice'
-import { getRange, getSize, getType } from '@/src/store/selectors'
+import {
+   addBike,
+   setFormIsActive,
+} from '@/src/app/features/user/booking/bookingProcessSlice'
+import { getRange, getSize, getType } from '@/src/app/selectors'
 import Image from 'next/image'
 
 export default function BikeCard({ bike }) {

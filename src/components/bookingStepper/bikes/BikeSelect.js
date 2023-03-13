@@ -4,15 +4,18 @@ import { Button, Stack } from '@mui/material'
 import { Container } from '@mui/material'
 import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
-import { useLazyGetAvaiableBikesQuery } from '@/src/store/services/bikeApi'
+import { useLazyGetAvaiableBikesQuery } from '@/src/app/apiServices/bikeApi'
 import BikesGrid from './BikesGrid'
-import { getBikes, getRange, getSize, getType } from '@/src/store/selectors'
-import { deleteBike, selectIsoStringDate } from '@/src/store/bookingFormSlice'
+import { getBikes, getRange, getSize, getType } from '@/src/app/selectors'
+import {
+   deleteBike,
+   selectIsoStringDateRange,
+} from '@/src/app/features/user/booking/bookingProcessSlice'
 
 const BikesSelect = () => {
    const dispatch = useDispatch()
 
-   const { to, from } = useSelector(selectIsoStringDate)
+   const { to, from } = useSelector(selectIsoStringDateRange)
 
    const selectedSize = useSelector(getSize)
    const selectedType = useSelector(getType)

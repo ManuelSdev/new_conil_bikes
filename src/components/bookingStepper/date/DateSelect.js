@@ -4,13 +4,13 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 
 import esLocale from 'date-fns/locale/es'
 import { Stack, TextField } from '@mui/material'
-import { getNumberOfBikes } from '@/src/store/selectors'
+import { getNumberOfBikes } from '@/src/app/selectors'
 import {
    dateSelected,
    dateErrorChanged,
-   selectDate,
    selectDateError,
-} from '@/src/store/bookingFormSlice'
+   selectDateRange,
+} from '@/src/app/features/user/booking/bookingProcessSlice'
 
 //TODO: limpia
 const FROM = 'from'
@@ -23,7 +23,7 @@ const DateSelect = () => {
 
    const dateError = useSelector(selectDateError)
 
-   const { from, to } = useSelector(selectDate)
+   const { from, to } = useSelector(selectDateRange)
 
    const handleChange = (picker) => (newValue) => {
       newValue && dispatch(dateSelected([picker, newValue.toISOString()]))

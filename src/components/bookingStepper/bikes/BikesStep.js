@@ -8,8 +8,11 @@ import {
    getAddButton,
    getFormIsActive,
    getNumberOfBikes,
-} from '@/src/store/selectors'
-import { setAddButton, setFormIsActive } from '@/src/store/bookingFormSlice'
+} from '@/src/app/selectors'
+import {
+   setAddButton,
+   setFormIsActive,
+} from '@/src/app/features/user/booking/bookingProcessSlice'
 
 const BikesStep = () => {
    const dispatch = useDispatch()

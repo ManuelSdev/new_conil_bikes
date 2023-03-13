@@ -18,12 +18,12 @@ import {
    getName,
    getNumberOfBikes,
    getPhone,
-} from '@/src/store/selectors'
+} from '@/src/app/selectors'
 import ContactStep from './contact/ContactStep'
 import ResumeStep from './resume/ResumeStep'
 import DateStep from './date/DateStep'
 import BikesStep from './bikes/BikesStep'
-import { selectDateError } from '@/src/store/bookingFormSlice'
+import { selectDateError } from '@/src/app/features/user/booking/bookingProcessSlice'
 
 //TODO: chapuza?
 const steps = ['Fecha', 'Bicicletas', 'Contacto', 'Resumen']

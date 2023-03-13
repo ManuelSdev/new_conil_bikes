@@ -8,9 +8,9 @@ import {
    MenuItem,
    Select,
 } from '@mui/material'
-import { setType } from '@/src/store/bookingFormSlice'
-import { getDate, getSize, getType } from '@/src/store/selectors'
-import { useLazyGetAvaiableTypesQuery } from '@/src/store/services/bikeApi'
+import { setType } from '@/src/app/features/user/booking/bookingProcessSlice'
+import { getDate, getSize, getType } from '@/src/app/selectors'
+import { useLazyGetAvaiableTypesQuery } from '@/src/app/apiServices/bikeApi'
 import { typesList } from '@/src/utils/appValues'
 import { capitalizeFirst } from '@/src/utils/functions'
 

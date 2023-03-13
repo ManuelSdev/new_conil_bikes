@@ -5,7 +5,7 @@ import RangeSelect from './RangeSelect'
 //import BikesSelect from "./BikeSelect"
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { setAnotherForm } from '@/src/store/bookingFormSlice'
+import { setAnotherForm } from '@/src/app/features/user/booking/bookingProcessSlice'
 import BikesSelect from './BikeSelect'
 
 const BikeFilterForm = () => {

@@ -10,20 +10,22 @@ const initialState = {
    type: '',
    range: '',
 
-   date: {},
-   datex: [],
+   dateRange: {},
    bikes: [],
-   name: '',
-   address: '',
-   phone: '',
-   mail: '',
-   homeDelivery: false,
-   homePickup: false,
+   user: {
+      name: '',
+      address: '',
+      phone: '',
+      mail: '',
+      homeDelivery: false,
+      homePickup: false,
+   },
+
    test: 0,
 }
 
 export const bookingFormSlice = createSlice({
-   name: 'bookingForm',
+   name: 'bookingProcess',
    initialState,
    reducers: {
       setAddButton: (state, action) => {
@@ -39,7 +41,7 @@ export const bookingFormSlice = createSlice({
 
       dateSelected: (state, action) => {
          const [picker, value] = action.payload
-         state.date = { ...state.date, [picker]: value }
+         state.dateRange = { ...state.dateRange, [picker]: value }
       },
 
       dateErrorChanged: (state, action) => {
@@ -168,6 +170,7 @@ export const {
    dateSelected,
    dateErrorChanged,
    setSize,
+   sizeSelected,
    setType,
    setRange,
    addBike,
@@ -179,29 +182,37 @@ export const {
    setMail,
    setHomeDelivery,
    setHomePickup,
-   setAnotherForm,
+   //  setAnotherForm,
 } = bookingFormSlice.actions
 
 export default bookingFormSlice.reducer
 
 /**SELECTORS */
-export const selectDate = (state) => {
-   const isoStringDate = state.bookingForm.date
+//Date format
+export const selectDateRange = (state) => {
+   const range = state.bookingProcess.dateRange
 
    const date = {
-      from: isoStringDate.from ? new Date(isoStringDate.from) : null,
-      to: isoStringDate.to ? new Date(isoStringDate.to) : null,
+      from: range.from ? new Date(range.from) : null,
+      to: range.to ? new Date(range.to) : null,
    }
    //console.log(date)
    return date
 }
-export const selectIsoStringDate = (state) => state.bookingForm.date
+//ISOstring Format
+export const selectIsoStringDateRange = (state) =>
+   state.bookingProcess.dateRange
 export const selectBookingDuration = (state) => {
-   const { from, to } = state.bookingForm.date
+   const { from, to } = state.bookingProcess.dateRange
    return differenceInDays(to, from)
 }
-export const selectDateError = (state) => state.bookingForm.dateError
+export const selectDateError = (state) => state.bookingProcess.dateError
 
-export const selectSize = (state) => state.bookingForm.size
+export const selectSize = (state) => state.bookingProcess.size
 
 /**LISTENERS */
+
+const dateListener = (action, listenerApi) => {
+   console.log('*************', action.payload)
+   // listenerApi.cancelActiveListeners()
+}

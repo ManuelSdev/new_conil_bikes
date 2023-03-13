@@ -9,7 +9,7 @@ import {
    getHomeDelivery,
    getHomePickup,
    getPrice,
-} from '@/src/store/selectors'
+} from '@/src/app/selectors'
 import SelectedBikesTable from './SelectedBikesTable'
 
 //limpia

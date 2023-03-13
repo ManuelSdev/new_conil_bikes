@@ -1,6 +1,6 @@
 import BookingStepper from '@/src/components/bookingStepper/BookingStepper'
-import { storeWrapper } from '@/src/store'
-import { setDatabaseInfo } from '@/src/store/databaseInfoSlice'
+import { storeWrapper } from '@/src/app/store'
+import { setDatabaseInfo } from '@/src/app/databaseInfoSlice'
 import { query } from '@/src/lib/db'
 
 const BookingsPage = () => {

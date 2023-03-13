@@ -5,16 +5,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import DateSelect from './DateSelect'
 import {
    resetBikes,
-   selectDate,
+   selectDateRange,
    setAddButton,
    setFormIsActive,
-} from '@/src/store/bookingFormSlice'
+} from '@/src/app/features/user/booking/bookingProcessSlice'
 import {
    getAddButton,
    getBikes,
    getFormIsActive,
    getNumberOfBikes,
-} from '@/src/store/selectors'
+} from '@/src/app/selectors'
 import Modal from '../../elements/Modal'
 
 //import Modal from "../../elements/Modal";
@@ -26,7 +26,7 @@ const DateStep = () => {
    const addButton = useSelector(getAddButton)
    const formIsActive = useSelector(getFormIsActive)
    const bikes = useSelector(getBikes)
-   const { from, to } = useSelector(selectDate)
+   const { from, to } = useSelector(selectDateRange)
 
    const [bookingForms, setBookingForms] = useState([])
    //TODO: check el formato de la fecha, si necesita objeto de config con format:true

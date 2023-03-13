@@ -7,53 +7,53 @@ export const getDatabaseInfo = (state) => state.databaseInfo
 export const getDrawerState = (state) => state.drawer.isOpen
 
 // bookingFormSlice
-export const getFormIsActive = (state) => state.bookingForm.formIsActive
+export const getFormIsActive = (state) => state.bookingProcess.formIsActive
 
-export const getAddButton = (state) => state.bookingForm.addButton
-export const getDate = (state) => state.bookingForm.date
-export const getDateError = (state) => state.bookingForm.dateError
+export const getAddButton = (state) => state.bookingProcess.addButton
+export const getDate = (state) => state.bookingProcess.date
+export const getDateError = (state) => state.bookingProcess.dateError
 export const getSize = (state) =>
    //console.log('************* SELECTOR GET SIZE', state) ||
-   state.bookingForm.size
-export const getType = (state) => state.bookingForm.type
-export const getRange = (state) => state.bookingForm.range
+   state.bookingProcess.size
+export const getType = (state) => state.bookingProcess.type
+export const getRange = (state) => state.bookingProcess.range
 
-export const getName = (state) => state.bookingForm.name
-export const getAddress = (state) => state.bookingForm.address
-export const getPhone = (state) => state.bookingForm.phone
-export const getMail = (state) => state.bookingForm.mail
-export const getPrice = (state) => state.bookingForm.price
-export const getHomeDelivery = (state) => state.bookingForm.homeDelivery
-export const getHomePickup = (state) => state.bookingForm.homePickup
+export const getName = (state) => state.bookingProcess.name
+export const getAddress = (state) => state.bookingProcess.address
+export const getPhone = (state) => state.bookingProcess.phone
+export const getMail = (state) => state.bookingProcess.mail
+export const getPrice = (state) => state.bookingProcess.price
+export const getHomeDelivery = (state) => state.bookingProcess.homeDelivery
+export const getHomePickup = (state) => state.bookingProcess.homePickup
 
 export const getContactInfo = (state) => [
-   state.bookingForm.name,
-   state.bookingForm.mail,
-   state.bookingForm.phone,
-   state.bookingForm.address,
-   //state.bookingForm.homeDelivery,
-   // state.bookingForm.homePickup,
+   state.bookingProcess.name,
+   state.bookingProcess.mail,
+   state.bookingProcess.phone,
+   state.bookingProcess.address,
+   //state.bookingProcess.homeDelivery,
+   // state.bookingProcess.homePickup,
 ]
 
 export const getBookingData = (state) => ({
-   from: state.bookingForm.date.from,
-   to: state.bookingForm.date.to,
-   bikes: state.bookingForm.bikes.map((bike) => ({
+   from: state.bookingProcess.date.from,
+   to: state.bookingProcess.date.to,
+   bikes: state.bookingProcess.bikes.map((bike) => ({
       id: bike.id,
       size: bike.size,
    })),
-   name: state.bookingForm.name,
-   address: state.bookingForm.address,
-   phone: state.bookingForm.phone,
-   price: state.bookingForm.price,
-   mail: state.bookingForm.mail,
-   homeDelivery: state.bookingForm.homeDelivery,
-   homePickup: state.bookingForm.homePickup,
+   name: state.bookingProcess.name,
+   address: state.bookingProcess.address,
+   phone: state.bookingProcess.phone,
+   price: state.bookingProcess.price,
+   mail: state.bookingProcess.mail,
+   homeDelivery: state.bookingProcess.homeDelivery,
+   homePickup: state.bookingProcess.homePickup,
 })
-export const getBikes = (state) => state.bookingForm.bikes
+export const getBikes = (state) => state.bookingProcess.bikes
 
 export const getBikesByUnits = (state) => {
-   const bikes = state.bookingForm.bikes
+   const bikes = state.bookingProcess.bikes
    const items = bikes.map((bike) => {
       //Retorna un  <SelectedBikesListItem> por cada unidad stored del mismo id+size
       const multipleItem = []
@@ -68,7 +68,7 @@ export const getBikesByUnits = (state) => {
 
    return items.flat()
 }
-export const getNumberOfBikes = (state) => state.bookingForm.bikes.length
+export const getNumberOfBikes = (state) => state.bookingProcess.bikes.length
 
 export const getCalendarSelectedDay = (state) =>
    state.bookingCalendar.selectedDay
@@ -84,7 +84,7 @@ export const getCurrentBooking = (state) => state.currentBooking
 
 export const getBookingDayPrice = (state) => {
    const { segmentList } = getDatabaseInfo(state)
-   const dayPrice = state.bookingForm.bikes.reduce((acc, bike) => {
+   const dayPrice = state.bookingProcess.bikes.reduce((acc, bike) => {
       const { type, range } = bike
       const [{ price }] = segmentList.filter(
          (segment) => segment.type === type && segment.range === range

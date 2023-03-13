@@ -9,8 +9,8 @@ import {
 import PedalBikeIcon from '@mui/icons-material/PedalBike'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useDispatch, useSelector } from 'react-redux'
-import { getBikes } from '@/src/store/selectors'
-import { deleteBike } from '@/src/store/bookingFormSlice'
+import { getBikes } from '@/src/app/selectors'
+import { deleteBike } from '@/src/app/features/user/booking/bookingProcessSlice'
 import { BIKE_TYPES_MAP } from '@/src/utils/appValues'
 import { capitalizeFirst } from '@/src/utils/functions'
 

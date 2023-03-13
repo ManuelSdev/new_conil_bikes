@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider } from '@emotion/react'
 import theme from '../src/theme'
 import createEmotionCache from '../src/lib/createEmotionCache'
-import { storeWrapper } from '@/src/store'
+import { storeWrapper } from '@/src/app/store'
 import { Provider } from 'react-redux'
 import '../styles/globals.css'
 

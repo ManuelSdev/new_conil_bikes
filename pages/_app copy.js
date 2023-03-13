@@ -1,41 +1,44 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Head from 'next/head';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { CacheProvider } from '@emotion/react';
-import theme from '../src/theme';
-import createEmotionCache from '../src/lib/createEmotionCache';
-import { wrapper } from '@/src/store';
-
-
+import * as React from 'react'
+import PropTypes from 'prop-types'
+import Head from 'next/head'
+import { ThemeProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
+import { CacheProvider } from '@emotion/react'
+import theme from '../src/theme'
+import createEmotionCache from '../src/lib/createEmotionCache'
+import { wrapper } from '@/src/app/store'
 
 // Client-side cache, shared for the whole session of the user in the browser.
-const clientSideEmotionCache = createEmotionCache();
+const clientSideEmotionCache = createEmotionCache()
 
-function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }) {
-  // const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+function MyApp({
+   Component,
+   emotionCache = clientSideEmotionCache,
+   pageProps,
+}) {
+   // const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
-  return (
-    <CacheProvider value={emotionCache}>
+   return (
+      <CacheProvider value={emotionCache}>
+         <Head>
+            <meta
+               name="viewport"
+               content="initial-scale=1, width=device-width"
+            />
+         </Head>
 
-      <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
-
-
-      <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </CacheProvider>
-  );
+         <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Component {...pageProps} />
+         </ThemeProvider>
+      </CacheProvider>
+   )
 }
 
 export default wrapper.withRedux(MyApp)
 MyApp.propTypes = {
-  Component: PropTypes.elementType.isRequired,
-  emotionCache: PropTypes.object,
-  pageProps: PropTypes.object.isRequired,
-};
+   Component: PropTypes.elementType.isRequired,
+   emotionCache: PropTypes.object,
+   pageProps: PropTypes.object.isRequired,
+}

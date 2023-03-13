@@ -7,15 +7,15 @@ import {
    MenuItem,
    Select,
 } from '@mui/material'
-import { setRange } from '@/src/store/bookingFormSlice'
+import { setRange } from '@/src/app/features/user/booking/bookingProcessSlice'
 import {
    getDatabaseInfo,
    getDate,
    getRange,
    getSize,
    getType,
-} from '@/src/store/selectors'
-import { useLazyGetAvaiableRangesQuery } from '@/src/store/services/bikeApi'
+} from '@/src/app/selectors'
+import { useLazyGetAvaiableRangesQuery } from '@/src/app/apiServices/bikeApi'
 import { rangesList } from '@/src/utils/appValues'
 import { capitalizeFirst } from '@/src/utils/functions'
 import { useDispatch, useSelector } from 'react-redux'

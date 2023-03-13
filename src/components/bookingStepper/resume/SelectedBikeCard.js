@@ -1,4 +1,4 @@
-import { getDatabaseInfo } from '@/src/store/selectors'
+import { getDatabaseInfo } from '@/src/app/selectors'
 import { BIKE_RANGES_MAP, BIKE_TYPES_MAP } from '@/src/utils/appValues'
 import { Box, Paper, Stack, Typography } from '@mui/material'
 import Image from 'next/image'
