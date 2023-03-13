@@ -174,7 +174,8 @@ export const {
 
 export default bookingFormSlice.reducer
 
-export const getDatex = (state) => {
+/**SELECTORS */
+export const selectDate = (state) => {
    const isoStringDate = state.bookingForm.date
 
    const date = {
@@ -184,5 +185,10 @@ export const getDatex = (state) => {
    console.log(date)
    return date
 }
-
+export const selectIsoStringDate = (state) => state.bookingForm.date
+export const selectBookingDuration = (state) => {
+   const { from, to } = state.bookingForm.date
+   return differenceInDays(to, from)
+}
 export const selectDateError = (state) => state.bookingForm.dateError
+//getDatex

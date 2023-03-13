@@ -8,7 +8,7 @@ import { getNumberOfBikes } from '@/src/store/selectors'
 import {
    dateAdded,
    dateErrorChanged,
-   getDatex,
+   selectDate,
    selectDateError,
 } from '@/src/store/bookingFormSlice'
 
@@ -23,7 +23,7 @@ const DateSelect = () => {
 
    const dateError = useSelector(selectDateError)
 
-   const { from, to } = useSelector(getDatex)
+   const { from, to } = useSelector(selectDate)
 
    const handleChange = (picker) => (newValue) => {
       newValue && dispatch(dateAdded([picker, newValue.toISOString()]))

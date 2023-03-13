@@ -6,24 +6,21 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
 import { useLazyGetAvaiableBikesQuery } from '@/src/store/services/bikeApi'
 import BikesGrid from './BikesGrid'
-import {
-   getBikes,
-   getDate,
-   getRange,
-   getSize,
-   getType,
-} from '@/src/store/selectors'
-import { deleteBike } from '@/src/store/bookingFormSlice'
+import { getBikes, getRange, getSize, getType } from '@/src/store/selectors'
+import { deleteBike, selectIsoStringDate } from '@/src/store/bookingFormSlice'
 
 const BikesSelect = () => {
    const dispatch = useDispatch()
-   const isoDate = useSelector(getDate)
+
+   const { to, from } = useSelector(selectIsoStringDate)
+
    const selectedSize = useSelector(getSize)
    const selectedType = useSelector(getType)
    const selectedRange = useSelector(getRange)
    const currentBikes = useSelector(getBikes)
    const args = {
-      ...isoDate,
+      to,
+      from,
       size: selectedSize,
       type: selectedType,
       range: selectedRange,
