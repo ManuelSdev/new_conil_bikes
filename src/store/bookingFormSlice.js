@@ -19,6 +19,7 @@ const initialState = {
    mail: '',
    homeDelivery: false,
    homePickup: false,
+   test: 0,
 }
 
 export const bookingFormSlice = createSlice({
@@ -36,7 +37,7 @@ export const bookingFormSlice = createSlice({
          state.date = { ...state.date, [key]: value }
       },
 
-      dateAdded: (state, action) => {
+      dateSelected: (state, action) => {
          const [picker, value] = action.payload
          state.date = { ...state.date, [picker]: value }
       },
@@ -52,6 +53,10 @@ export const bookingFormSlice = createSlice({
             : ''
       },
       setSize: (state, action) => {
+         state.size = action.payload
+      },
+
+      sizeSelected: (state, action) => {
          state.size = action.payload
       },
       setType: (state, action) => {
@@ -113,7 +118,7 @@ export const bookingFormSlice = createSlice({
                (bike) =>
                   bike.size === size && bike.id === id && bike.quantity === 1
             )
-            console.log('only one', onlyOne)
+            //    console.log('only one', onlyOne)
             state.bikes = onlyOne
                ? state.bikes.filter(
                     (bike) => bike.size !== size && bike.id !== id
@@ -148,14 +153,19 @@ export const bookingFormSlice = createSlice({
          state.type = ''
          state.range = ''
       },
+
+      testAction: (state, action) => {
+         state.test = action.payload
+      },
    },
 })
 
 export const {
+   testAction,
    setFormIsActive,
    setAddButton,
    setDate,
-   dateAdded,
+   dateSelected,
    dateErrorChanged,
    setSize,
    setType,
@@ -182,7 +192,7 @@ export const selectDate = (state) => {
       from: isoStringDate.from ? new Date(isoStringDate.from) : null,
       to: isoStringDate.to ? new Date(isoStringDate.to) : null,
    }
-   console.log(date)
+   //console.log(date)
    return date
 }
 export const selectIsoStringDate = (state) => state.bookingForm.date
@@ -191,4 +201,7 @@ export const selectBookingDuration = (state) => {
    return differenceInDays(to, from)
 }
 export const selectDateError = (state) => state.bookingForm.dateError
-//getDatex
+
+export const selectSize = (state) => state.bookingForm.size
+
+/**LISTENERS */

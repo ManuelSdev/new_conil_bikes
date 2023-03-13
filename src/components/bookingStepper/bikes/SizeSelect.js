@@ -14,7 +14,7 @@ import { compareAsc } from 'date-fns'
 
 import { sizesList } from '@/src/utils/appValues'
 import { getDate, getDateError, getSize } from '@/src/store/selectors'
-import { setSize } from '@/src/store/bookingFormSlice'
+import { selectSize, setSize } from '@/src/store/bookingFormSlice'
 import { useGetAvaiableSizesQuery } from '@/src/store/services/bikeApi'
 
 const loadingLabel = () => (
@@ -37,8 +37,9 @@ const loadingLabel = () => (
 export default function SizeSelect() {
    const dispatch = useDispatch()
    const isoDate = useSelector(getDate)
+
    const dateError = useSelector(getDateError)
-   const selectedSize = useSelector(getSize)
+   const selectedSize = useSelector(selectSize)
 
    const [skip, setSkip] = React.useState(true)
    const handleChange = (event) => {

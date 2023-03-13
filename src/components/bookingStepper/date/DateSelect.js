@@ -6,7 +6,7 @@ import esLocale from 'date-fns/locale/es'
 import { Stack, TextField } from '@mui/material'
 import { getNumberOfBikes } from '@/src/store/selectors'
 import {
-   dateAdded,
+   dateSelected,
    dateErrorChanged,
    selectDate,
    selectDateError,
@@ -26,7 +26,7 @@ const DateSelect = () => {
    const { from, to } = useSelector(selectDate)
 
    const handleChange = (picker) => (newValue) => {
-      newValue && dispatch(dateAdded([picker, newValue.toISOString()]))
+      newValue && dispatch(dateSelected([picker, newValue.toISOString()]))
    }
 
    const handleError = (reason, value) => {
