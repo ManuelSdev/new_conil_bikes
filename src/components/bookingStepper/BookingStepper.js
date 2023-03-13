@@ -14,7 +14,6 @@ import {
 import ConfirmBookingButton from './ConfirmBookingButton'
 import {
    getAddress,
-   getDate,
    getMail,
    getName,
    getNumberOfBikes,
@@ -24,6 +23,7 @@ import ContactStep from './contact/ContactStep'
 import ResumeStep from './resume/ResumeStep'
 import DateStep from './date/DateStep'
 import BikesStep from './bikes/BikesStep'
+import { selectDateError } from '@/src/store/bookingFormSlice'
 
 //TODO: chapuza?
 const steps = ['Fecha', 'Bicicletas', 'Contacto', 'Resumen']
@@ -47,9 +47,8 @@ const StepWrapper = ({ children, textHeader }) => (
 )
 
 export default function BookingStepper() {
-   const isoDate = useSelector(getDate)
    const amount = useSelector(getNumberOfBikes)
-
+   const isDateError = useSelector(selectDateError)
    const name = useSelector(getName)
    const mail = useSelector(getMail)
    const phone = useSelector(getPhone)
@@ -85,7 +84,6 @@ export default function BookingStepper() {
       activeStep > 0 && setActiveStep((prevActiveStep) => prevActiveStep - 1)
    }
 
-   const dateIsValid = () => (isoDate.from && isoDate.to ? true : false)
    const contactInfoIsValid = () => contactInfo.every((elem) => !!elem)
 
    return (
@@ -135,7 +133,7 @@ export default function BookingStepper() {
             )}
          </Box>
          {activeStep === 0 ? (
-            <Button disabled={!dateIsValid()} onClick={handleNext}>
+            <Button disabled={!!isDateError} onClick={handleNext}>
                Continuar
             </Button>
          ) : activeStep === 1 ? (

@@ -1,4 +1,5 @@
 import { createSlice, current } from '@reduxjs/toolkit'
+import { format } from 'date-fns'
 
 const initialState = {
    addButton: true,
@@ -10,6 +11,7 @@ const initialState = {
    range: '',
 
    date: {},
+   datex: [],
    bikes: [],
    name: '',
    address: '',
@@ -33,8 +35,21 @@ export const bookingFormSlice = createSlice({
          const [key, value] = action.payload
          state.date = { ...state.date, [key]: value }
       },
-      setDateError: (state, action) => {
-         state.dateError = action.payload
+
+      dateAdded: (state, action) => {
+         const [picker, value] = action.payload
+         state.date = { ...state.date, [picker]: value }
+      },
+
+      dateErrorChanged: (state, action) => {
+         const reason = action.payload
+         const { from } = state.date
+         state.dateError = reason
+            ? `Seleccione una fecha superior a ${format(
+                 new Date(from),
+                 'dd/MM/yyyy'
+              )} o modifique la fecha de inicio`
+            : ''
       },
       setSize: (state, action) => {
          state.size = action.payload
@@ -75,23 +90,7 @@ export const bookingFormSlice = createSlice({
             : [...state.bikes, newBike]
          // state.bikes.push(action.payload)
       },
-      /*
-      increaseBikeQuantity: (state, action) => {
-         const { id, size } = action.payload
-         state.bikes = state.bikes.map((bike) => {
-            if (bike.size === size && bike.id === id) {
-               return { ...bike, quantity: bike.quantity + 1 }
-            } else return bike
-         })
-      },
-      decreaseBikeQuantity: (state, action) => {
-         state.bikes.push(action.payload)
-      },
-      syncBikeWithDb: (state, action) => {
-         const { id, size, newCount, newQuantity } = action.payload
-         state.bikes.push(action.payload)
-      },
-      */
+
       deleteBike: (state, action) => {
          const { id, size, count } = action.payload
          /**
@@ -125,15 +124,6 @@ export const bookingFormSlice = createSlice({
                     } else return bike
                  })
          }
-
-         /*
-         const start = state.bikes.findIndex(
-            (bike) =>
-               bike.id === action.payload.id &&
-               bike.size === action.payload.size
-         )
-         state.bikes.splice(start, 1)
-         */
       },
       setName: (state, action) => {
          state.name = action.payload
@@ -165,7 +155,8 @@ export const {
    setFormIsActive,
    setAddButton,
    setDate,
-   setDateError,
+   dateAdded,
+   dateErrorChanged,
    setSize,
    setType,
    setRange,
@@ -182,3 +173,16 @@ export const {
 } = bookingFormSlice.actions
 
 export default bookingFormSlice.reducer
+
+export const getDatex = (state) => {
+   const isoStringDate = state.bookingForm.date
+
+   const date = {
+      from: isoStringDate.from ? new Date(isoStringDate.from) : null,
+      to: isoStringDate.to ? new Date(isoStringDate.to) : null,
+   }
+   console.log(date)
+   return date
+}
+
+export const selectDateError = (state) => state.bookingForm.dateError
