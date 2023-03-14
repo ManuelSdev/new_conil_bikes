@@ -1,16 +1,19 @@
 import { Button, Dialog, DialogContent, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { useAddBookingMutation } from '@/src/app/apiServices/bookingApi'
 import Modal from '../elements/Modal'
-import { selectBookingData } from '@/src/app/features/user/booking/bookingProcessSlice'
+import {
+   bookingFinished,
+   selectBookingData,
+} from '@/src/app/features/user/booking/bookingProcessSlice'
 
 const ConfirmBookingButton = () => {
    const router = useRouter()
    const bookingData = useSelector(selectBookingData)
-
+   const dispatch = useDispatch()
    const [
       addBooking,
       {
@@ -31,6 +34,7 @@ const ConfirmBookingButton = () => {
    }
 
    const handleClose = () => {
+      dispatch(bookingFinished)
       setOpen(false)
       isSuccess && router.push('/')
    }

@@ -7,7 +7,7 @@ import {
    selectBookingDayPrice,
    selectBookingDuration,
    selectDateRange,
-   selectUser,
+   selectUserInfo,
 } from '@/src/app/features/user/booking/bookingProcessSlice'
 
 //limpia
@@ -16,7 +16,7 @@ const ResumeStep = () => {
    const bookingDuration = useSelector(selectBookingDuration)
    const { from, to } = useSelector(selectDateRange)
    const { name, surname, address, phone, mail, homeDelivery, homePickup } =
-      useSelector(selectUser)
+      useSelector(selectUserInfo)
 
    const userData = [name, surname, mail, phone, address]
 

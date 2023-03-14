@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
    Button,
    Paper,
@@ -19,7 +19,9 @@ import BikesStep from './bikes/BikesStep'
 import {
    selectDateError,
    selectNumberOfBikes,
-   selectUser,
+   selectStrDateRange,
+   selectUserInfo,
+   userInfoAdded,
 } from '@/src/app/features/user/booking/bookingProcessSlice'
 
 //TODO: chapuza?
@@ -45,10 +47,11 @@ const StepWrapper = ({ children, textHeader }) => (
 
 export default function BookingStepper() {
    const amount = useSelector(selectNumberOfBikes)
-   const isDateError = useSelector(selectDateError)
-   const { name, surname, mail, phone, address } = useSelector(selectUser)
+   const { from, to } = useSelector(selectStrDateRange)
+   const dateError = useSelector(selectDateError)
+   //onst { name, surname, mail, phone, address } = useSelector(selectUserInfo)
 
-   const contactInfo = [name, surname, mail, phone, address]
+   //
 
    const [activeStep, setActiveStep] = useState(0)
    const [completed, setCompleted] = useState({})
@@ -78,9 +81,34 @@ export default function BookingStepper() {
    const handleBack = () => {
       activeStep > 0 && setActiveStep((prevActiveStep) => prevActiveStep - 1)
    }
+   /**formulario contacto */
+   //TODO: SACA ESTO DE AQUÍ
+   const [form, setForm] = useState({
+      name: '',
+      surname: '',
+      address: '',
+      phone: '',
+      mail: '',
+      homeDelivery: false,
+      homePickup: false,
+   })
+   const { name, surname, address, phone, mail, homeDelivery, homePickup } =
+      form
+   const handleChange = (event) => {
+      const { name, value } = event.target
+      if (value === 'true') setForm({ ...form, [name]: true })
+      else if (value === 'false') setForm({ ...form, [name]: false })
+      else setForm({ ...form, [name]: value })
+   }
+   const dispatch = useDispatch()
+   const handleClick = (ev) => {
+      dispatch(userInfoAdded(form))
+      handleNext()
+   }
    //TODO terminar esta validación chusquera
+   const contactInfo = [name, surname, address, phone, mail]
    const contactInfoIsValid = () => contactInfo.every((elem) => !!elem)
-
+   console.log('*************', !!!from)
    return (
       <Stack id="bookingStepper" spacing={2}>
          <Box
@@ -118,7 +146,7 @@ export default function BookingStepper() {
             ) : activeStep === 2 ? (
                <StepWrapper textHeader={'Indica tus datos de contacto'}>
                   {' '}
-                  <ContactStep validation={contactInfoIsValid} />
+                  <ContactStep {...form} handleChange={handleChange} />
                </StepWrapper>
             ) : (
                <StepWrapper textHeader={'Resumen de tu reserva'}>
@@ -128,7 +156,7 @@ export default function BookingStepper() {
             )}
          </Box>
          {activeStep === 0 ? (
-            <Button disabled={!!isDateError} onClick={handleNext}>
+            <Button disabled={!from || !to || !!dateError} onClick={handleNext}>
                Continuar
             </Button>
          ) : activeStep === 1 ? (
@@ -149,7 +177,7 @@ export default function BookingStepper() {
                   sx={{ mb: 2 }}
                   disabled={!contactInfoIsValid()}
                   fullWidth
-                  onClick={handleNext}
+                  onClick={handleClick}
                >
                   Continuar
                </Button>

@@ -9,34 +9,38 @@ import {
 } from '@mui/material'
 
 import {
-   selectUser,
+   selectUserInfo,
    userAdded,
 } from '@/src/app/features/user/booking/bookingProcessSlice'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
-const ContactStep = () => {
-   const [form, setForm] = useState({
-      name: '',
-      surname: '',
-      address: '',
-      phone: '',
-      mail: '',
-      homeDelivery: false,
-      homePickup: false,
-   })
-
+const ContactStep = ({
+   name,
+   surname,
+   address,
+   phone,
+   mail,
+   homeDelivery,
+   homePickup,
+   handleChange,
+}) => {
+   /*
+   const userInfo=useSelector(selectUserInfo)
+   const [form, setForm] = useState()
    const { name, surname, address, phone, mail, homeDelivery, homePickup } =
       form
    const textFieldList = [name, surname, address, phone, mail]
    const dispatch = useDispatch()
-
+   useMemo(() => {
+      return form
+   }, [form])
    useEffect(() => {
       if (textFieldList.every((elem) => !!elem)) dispatch(userAdded(form))
 
       return () => true
    }, [form])
-
+*/
    /*
    const idMap = {
       name: setName,
@@ -47,6 +51,7 @@ const ContactStep = () => {
       homePickup: setHomePickup,
    }
    */
+   /*
    const handleChange = (event) => {
       const { name, value } = event.target
       if (value === 'true') setForm({ ...form, [name]: true })
@@ -60,6 +65,7 @@ const ContactStep = () => {
       else dispatch(idMap[name](value))
    }
    console.log(form)
+   */
    return (
       <Stack component="form" mb={2} spacing={2}>
          <TextField

@@ -8,7 +8,7 @@ const initialState = {
 
    dateRange: {},
    bikes: [],
-   user: {
+   userInfo: {
       name: '',
       surname: '',
       address: '',
@@ -38,7 +38,8 @@ export const bookingFormSlice = createSlice({
 
       dateErrorChanged: (state, action) => {
          const reason = action.payload
-         const { from } = state.date
+
+         const { from } = state.dateRange
          state.dateError = reason
             ? `Seleccione una fecha superior a ${format(
                  new Date(from),
@@ -123,8 +124,8 @@ export const bookingFormSlice = createSlice({
             } else return bike
          })
       },
-      userAdded: (state, action) => {
-         state.user = action.payload
+      userInfoAdded: (state, action) => {
+         state.userInfo = action.payload
       },
 
       setAnotherForm: (state, action) => {
@@ -132,7 +133,9 @@ export const bookingFormSlice = createSlice({
          state.type = ''
          state.range = ''
       },
-
+      bookingFinished: (state) => {
+         state = initialState
+      },
       testAction: (state, action) => {
          state.test = action.payload
       },
@@ -149,12 +152,14 @@ export const {
    bikeRemoved,
    bikeRemovedBySync,
    dateModified,
-   userAdded,
+   userInfoAdded,
+   bookingFinished,
    //  setAnotherForm,
 } = bookingFormSlice.actions
 
 export default bookingFormSlice.reducer
 
+//https://redux.js.org/usage/deriving-data-selectors#optimizing-selectors-with-memoization
 /*************************************** IMPUT SELECTORS ******************************************************/
 //Pure state selector
 const selectBookingProcess = (state) => state.bookingProcess
@@ -183,10 +188,10 @@ export const selectSize = createSelector(
       console.log('XXXXXXXXXXXX selectSize') || bookingProcess.size
 )
 
-export const selectUser = createSelector(
+export const selectUserInfo = createSelector(
    [selectBookingProcess],
    (bookingProcess) =>
-      console.log('XXXXXXXXXXXX selectUser') || bookingProcess.user
+      console.log('XXXXXXXXXXXX selectUser') || bookingProcess.userInfo
 )
 /**
  * Retorna la lista de bicis del store, donde cada elemento puede representar
@@ -264,7 +269,7 @@ export const selectBookingData = createSelector(
       selectBikesByUnits,
       selectBookingDuration,
       selectBookingPrice,
-      selectUser,
+      selectUserInfo,
    ],
    (strDateRange, bikesByUnits, bookingDuration, bookingPrice, user) => {
       const { from, to } = strDateRange
