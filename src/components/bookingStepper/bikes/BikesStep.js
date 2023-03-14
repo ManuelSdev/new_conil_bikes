@@ -2,7 +2,7 @@
 import { Box, Button, Divider } from '@mui/material'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import BookingForm from './BikeForm'
+import BikeForm from './BikeForm'
 import SelectedBikesList from './SelectedBikesList'
 import {
    getAddButton,
@@ -37,7 +37,7 @@ const BikesStep = () => {
          {!!amount && <SelectedBikesList />}
          {!!amount && <Divider sx={{ mt: 1, mb: 2 }} />}
          {formIsActive ? (
-            <BookingForm key={amount} />
+            <BikeForm key={amount} />
          ) : (
             <Box
                //alignItems='center'

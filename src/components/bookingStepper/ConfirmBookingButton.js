@@ -2,34 +2,15 @@ import { Button, Dialog, DialogContent, CircularProgress } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import {
-   getBookingData,
-   getBookingDuration,
-   getBookingPrice,
-} from '@/src/app/selectors'
+
 import { useAddBookingMutation } from '@/src/app/apiServices/bookingApi'
 import Modal from '../elements/Modal'
+import { selectBookingData } from '@/src/app/features/user/booking/bookingProcessSlice'
 
 const ConfirmBookingButton = () => {
    const router = useRouter()
-   const bookingData = useSelector(getBookingData)
-   const duration = useSelector(getBookingDuration)
-   const price = useSelector(getBookingPrice)
-   /**
- El array bikes contiene un objeto por cada bici. Cada objeto contiene
- varias propiedades que no es necesario enviar al api para registrar la reserva
- en la base de datos. Solo necesito enviar las propiedades id y size
- */
-   const { bikes: toFixBikes } = bookingData
+   const bookingData = useSelector(selectBookingData)
 
-   const bikes = toFixBikes.map((bike) => {
-      const { id, size } = bike
-
-      return { id, size }
-   })
-   //console.log('---------------', bikes)
-   const finalBookingData = { ...bookingData, price, duration }
-   console.log('************', finalBookingData)
    const [
       addBooking,
       {
@@ -55,8 +36,8 @@ const ConfirmBookingButton = () => {
    }
 
    const handleSubmit = async () => {
-      console.log('mmmmmmmmmmmmmmm', finalBookingData)
-      await addBooking(finalBookingData).unwrap()
+      console.log('mmmmmmmmmmmmmmm', bookingData)
+      await addBooking(bookingData).unwrap()
       handleOpen()
    }
    return (

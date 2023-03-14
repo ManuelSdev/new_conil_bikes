@@ -23,7 +23,10 @@ import ContactStep from './contact/ContactStep'
 import ResumeStep from './resume/ResumeStep'
 import DateStep from './date/DateStep'
 import BikesStep from './bikes/BikesStep'
-import { selectDateError } from '@/src/app/features/user/booking/bookingProcessSlice'
+import {
+   selectDateError,
+   selectUser,
+} from '@/src/app/features/user/booking/bookingProcessSlice'
 
 //TODO: chapuza?
 const steps = ['Fecha', 'Bicicletas', 'Contacto', 'Resumen']
@@ -49,11 +52,9 @@ const StepWrapper = ({ children, textHeader }) => (
 export default function BookingStepper() {
    const amount = useSelector(getNumberOfBikes)
    const isDateError = useSelector(selectDateError)
-   const name = useSelector(getName)
-   const mail = useSelector(getMail)
-   const phone = useSelector(getPhone)
-   const address = useSelector(getAddress)
-   const contactInfo = [name, mail, phone, address]
+   const { name, surname, mail, phone, address } = useSelector(selectUser)
+
+   const contactInfo = [name, surname, mail, phone, address]
 
    const [activeStep, setActiveStep] = useState(0)
    const [completed, setCompleted] = useState({})
@@ -83,7 +84,7 @@ export default function BookingStepper() {
    const handleBack = () => {
       activeStep > 0 && setActiveStep((prevActiveStep) => prevActiveStep - 1)
    }
-
+   //TODO terminar esta validación chusquera
    const contactInfoIsValid = () => contactInfo.every((elem) => !!elem)
 
    return (
@@ -123,7 +124,7 @@ export default function BookingStepper() {
             ) : activeStep === 2 ? (
                <StepWrapper textHeader={'Indica tus datos de contacto'}>
                   {' '}
-                  <ContactStep />
+                  <ContactStep validation={contactInfoIsValid} />
                </StepWrapper>
             ) : (
                <StepWrapper textHeader={'Resumen de tu reserva'}>

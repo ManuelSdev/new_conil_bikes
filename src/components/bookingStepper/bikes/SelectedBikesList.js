@@ -9,20 +9,22 @@ import {
 import PedalBikeIcon from '@mui/icons-material/PedalBike'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useDispatch, useSelector } from 'react-redux'
-import { getBikes, getBikesByUnits } from '@/src/app/selectors'
-import { deleteBike } from '@/src/app/features/user/booking/bookingProcessSlice'
+import {
+   bikeRemoved,
+   selectBikesByUnits,
+} from '@/src/app/features/user/booking/bookingProcessSlice'
 import { BIKE_TYPES_MAP } from '@/src/utils/appValues'
 import { capitalizeFirst } from '@/src/utils/functions'
 import SelectedBikesListItem from './SelectedBikesListItem'
 
 export default function SelectedBikesList() {
-   const bikes = useSelector(getBikesByUnits)
+   const bikes = useSelector(selectBikesByUnits)
    const dispatch = useDispatch()
 
    const handleDelete = (bike) => (ev) => {
       // console.log(ev)
       console.log(bike)
-      dispatch(deleteBike(bike))
+      dispatch(bikeRemoved(bike))
    }
 
    return (

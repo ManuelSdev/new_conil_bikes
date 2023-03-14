@@ -1,33 +1,27 @@
 import { useSelector } from 'react-redux'
 import { Typography, Box, Divider, Stack } from '@mui/material'
-import { format, differenceInDays } from 'date-fns'
-import {
-   getBookingDayPrice,
-   getBookingDuration,
-   getContactInfo,
-   getDate,
-   getHomeDelivery,
-   getHomePickup,
-   getPrice,
-} from '@/src/app/selectors'
+import { format } from 'date-fns'
+
 import SelectedBikesTable from './SelectedBikesTable'
+import {
+   selectBookingDayPrice,
+   selectBookingDuration,
+   selectDateRange,
+   selectUser,
+} from '@/src/app/features/user/booking/bookingProcessSlice'
 
 //limpia
 const ResumeStep = () => {
-   const isoDate = useSelector(getDate)
-   const totalPrice = useSelector(getPrice)
-   const info = useSelector(getContactInfo)
-   const bookingDayPrice = useSelector(getBookingDayPrice)
-   //const bookingDuration = useSelector(getBookingDuration)
-   const homeDelivery = useSelector(getHomeDelivery)
-   const homePickup = useSelector(getHomePickup)
+   const bookingDayPrice = useSelector(selectBookingDayPrice)
+   const bookingDuration = useSelector(selectBookingDuration)
+   const { from, to } = useSelector(selectDateRange)
+   const { name, surname, address, phone, mail, homeDelivery, homePickup } =
+      useSelector(selectUser)
+
+   const userData = [name, surname, address, phone, mail]
+
    const data = ['Nombre', 'Email', 'Teléfono', 'Dirección']
 
-   const date = {
-      from: isoDate.from ? new Date(isoDate.from) : null,
-      to: isoDate.to ? new Date(isoDate.to) : null,
-   }
-   const bookingDuration = differenceInDays(date.to, date.from)
    const bookingTotalPrice = bookingDayPrice * bookingDuration
    return (
       <Box>
@@ -35,11 +29,11 @@ const ResumeStep = () => {
             <Typography variant="h6">Fecha</Typography>
             <Typography variant="subtitle2">
                <strong>Inicio: </strong>
-               {format(date.from, 'dd/MM/yyyy')}
+               {format(date, 'dd/MM/yyyy')}
             </Typography>
             <Typography variant="subtitle2">
                <strong>Fin: </strong>
-               {format(date.to, 'dd/MM/yyyy')}
+               {format(date, 'dd/MM/yyyy')}
             </Typography>
             <Typography variant="subtitle2">
                <strong>Días: </strong>
@@ -53,7 +47,7 @@ const ResumeStep = () => {
          //       sx={{ marginTop: 0 }}
          >
             <Typography variant="h6">Datos de contacto</Typography>
-            {info.map((elem, index) => (
+            {userData.map((elem, index) => (
                <Typography key={elem} variant="subtitle2">
                   <strong>{data[index]}: </strong>
                   {elem}

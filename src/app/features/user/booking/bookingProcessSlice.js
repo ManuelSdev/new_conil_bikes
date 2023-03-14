@@ -1,19 +1,16 @@
 import { createSlice, current } from '@reduxjs/toolkit'
-import { format } from 'date-fns'
+import { differenceInDays, format } from 'date-fns'
 
 const initialState = {
    addButton: true,
    formIsActive: true,
    dateError: '',
 
-   size: '',
-   type: '',
-   range: '',
-
    dateRange: {},
    bikes: [],
    user: {
       name: '',
+      surname: '',
       address: '',
       phone: '',
       mail: '',
@@ -34,10 +31,6 @@ export const bookingFormSlice = createSlice({
       setFormIsActive: (state, action) => {
          state.formIsActive = action.payload
       },
-      setDate: (state, action) => {
-         const [key, value] = action.payload
-         state.date = { ...state.date, [key]: value }
-      },
 
       dateSelected: (state, action) => {
          const [picker, value] = action.payload
@@ -54,23 +47,11 @@ export const bookingFormSlice = createSlice({
               )} o modifique la fecha de inicio`
             : ''
       },
-      setSize: (state, action) => {
-         state.size = action.payload
-      },
 
-      sizeSelected: (state, action) => {
-         state.size = action.payload
-      },
-      setType: (state, action) => {
-         state.type = action.payload
-      },
-      setRange: (state, action) => {
-         state.range = action.payload
-      },
       resetBikes: (state) => {
          state.bikes = []
       },
-      addBike: (state, action) => {
+      bikeSelected: (state, action) => {
          //No desctructure count propertie and add quantity property
          const { id, size, model, type, range, brand, description, images } =
             action.payload
@@ -98,7 +79,7 @@ export const bookingFormSlice = createSlice({
          // state.bikes.push(action.payload)
       },
 
-      deleteBike: (state, action) => {
+      bikeRemoved: (state, action) => {
          const { id, size, count } = action.payload
          /**
           * count representa la última cantidad conocida de unidades en la base de datos
@@ -132,24 +113,11 @@ export const bookingFormSlice = createSlice({
                  })
          }
       },
-      setName: (state, action) => {
-         state.name = action.payload
+
+      userAdded: (state, action) => {
+         state.user = action.payload
       },
-      setAddress: (state, action) => {
-         state.address = action.payload
-      },
-      setPhone: (state, action) => {
-         state.phone = action.payload
-      },
-      setMail: (state, action) => {
-         state.mail = action.payload
-      },
-      setHomeDelivery: (state, action) => {
-         state.homeDelivery = action.payload
-      },
-      setHomePickup: (state, action) => {
-         state.homePickup = action.payload
-      },
+
       setAnotherForm: (state, action) => {
          state.size = ''
          state.type = ''
@@ -166,22 +134,12 @@ export const {
    testAction,
    setFormIsActive,
    setAddButton,
-   setDate,
    dateSelected,
    dateErrorChanged,
-   setSize,
-   sizeSelected,
-   setType,
-   setRange,
-   addBike,
-   deleteBike,
+   bikeSelected,
+   bikeRemoved,
    resetBikes,
-   setName,
-   setAddress,
-   setPhone,
-   setMail,
-   setHomeDelivery,
-   setHomePickup,
+   userAdded,
    //  setAnotherForm,
 } = bookingFormSlice.actions
 
@@ -202,14 +160,84 @@ export const selectDateRange = (state) => {
 //ISOstring Format
 export const selectIsoStringDateRange = (state) =>
    state.bookingProcess.dateRange
-export const selectBookingDuration = (state) => {
-   const { from, to } = state.bookingProcess.dateRange
-   return differenceInDays(to, from)
-}
+
 export const selectDateError = (state) => state.bookingProcess.dateError
 
 export const selectSize = (state) => state.bookingProcess.size
 
+export const selectUser = (state) => state.bookingProcess.user
+
+export const selectBikes = (state) => state.bookingProcess.bikes
+
+//Retorna una lista donde cada elemento es una bici sin la propiedad quantity
+export const selectBikesByUnits = (state) => {
+   const bikes = state.bookingProcess.bikes
+   const items = bikes.map((bike) => {
+      //Retorna un  <SelectedBikesListItem> por cada unidad stored del mismo id+size
+      const multipleItem = []
+      let n = 1
+      const { quantity } = bike
+      while (n <= quantity) {
+         multipleItem.push(bike)
+         n++
+      }
+      return multipleItem
+   })
+
+   return items.flat()
+}
+
+export const selectBookingDayPrice = (state) => {
+   //TODO: resolver mejor qua aquí pillas de otro slice
+   const { segmentList } = state.databaseInfo
+   const bikeList = selectBikesByUnits(state)
+   const dayPrice = bikeList.reduce((acc, bike) => {
+      const { type, range } = bike
+      const [{ price }] = segmentList.filter(
+         (segment) => segment.type === type && segment.range === range
+      )
+      return acc + price
+   }, 0)
+   return dayPrice
+}
+
+export const selectBookingDuration = (state) => {
+   const { from, to } = selectDateRange(state)
+
+   const duration = differenceInDays(to, from)
+   return duration
+}
+
+export const selectBookingPrice = (state) =>
+   selectBookingDayPrice(state) * selectBookingDuration(state)
+
+//Datos necesarios para POST crear reserva
+export const selectBookingData = (state) => {
+   const { from, to } = selectIsoStringDateRange(state)
+   const bikes = selectBikesByUnits.map((bike) => ({
+      id: bike.id,
+      size: bike.size,
+   }))
+   const { name, surname, address, phone, mail, homeDelivery, homePickup } =
+      selectUser(state)
+   const duration = selectBookingDuration(state)
+   price = selectBookingPrice(state)
+   const bookingData = {
+      from,
+      to,
+      bikes,
+      name,
+      surname,
+      address,
+      phone,
+      mail,
+      homeDelivery,
+      homePickup,
+      price,
+      duration,
+   }
+   return bookingData
+}
 /**LISTENERS */
 
 const dateListener = (action, listenerApi) => {

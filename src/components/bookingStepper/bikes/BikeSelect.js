@@ -6,28 +6,16 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
 import { useLazyGetAvaiableBikesQuery } from '@/src/app/apiServices/bikeApi'
 import BikesGrid from './BikesGrid'
-import { getBikes, getRange, getSize, getType } from '@/src/app/selectors'
 import {
-   deleteBike,
-   selectIsoStringDateRange,
+   bikeRemoved,
+   selectBikes,
 } from '@/src/app/features/user/booking/bookingProcessSlice'
 
-const BikesSelect = () => {
+const BikesSelect = ({ form, dateRange }) => {
    const dispatch = useDispatch()
 
-   const { to, from } = useSelector(selectIsoStringDateRange)
-
-   const selectedSize = useSelector(getSize)
-   const selectedType = useSelector(getType)
-   const selectedRange = useSelector(getRange)
-   const currentBikes = useSelector(getBikes)
-   const args = {
-      to,
-      from,
-      size: selectedSize,
-      type: selectedType,
-      range: selectedRange,
-   }
+   const currentBikes = useSelector(selectBikes)
+   const { range } = form
 
    const [bikes, setBikes] = useState([])
 
@@ -37,13 +25,11 @@ const BikesSelect = () => {
       lastPromiseInfo,
    ] = useLazyGetAvaiableBikesQuery()
 
-   isSuccess && console.log('bikes', avaiableBikes)
-
-   const handleTrigger = () => trigger(args)
+   const handleTrigger = () => trigger({ ...dateRange, ...form })
 
    useEffect(() => {
-      !!!selectedRange && setBikes([])
-   }, [selectedRange])
+      !!!range && setBikes([])
+   }, [range])
 
    useEffect(() => {
       isSuccess && setBikes(getCheckedNewBikes(avaiableBikes, currentBikes))
@@ -51,7 +37,6 @@ const BikesSelect = () => {
 
    const getCheckedNewBikes = (newBikes, currentBikes) => {
       //Si aun no hay bicicletas seleccionadas en el store, no se aplican cambios
-
       if (currentBikes.length === 0) return newBikes
       const checkedNewBikes = newBikes.map((nBike) => {
          const { id, size, count } = nBike
@@ -59,24 +44,18 @@ const BikesSelect = () => {
          //Comprueba si el id+size ya se encuentra stored y procede
          currentBikes.forEach((cBike) => {
             if (id === cBike.id && size === cBike.size) {
-               console.log('****', nBike)
-               console.log('++++', cBike)
                if (count === cBike.quantity) {
-                  console.log('primero')
                   checkedBike = { ...nBike, avaiable: false }
                }
                if (count > cBike.quantity) {
-                  console.log('segundo')
                   checkedBike = { ...nBike, avaiable: true }
                }
                if (count < cBike.quantity) {
-                  console.log('tercero')
-                  dispatch(deleteBike({ id, size, count }))
+                  dispatch(bikeRemoved({ id, size, count }))
                   checkedBike = { ...nBike, avaiable: false }
                }
             } else {
                {
-                  console.log('nada')
                   //Si el id+size no está stored, asigna la propiedad avaiable:true directamente
                   checkedBike = { ...nBike, avaiable: true }
                }
@@ -86,10 +65,11 @@ const BikesSelect = () => {
       })
       return checkedNewBikes
    }
+
    return (
       <Container>
          <Stack alignItems="center" spacing={2}>
-            {selectedRange && (
+            {range && (
                <Button
                   //disabled={!!!selectedRange}
                   onClick={handleTrigger}

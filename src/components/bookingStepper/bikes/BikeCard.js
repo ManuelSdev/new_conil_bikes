@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography'
 
 import { useDispatch, useSelector } from 'react-redux'
 import {
-   addBike,
+   bikeSelected,
    setFormIsActive,
 } from '@/src/app/features/user/booking/bookingProcessSlice'
 import { getRange, getSize, getType } from '@/src/app/selectors'
@@ -23,7 +23,7 @@ export default function BikeCard({ bike }) {
    const dispatch = useDispatch()
 
    const handleClick = () => {
-      dispatch(addBike(bike))
+      dispatch(bikeSelected(bike))
       dispatch(setFormIsActive(false))
       // dispatch(setSize(''))
    }

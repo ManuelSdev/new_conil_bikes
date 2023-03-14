@@ -9,31 +9,35 @@ import {
 } from '@mui/material'
 
 import {
-   setAddress,
-   setHomeDelivery,
-   setHomePickup,
-   setMail,
-   setName,
-   setPhone,
+   selectUser,
+   userAdded,
 } from '@/src/app/features/user/booking/bookingProcessSlice'
-import {
-   getAddress,
-   getHomeDelivery,
-   getHomePickup,
-   getMail,
-   getName,
-   getPhone,
-} from '@/src/app/selectors'
+
+import { useEffect, useState } from 'react'
 
 const ContactStep = () => {
-   const name = useSelector(getName)
-   const address = useSelector(getAddress)
-   const phone = useSelector(getPhone)
-   const mail = useSelector(getMail)
-   const homeDelivery = useSelector(getHomeDelivery)
-   const homePickup = useSelector(getHomePickup)
+   const [form, setForm] = useState({
+      name: '',
+      surname: '',
+      address: '',
+      phone: '',
+      mail: '',
+      homeDelivery: false,
+      homePickup: false,
+   })
 
+   const { name, surname, address, phone, mail, homeDelivery, homePickup } =
+      form
+   const textFieldList = [name, surname, address, phone, mail]
    const dispatch = useDispatch()
+
+   useEffect(() => {
+      if (textFieldList.every((elem) => !!elem)) dispatch(userAdded(form))
+
+      return () => true
+   }, [form])
+
+   /*
    const idMap = {
       name: setName,
       address: setAddress,
@@ -42,20 +46,34 @@ const ContactStep = () => {
       homeDelivery: setHomeDelivery,
       homePickup: setHomePickup,
    }
+   */
    const handleChange = (event) => {
+      const { name, value } = event.target
+      if (value === 'true') setForm({ ...form, [name]: true })
+      else if (value === 'false') setForm({ ...form, [name]: false })
+      else setForm({ ...form, [name]: value })
+   }
+   const handleChanges = (event) => {
       const { name, value } = event.target
       if (value === 'true') dispatch(idMap[name](true))
       else if (value === 'false') dispatch(idMap[name](false))
       else dispatch(idMap[name](value))
    }
-
+   console.log(form)
    return (
       <Stack component="form" mb={2} spacing={2}>
          <TextField
             fullWidth
             name="name"
-            label="Nombre completo"
+            label="Nombre"
             value={name}
+            onChange={handleChange}
+         />
+         <TextField
+            fullWidth
+            name="surname"
+            label="Apellidos"
+            value={surname}
             onChange={handleChange}
          />
          <TextField

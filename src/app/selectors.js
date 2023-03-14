@@ -12,19 +12,6 @@ export const getFormIsActive = (state) => state.bookingProcess.formIsActive
 export const getAddButton = (state) => state.bookingProcess.addButton
 export const getDate = (state) => state.bookingProcess.date
 export const getDateError = (state) => state.bookingProcess.dateError
-export const getSize = (state) =>
-   //console.log('************* SELECTOR GET SIZE', state) ||
-   state.bookingProcess.size
-export const getType = (state) => state.bookingProcess.type
-export const getRange = (state) => state.bookingProcess.range
-
-export const getName = (state) => state.bookingProcess.name
-export const getAddress = (state) => state.bookingProcess.address
-export const getPhone = (state) => state.bookingProcess.phone
-export const getMail = (state) => state.bookingProcess.mail
-export const getPrice = (state) => state.bookingProcess.price
-export const getHomeDelivery = (state) => state.bookingProcess.homeDelivery
-export const getHomePickup = (state) => state.bookingProcess.homePickup
 
 export const getContactInfo = (state) => [
    state.bookingProcess.name,
@@ -50,24 +37,7 @@ export const getBookingData = (state) => ({
    homeDelivery: state.bookingProcess.homeDelivery,
    homePickup: state.bookingProcess.homePickup,
 })
-export const getBikes = (state) => state.bookingProcess.bikes
 
-export const getBikesByUnits = (state) => {
-   const bikes = state.bookingProcess.bikes
-   const items = bikes.map((bike) => {
-      //Retorna un  <SelectedBikesListItem> por cada unidad stored del mismo id+size
-      const multipleItem = []
-      let n = 1
-      const { quantity } = bike
-      while (n <= quantity) {
-         multipleItem.push(bike)
-         n++
-      }
-      return multipleItem
-   })
-
-   return items.flat()
-}
 export const getNumberOfBikes = (state) => state.bookingProcess.bikes.length
 
 export const getCalendarSelectedDay = (state) =>

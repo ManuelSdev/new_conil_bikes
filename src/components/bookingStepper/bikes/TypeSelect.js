@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import {
    Box,
    FormControl,
@@ -8,65 +6,36 @@ import {
    MenuItem,
    Select,
 } from '@mui/material'
-import { setType } from '@/src/app/features/user/booking/bookingProcessSlice'
-import { getDate, getSize, getType } from '@/src/app/selectors'
-import { useLazyGetAvaiableTypesQuery } from '@/src/app/apiServices/bikeApi'
+
 import { typesList } from '@/src/utils/appValues'
 import { capitalizeFirst } from '@/src/utils/functions'
 
-const TypeSelect = () => {
-   const dispatch = useDispatch()
-   const isoDate = useSelector(getDate)
-   const selectedSize = useSelector(getSize)
-   const selectedType = useSelector(getType)
-
-   const args = { ...isoDate, size: selectedSize }
-
-   const handleChange = (event) => {
-      dispatch(setType(event.target.value))
-   }
-
-   const [
-      trigger,
-      { data: avaiableTypes, isLoading, isSuccess, unsubscribe },
-      lastPromiseInfo,
-   ] = useLazyGetAvaiableTypesQuery()
-
-   useEffect(() => {
-      selectedType && dispatch(setType(''))
-      selectedSize && trigger(args)
-   }, [selectedSize])
-
-   const loadingLabel = () => (
-      <Box>
-         Cargando tipos de bicicleta
-         <LinearProgress
-            sx={
-               {
-                  //      backgroundColor: 'grey',
-                  //      color: 'red',
-                  //display: 'flex',
-                  //       justifySelf: 'center',
-                  //      position: 'relative',
-                  //   '&..MuiCircularProgress-root.MuiCircularProgress-svg': { position: 'relative' },
-               }
-            }
-         />
-      </Box>
-   )
+const TypeSelect = ({
+   avaiableTypes,
+   handleChange,
+   isLoading,
+   form,
+   LoadingLabel,
+}) => {
+   const { size, type } = form
 
    return (
-      <FormControl fullWidth disabled={!!!selectedSize}>
+      <FormControl fullWidth disabled={!!!size}>
          <InputLabel id="bike-type-select-label" sx={{ width: '100%' }}>
-            {isLoading ? loadingLabel() : 'Tipo'}
+            {isLoading ? (
+               <LoadingLabel text={'Cargando tipos de bicicleta'} />
+            ) : (
+               'Tipo'
+            )}
          </InputLabel>
+
          <Select
             required
             labelId="bike-type-select-label"
             id="bike-type-select"
             onChange={handleChange}
             label="Type"
-            value={selectedType}
+            value={type}
          >
             {typesList.map((type) => {
                const [engType, spaType] = type
