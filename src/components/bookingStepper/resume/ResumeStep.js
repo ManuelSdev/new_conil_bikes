@@ -18,9 +18,9 @@ const ResumeStep = () => {
    const { name, surname, address, phone, mail, homeDelivery, homePickup } =
       useSelector(selectUser)
 
-   const userData = [name, surname, address, phone, mail]
+   const userData = [name, surname, mail, phone, address]
 
-   const data = ['Nombre', 'Email', 'Teléfono', 'Dirección']
+   const data = ['Nombre', 'Apellidos', 'Email', 'Teléfono', 'Dirección']
 
    const bookingTotalPrice = bookingDayPrice * bookingDuration
    return (

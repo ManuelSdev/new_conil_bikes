@@ -4,11 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 //import Modal from "@/src/components/elements/Modal";
 import DateSelect from './DateSelect'
 import {
-   resetBikes,
+   bikeFormEnabled,
+   dateModified,
    selectBikes,
    selectDateRange,
-   setAddButton,
-   setFormIsActive,
 } from '@/src/app/features/user/booking/bookingProcessSlice'
 
 import Modal from '../../elements/Modal'
@@ -21,15 +20,15 @@ const DateStep = () => {
 
    const bikes = useSelector(selectBikes)
    const { from, to } = useSelector(selectDateRange)
-
+   //YA: LISTENER
    //TODO: check el formato de la fecha, si necesita objeto de config con format:true
    const dateIsBlockedByBikes = from && to && !!bikes.length
    console.log('fecha bloqueada', dateIsBlockedByBikes)
    console.log('hay bicis', !!bikes.length)
-   const handleAddBike = () => dispatch(setFormIsActive(true))
+   const handleAddBike = () => dispatch(bikeFormEnabled)
 
    const handleClick = () => {
-      dispatch(setAddButton(false))
+      dispatch()
    }
    const [open, setOpen] = useState(false)
 
@@ -43,7 +42,7 @@ const DateStep = () => {
    }
    const handleAccept = () => {
       console.log('aceptar')
-      dispatch(resetBikes())
+      dispatch(dateModified())
       setOpen(false)
    }
 

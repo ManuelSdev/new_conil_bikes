@@ -6,12 +6,11 @@ import CardMedia from '@mui/material/CardMedia'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {
+   bikeFormDisabled,
    bikeSelected,
-   setFormIsActive,
 } from '@/src/app/features/user/booking/bookingProcessSlice'
-import { getRange, getSize, getType } from '@/src/app/selectors'
 import Image from 'next/image'
 
 export default function BikeCard({ bike }) {
@@ -24,7 +23,9 @@ export default function BikeCard({ bike }) {
 
    const handleClick = () => {
       dispatch(bikeSelected(bike))
-      dispatch(setFormIsActive(false))
+      //Cuando se selecciona una bicicleta, se oculta el formulario size/type/range
+      //YA:pasa listener
+      dispatch(bikeFormDisabled)
       // dispatch(setSize(''))
    }
 

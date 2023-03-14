@@ -15,15 +15,13 @@ import {
 } from '@/src/app/features/user/booking/bookingProcessSlice'
 import { BIKE_TYPES_MAP } from '@/src/utils/appValues'
 import { capitalizeFirst } from '@/src/utils/functions'
-import SelectedBikesListItem from './SelectedBikesListItem'
 
 export default function SelectedBikesList() {
    const bikes = useSelector(selectBikesByUnits)
+
    const dispatch = useDispatch()
 
    const handleDelete = (bike) => (ev) => {
-      // console.log(ev)
-      console.log(bike)
       dispatch(bikeRemoved(bike))
    }
 
@@ -61,4 +59,3 @@ export default function SelectedBikesList() {
       </Box>
    )
 }
-BIKE_TYPES_MAP

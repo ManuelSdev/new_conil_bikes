@@ -1,8 +1,8 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
-import { getDatabaseInfo } from '@/src/app/selectors'
 import { rangesList } from '@/src/utils/appValues'
 import { capitalizeFirst } from '@/src/utils/functions'
 import { useSelector } from 'react-redux'
+import { selectDatabaseInfoSegmentList } from '@/src/app/databaseInfoSlice'
 
 //TODO: busca y limpia URLSearchParams
 const RangeSelect = ({
@@ -12,7 +12,7 @@ const RangeSelect = ({
    form,
    LoadingLabel,
 }) => {
-   const { segmentList } = useSelector(getDatabaseInfo)
+   const segmentList = useSelector(selectDatabaseInfoSegmentList)
 
    const { type: selectedType, range: selectedRange } = form
 

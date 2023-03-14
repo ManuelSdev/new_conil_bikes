@@ -1,9 +1,9 @@
+import { selectDatabaseInfoSegmentList } from '@/src/app/databaseInfoSlice'
 import { createSelector, createSlice, current } from '@reduxjs/toolkit'
 import { differenceInDays, format } from 'date-fns'
 
 const initialState = {
-   addButton: true,
-   formIsActive: true,
+   bikeFormIsEnable: true,
    dateError: '',
 
    dateRange: {},
@@ -25,13 +25,12 @@ export const bookingFormSlice = createSlice({
    name: 'bookingProcess',
    initialState,
    reducers: {
-      setAddButton: (state, action) => {
-         state.addButton = action.payload
+      bikeFormEnabled: (state) => {
+         state.bikeFormIsEnable = true
       },
-      setFormIsActive: (state, action) => {
-         state.formIsActive = action.payload
+      bikeFormDisabled: (state) => {
+         state.bikeFormIsEnable = false
       },
-
       dateSelected: (state, action) => {
          const [picker, value] = action.payload
          state.dateRange = { ...state.dateRange, [picker]: value }
@@ -48,7 +47,7 @@ export const bookingFormSlice = createSlice({
             : ''
       },
 
-      resetBikes: (state) => {
+      dateModified: (state) => {
          state.bikes = []
       },
       bikeSelected: (state, action) => {
@@ -78,9 +77,36 @@ export const bookingFormSlice = createSlice({
             : [...state.bikes, newBike]
          // state.bikes.push(action.payload)
       },
-
+      //El usuario elimina una bicicleta
       bikeRemoved: (state, action) => {
-         const { id, size, count } = action.payload
+         console.log(action.payload)
+         const bike = action.payload
+         const { id, size } = bike
+         //Comprueba si solo hay una unidad/quantity===1
+         const onlyOne = state.bikes.some(
+            (bike) =>
+               bike.size === size && bike.id === id && bike.quantity === 1
+         )
+         //    console.log('only one', onlyOne)
+         if (onlyOne) {
+            console.log('only one------------')
+            state.bikes = state.bikes.filter(
+               (bike) => !(bike.size === size && bike.id === id)
+            )
+         } else {
+            console.log('MAS DE UNA***********')
+            state.bikes = state.bikes.map((bike) => {
+               if (bike.size === size && bike.id === id) {
+                  return { ...bike, quantity: bike.quantity - 1 }
+               } else return bike
+            })
+         }
+      },
+      //Una o más bicicletas son eliminadas cuando la base de datos retorna una cantidad disponible
+      //inferior a la cantidad seleccionada por el usuario
+      bikeRemovedBySync: (state, action) => {
+         const bike = action.payload
+         const { id, size, count } = bike
          /**
           * count representa la última cantidad conocida de unidades en la base de datos
           * para un id+size determinado.
@@ -90,30 +116,13 @@ export const bookingFormSlice = createSlice({
           * previamente y se encuentra almacenado en state.bikes
           *
           */
-         if (count) {
-            state.bikes = state.bikes.map((bike) => {
-               if (bike.size === size && bike.id === id) {
-                  return { ...bike, quantity: count }
-               } else return bike
-            })
-         } else {
-            const onlyOne = state.bikes.some(
-               (bike) =>
-                  bike.size === size && bike.id === id && bike.quantity === 1
-            )
-            //    console.log('only one', onlyOne)
-            state.bikes = onlyOne
-               ? state.bikes.filter(
-                    (bike) => bike.size !== size && bike.id !== id
-                 )
-               : state.bikes.map((bike) => {
-                    if (bike.size === size && bike.id === id) {
-                       return { ...bike, quantity: bike.quantity - 1 }
-                    } else return bike
-                 })
-         }
+         //TODO: MENSAJE MODAL DE QUE HAS BORRADO Y ESO
+         state.bikes = state.bikes.map((bike) => {
+            if (bike.size === size && bike.id === id) {
+               return { ...bike, quantity: count }
+            } else return bike
+         })
       },
-
       userAdded: (state, action) => {
          state.user = action.payload
       },
@@ -132,13 +141,14 @@ export const bookingFormSlice = createSlice({
 
 export const {
    testAction,
-   setFormIsActive,
-   setAddButton,
+   bikeFormEnabled,
+   bikeFormDisabled,
    dateSelected,
    dateErrorChanged,
    bikeSelected,
    bikeRemoved,
-   resetBikes,
+   bikeRemovedBySync,
+   dateModified,
    userAdded,
    //  setAnotherForm,
 } = bookingFormSlice.actions
@@ -148,7 +158,6 @@ export default bookingFormSlice.reducer
 /*************************************** IMPUT SELECTORS ******************************************************/
 //Pure state selector
 const selectBookingProcess = (state) => state.bookingProcess
-const selectDatabaseInfo = (state) => state.databaseInfo
 
 //Created selectors
 //ISOstring format
@@ -158,7 +167,10 @@ export const selectStrDateRange = createSelector(
       console.log('XXXXXXXXXXXX  selectStrDateRange') ||
       bookingProcess.dateRange
 )
-
+export const selectBikeFormIsEnable = createSelector(
+   [selectBookingProcess],
+   (bookingProcess) => bookingProcess.bikeFormIsEnable
+)
 export const selectDateError = createSelector(
    [selectBookingProcess],
    (bookingProcess) =>
@@ -176,7 +188,10 @@ export const selectUser = createSelector(
    (bookingProcess) =>
       console.log('XXXXXXXXXXXX selectUser') || bookingProcess.user
 )
-
+/**
+ * Retorna la lista de bicis del store, donde cada elemento puede representar
+ * una o más bicicletas según la propiedad quantity
+ */
 export const selectBikes = createSelector(
    [selectBookingProcess],
    (bookingProcess) =>
@@ -195,27 +210,24 @@ export const selectDateRange = createSelector(
    }
 )
 
-export const selectDatabaseInfoSegmentList = createSelector(
-   [selectDatabaseInfo],
-   (databaseInfo) => databaseInfo.segmentList
-)
 //Retorna una lista donde cada elemento es una bici sin la propiedad quantity
-export const selectBikesByUnits = createSelector(
-   [selectBikes],
-   (bikesByUnits) => {
-      const bikesInUnits = bikesByUnits.map((bike) => {
-         const multipleItem = []
-         let n = 1
-         const { quantity } = bike
-         while (n <= quantity) {
-            multipleItem.push(bike)
-            n++
-         }
-         return multipleItem
-      })
+export const selectBikesByUnits = createSelector([selectBikes], (bikes) => {
+   const bikesInUnits = bikes.map((bike) => {
+      const multipleItem = []
+      let n = 1
+      const { quantity } = bike
+      while (n <= quantity) {
+         multipleItem.push(bike)
+         n++
+      }
+      return multipleItem
+   })
 
-      return bikesInUnits.flat()
-   }
+   return bikesInUnits.flat()
+})
+export const selectNumberOfBikes = createSelector(
+   [selectBikesByUnits],
+   (bikesByUnits) => bikesByUnits.length
 )
 
 export const selectBookingDayPrice = createSelector(

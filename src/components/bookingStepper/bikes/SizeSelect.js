@@ -19,7 +19,7 @@ export default function SizeSelect({
    handleChange,
    LoadingLabel,
 }) {
-   const dateRange = useSelector(selectStrDateRange)
+   const strDateRange = useSelector(selectStrDateRange)
 
    const {
       data: avaiableSizes,
@@ -27,7 +27,7 @@ export default function SizeSelect({
       isSuccess,
       refetch,
       isFetching,
-   } = useGetAvaiableSizesQuery(dateRange)
+   } = useGetAvaiableSizesQuery(strDateRange)
 
    return (
       <Box sx={{ minWidth: 120 }}>

@@ -36,7 +36,7 @@ const LoadingLabel = ({ text }) => (
 
 const BikeForm = () => {
    const dispatch = useDispatch()
-   const dateRange = useSelector(selectStrDateRange)
+   const strDateRange = useSelector(selectStrDateRange)
 
    const initialForm = {
       size: '',
@@ -80,11 +80,11 @@ const BikeForm = () => {
    ] = useLazyGetAvaiableRangesQuery()
 
    useEffect(() => {
-      size && triggerType({ ...dateRange, size })
+      size && triggerType({ ...strDateRange, size })
    }, [size])
 
    useEffect(() => {
-      type && triggerRange({ ...dateRange, size, type })
+      type && triggerRange({ ...strDateRange, size, type })
    }, [type])
 
    // console.log('BIKE FORM', form)
@@ -109,7 +109,7 @@ const BikeForm = () => {
             isLoading={isLoadingRange}
             LoadingLabel={LoadingLabel}
          />
-         <BikesSelect dateRange={dateRange} form={form} />
+         <BikesSelect strDateRange={strDateRange} form={form} />
       </Stack>
    )
 }

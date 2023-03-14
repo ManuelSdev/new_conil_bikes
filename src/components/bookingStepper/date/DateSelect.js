@@ -4,12 +4,13 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 
 import esLocale from 'date-fns/locale/es'
 import { Stack, TextField } from '@mui/material'
-import { getNumberOfBikes } from '@/src/app/selectors'
+
 import {
    dateSelected,
    dateErrorChanged,
    selectDateError,
    selectDateRange,
+   selectNumberOfBikes,
 } from '@/src/app/features/user/booking/bookingProcessSlice'
 
 //TODO: limpia
@@ -18,8 +19,8 @@ const TO = 'to'
 
 const DateSelect = () => {
    const dispatch = useDispatch()
-   //Si ya hay alguna bici seleccionada, bikes!=0 y se bloquea la selección de fecha
-   const bikes = useSelector(getNumberOfBikes)
+   //Si ya hay alguna bici seleccionada, numberOfBikes!=0 y se bloquea la selección de fecha
+   const numberOfBikes = useSelector(selectNumberOfBikes)
 
    const dateError = useSelector(selectDateError)
 
@@ -48,7 +49,7 @@ const DateSelect = () => {
       >
          <Stack direction="row" spacing={1}>
             <DatePicker
-               readOnly={!!bikes}
+               readOnly={!!numberOfBikes}
                label="Inicio"
                disablePast
                //      disableMaskedInput={true}
@@ -71,7 +72,7 @@ const DateSelect = () => {
                }
             />
             <DatePicker
-               readOnly={!!bikes}
+               readOnly={!!numberOfBikes}
                label="Fin"
                disablePast
                // disableMaskedInput={true}

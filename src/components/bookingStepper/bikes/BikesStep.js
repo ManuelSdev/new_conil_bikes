@@ -1,42 +1,28 @@
 //import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { Box, Button, Divider } from '@mui/material'
-import { useState } from 'react'
+
 import { useDispatch, useSelector } from 'react-redux'
 import BikeForm from './BikeForm'
 import SelectedBikesList from './SelectedBikesList'
+
 import {
-   getAddButton,
-   getFormIsActive,
-   getNumberOfBikes,
-} from '@/src/app/selectors'
-import {
-   setAddButton,
-   setFormIsActive,
+   bikeFormEnabled,
+   selectBikeFormIsEnable,
+   selectNumberOfBikes,
 } from '@/src/app/features/user/booking/bookingProcessSlice'
 
 const BikesStep = () => {
    const dispatch = useDispatch()
-   const amount = useSelector(getNumberOfBikes)
-   const addButton = useSelector(getAddButton)
-   const formIsActive = useSelector(getFormIsActive)
-   const [bookingForms, setBookingForms] = useState([])
-   const handleAddBike = () => dispatch(setFormIsActive(true))
+   const amount = useSelector(selectNumberOfBikes)
+   const formIsEnable = useSelector(selectBikeFormIsEnable)
+   const handleClick = () => dispatch(bikeFormEnabled)
 
-   const handleClick = () => {
-      dispatch(setAddButton(false))
-   }
-   /*
-        useEffect(() => {
-            console.log('dispatchhhh')
-            dispatch(setAnotherForm())
-        }, [amount]);
-    */
    return (
       <Box>
          {/* <SelectedBikesTable></SelectedBikesTable>*/}
          {!!amount && <SelectedBikesList />}
          {!!amount && <Divider sx={{ mt: 1, mb: 2 }} />}
-         {formIsActive ? (
+         {formIsEnable ? (
             <BikeForm key={amount} />
          ) : (
             <Box
@@ -44,7 +30,7 @@ const BikesStep = () => {
                mb={1}
                sx={{ display: 'flex', justifyContent: 'center' }}
             >
-               <Button onClick={handleAddBike}>Añadir bicicleta</Button>
+               <Button onClick={handleClick}>Añadir bicicleta</Button>
             </Box>
          )}
       </Box>

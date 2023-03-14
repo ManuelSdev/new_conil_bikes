@@ -12,19 +12,13 @@ import {
 } from '@mui/material'
 
 import ConfirmBookingButton from './ConfirmBookingButton'
-import {
-   getAddress,
-   getMail,
-   getName,
-   getNumberOfBikes,
-   getPhone,
-} from '@/src/app/selectors'
 import ContactStep from './contact/ContactStep'
 import ResumeStep from './resume/ResumeStep'
 import DateStep from './date/DateStep'
 import BikesStep from './bikes/BikesStep'
 import {
    selectDateError,
+   selectNumberOfBikes,
    selectUser,
 } from '@/src/app/features/user/booking/bookingProcessSlice'
 
@@ -50,7 +44,7 @@ const StepWrapper = ({ children, textHeader }) => (
 )
 
 export default function BookingStepper() {
-   const amount = useSelector(getNumberOfBikes)
+   const amount = useSelector(selectNumberOfBikes)
    const isDateError = useSelector(selectDateError)
    const { name, surname, mail, phone, address } = useSelector(selectUser)
 

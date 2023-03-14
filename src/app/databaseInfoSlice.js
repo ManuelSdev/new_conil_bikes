@@ -1,4 +1,4 @@
-import { createSlice, current } from '@reduxjs/toolkit'
+import { createSelector, createSlice, current } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
 
 const initialState = {
@@ -12,7 +12,7 @@ export const databaseInfoSlice = createSlice({
    name: 'databaseInfo',
    initialState,
    reducers: {
-      setDatabaseInfo: (state, action) => {
+      databaseInfoLoaded: (state, action) => {
          //console.log('SET', action.payload)
          return (state = { ...state, ...action.payload })
       },
@@ -28,6 +28,15 @@ export const databaseInfoSlice = createSlice({
    },
 })
 
-export const { setDatabaseInfo } = databaseInfoSlice.actions
+export const { databaseInfoLoaded } = databaseInfoSlice.actions
 
 export default databaseInfoSlice.reducer
+
+const selectDatabaseInfo = (state) => state.databaseInfo
+
+export const selectDatabaseInfoSegmentList = createSelector(
+   [selectDatabaseInfo],
+   (databaseInfo) =>
+      console.log('---------', databaseInfo.segmentList) ||
+      databaseInfo.segmentList
+)

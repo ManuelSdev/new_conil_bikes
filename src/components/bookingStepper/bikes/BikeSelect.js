@@ -7,11 +7,11 @@ import Box from '@mui/material/Box'
 import { useLazyGetAvaiableBikesQuery } from '@/src/app/apiServices/bikeApi'
 import BikesGrid from './BikesGrid'
 import {
-   bikeRemoved,
+   bikeRemovedBySync,
    selectBikes,
 } from '@/src/app/features/user/booking/bookingProcessSlice'
 
-const BikesSelect = ({ form, dateRange }) => {
+const BikesSelect = ({ form, strDateRange }) => {
    const dispatch = useDispatch()
 
    const currentBikes = useSelector(selectBikes)
@@ -25,7 +25,7 @@ const BikesSelect = ({ form, dateRange }) => {
       lastPromiseInfo,
    ] = useLazyGetAvaiableBikesQuery()
 
-   const handleTrigger = () => trigger({ ...dateRange, ...form })
+   const handleTrigger = () => trigger({ ...strDateRange, ...form })
 
    useEffect(() => {
       !!!range && setBikes([])
@@ -51,7 +51,7 @@ const BikesSelect = ({ form, dateRange }) => {
                   checkedBike = { ...nBike, avaiable: true }
                }
                if (count < cBike.quantity) {
-                  dispatch(bikeRemoved({ id, size, count }))
+                  dispatch(bikeRemovedBySync({ id, size, count }))
                   checkedBike = { ...nBike, avaiable: false }
                }
             } else {

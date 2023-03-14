@@ -1,4 +1,4 @@
-import { getDatabaseInfo } from '@/src/app/selectors'
+import { selectDatabaseInfoSegmentList } from '@/src/app/databaseInfoSlice'
 import { BIKE_RANGES_MAP, BIKE_TYPES_MAP } from '@/src/utils/appValues'
 import { Box, Paper, Stack, Typography } from '@mui/material'
 import Image from 'next/image'
@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 const SelectedBikeCard = ({ bike }) => {
    const [image] = bike.images
 
-   const { segmentList } = useSelector(getDatabaseInfo)
+   const segmentList = useSelector(selectDatabaseInfoSegmentList)
 
    const getBikeSegment = () =>
       segmentList.filter(
