@@ -29,11 +29,11 @@ const ResumeStep = () => {
             <Typography variant="h6">Fecha</Typography>
             <Typography variant="subtitle2">
                <strong>Inicio: </strong>
-               {format(date, 'dd/MM/yyyy')}
+               {format(from, 'dd/MM/yyyy')}
             </Typography>
             <Typography variant="subtitle2">
                <strong>Fin: </strong>
-               {format(date, 'dd/MM/yyyy')}
+               {format(to, 'dd/MM/yyyy')}
             </Typography>
             <Typography variant="subtitle2">
                <strong>Días: </strong>

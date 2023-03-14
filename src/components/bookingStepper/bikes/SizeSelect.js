@@ -11,7 +11,7 @@ import {
 } from '@mui/material'
 
 import { sizesList } from '@/src/utils/appValues'
-import { selectIsoStringDateRange } from '@/src/app/features/user/booking/bookingProcessSlice'
+import { selectStrDateRange } from '@/src/app/features/user/booking/bookingProcessSlice'
 import { useGetAvaiableSizesQuery } from '@/src/app/apiServices/bikeApi'
 
 export default function SizeSelect({
@@ -19,7 +19,7 @@ export default function SizeSelect({
    handleChange,
    LoadingLabel,
 }) {
-   const dateRange = useSelector(selectIsoStringDateRange)
+   const dateRange = useSelector(selectStrDateRange)
 
    const {
       data: avaiableSizes,

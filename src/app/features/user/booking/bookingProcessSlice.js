@@ -1,4 +1,4 @@
-import { createSlice, current } from '@reduxjs/toolkit'
+import { createSelector, createSlice, current } from '@reduxjs/toolkit'
 import { differenceInDays, format } from 'date-fns'
 
 const initialState = {
@@ -145,99 +145,142 @@ export const {
 
 export default bookingFormSlice.reducer
 
-/**SELECTORS */
-//Date format
-export const selectDateRange = (state) => {
-   const range = state.bookingProcess.dateRange
+/*************************************** IMPUT SELECTORS ******************************************************/
+//Pure state selector
+const selectBookingProcess = (state) => state.bookingProcess
+const selectDatabaseInfo = (state) => state.databaseInfo
 
-   const date = {
-      from: range.from ? new Date(range.from) : null,
-      to: range.to ? new Date(range.to) : null,
-   }
-   //console.log(date)
-   return date
-}
-//ISOstring Format
-export const selectIsoStringDateRange = (state) =>
-   state.bookingProcess.dateRange
+//Created selectors
+//ISOstring format
+export const selectStrDateRange = createSelector(
+   [selectBookingProcess],
+   (bookingProcess) =>
+      console.log('XXXXXXXXXXXX  selectStrDateRange') ||
+      bookingProcess.dateRange
+)
 
-export const selectDateError = (state) => state.bookingProcess.dateError
+export const selectDateError = createSelector(
+   [selectBookingProcess],
+   (bookingProcess) =>
+      console.log('XXXXXXXXXXXX  selectDateError') || bookingProcess.dateError
+)
 
-export const selectSize = (state) => state.bookingProcess.size
+export const selectSize = createSelector(
+   [selectBookingProcess],
+   (bookingProcess) =>
+      console.log('XXXXXXXXXXXX selectSize') || bookingProcess.size
+)
 
-export const selectUser = (state) => state.bookingProcess.user
+export const selectUser = createSelector(
+   [selectBookingProcess],
+   (bookingProcess) =>
+      console.log('XXXXXXXXXXXX selectUser') || bookingProcess.user
+)
 
-export const selectBikes = (state) => state.bookingProcess.bikes
+export const selectBikes = createSelector(
+   [selectBookingProcess],
+   (bookingProcess) =>
+      console.log('XXXXXXXXXXXX selectBikes') || bookingProcess.bikes
+)
 
-//Retorna una lista donde cada elemento es una bici sin la propiedad quantity
-export const selectBikesByUnits = (state) => {
-   const bikes = state.bookingProcess.bikes
-   const items = bikes.map((bike) => {
-      //Retorna un  <SelectedBikesListItem> por cada unidad stored del mismo id+size
-      const multipleItem = []
-      let n = 1
-      const { quantity } = bike
-      while (n <= quantity) {
-         multipleItem.push(bike)
-         n++
+export const selectDateRange = createSelector(
+   [selectStrDateRange],
+   (dateRange) => {
+      const { from, to } = dateRange
+      const formatedDateRange = {
+         from: from ? new Date(from) : null,
+         to: to ? new Date(to) : null,
       }
-      return multipleItem
-   })
-
-   return items.flat()
-}
-
-export const selectBookingDayPrice = (state) => {
-   //TODO: resolver mejor qua aquí pillas de otro slice
-   const { segmentList } = state.databaseInfo
-   const bikeList = selectBikesByUnits(state)
-   const dayPrice = bikeList.reduce((acc, bike) => {
-      const { type, range } = bike
-      const [{ price }] = segmentList.filter(
-         (segment) => segment.type === type && segment.range === range
-      )
-      return acc + price
-   }, 0)
-   return dayPrice
-}
-
-export const selectBookingDuration = (state) => {
-   const { from, to } = selectDateRange(state)
-
-   const duration = differenceInDays(to, from)
-   return duration
-}
-
-export const selectBookingPrice = (state) =>
-   selectBookingDayPrice(state) * selectBookingDuration(state)
-
-//Datos necesarios para POST crear reserva
-export const selectBookingData = (state) => {
-   const { from, to } = selectIsoStringDateRange(state)
-   const bikes = selectBikesByUnits.map((bike) => ({
-      id: bike.id,
-      size: bike.size,
-   }))
-   const { name, surname, address, phone, mail, homeDelivery, homePickup } =
-      selectUser(state)
-   const duration = selectBookingDuration(state)
-   price = selectBookingPrice(state)
-   const bookingData = {
-      from,
-      to,
-      bikes,
-      name,
-      surname,
-      address,
-      phone,
-      mail,
-      homeDelivery,
-      homePickup,
-      price,
-      duration,
+      return formatedDateRange
    }
-   return bookingData
-}
+)
+
+export const selectDatabaseInfoSegmentList = createSelector(
+   [selectDatabaseInfo],
+   (databaseInfo) => databaseInfo.segmentList
+)
+//Retorna una lista donde cada elemento es una bici sin la propiedad quantity
+export const selectBikesByUnits = createSelector(
+   [selectBikes],
+   (bikesByUnits) => {
+      const bikesInUnits = bikesByUnits.map((bike) => {
+         const multipleItem = []
+         let n = 1
+         const { quantity } = bike
+         while (n <= quantity) {
+            multipleItem.push(bike)
+            n++
+         }
+         return multipleItem
+      })
+
+      return bikesInUnits.flat()
+   }
+)
+
+export const selectBookingDayPrice = createSelector(
+   [selectDatabaseInfoSegmentList, selectBikesByUnits],
+   (segmentList, bikesInUnits) => {
+      const dayPrice = bikesInUnits.reduce((acc, bike) => {
+         const { type, range } = bike
+         const [{ price }] = segmentList.filter(
+            (segment) => segment.type === type && segment.range === range
+         )
+         return acc + price
+      }, 0)
+      return dayPrice
+   }
+)
+
+export const selectBookingDuration = createSelector(
+   [selectDateRange],
+   (dateRange) => {
+      const { from, to } = dateRange
+      const duration = differenceInDays(to, from)
+      return duration
+   }
+)
+
+export const selectBookingPrice = createSelector(
+   [selectBookingDayPrice, selectBookingDuration],
+   (bookingDayPrice, bookingDuration) => bookingDayPrice * bookingDuration
+)
+
+export const selectBookingData = createSelector(
+   [
+      selectStrDateRange,
+      selectBikesByUnits,
+      selectBookingDuration,
+      selectBookingPrice,
+      selectUser,
+   ],
+   (strDateRange, bikesByUnits, bookingDuration, bookingPrice, user) => {
+      const { from, to } = strDateRange
+      const bikes = bikesByUnits.map((bike) => ({
+         id: bike.id,
+         size: bike.size,
+      }))
+      const { name, surname, address, phone, mail, homeDelivery, homePickup } =
+         user
+      const duration = bookingDuration
+      const price = bookingPrice
+      const bookingData = {
+         from,
+         to,
+         bikes,
+         name,
+         surname,
+         address,
+         phone,
+         mail,
+         homeDelivery,
+         homePickup,
+         price,
+         duration,
+      }
+      return bookingData
+   }
+)
 /**LISTENERS */
 
 const dateListener = (action, listenerApi) => {

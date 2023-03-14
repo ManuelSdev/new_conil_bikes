@@ -6,7 +6,7 @@ import RangeSelect from './RangeSelect'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-   selectIsoStringDateRange,
+   selectStrDateRange,
    setAnotherForm,
 } from '@/src/app/features/user/booking/bookingProcessSlice'
 import BikesSelect from './BikeSelect'
@@ -36,7 +36,7 @@ const LoadingLabel = ({ text }) => (
 
 const BikeForm = () => {
    const dispatch = useDispatch()
-   const dateRange = useSelector(selectIsoStringDateRange)
+   const dateRange = useSelector(selectStrDateRange)
 
    const initialForm = {
       size: '',
@@ -87,7 +87,7 @@ const BikeForm = () => {
       type && triggerRange({ ...dateRange, size, type })
    }, [type])
 
-   console.log('BIKE FORM', form)
+   // console.log('BIKE FORM', form)
    return (
       <Stack spacing={2}>
          <SizeSelect
